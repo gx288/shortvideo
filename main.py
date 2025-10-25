@@ -10,8 +10,6 @@ import glob
 from google.cloud import texttospeech
 import gspread
 from google.oauth2.service_account import Credentials
-from googleapiclient.discovery import build
-from googleapiclient.http import MediaFileUpload
 
 # Fallback for ANTIALIAS in Pillow
 Image.ANTIALIAS = Image.LANCZOS
@@ -34,13 +32,9 @@ print(f"  Created directory: {output_dir}")
 
 # Stage 0: Read from Google Sheets
 print("Stage 0: Reading from Google Sheets...")
-scopes = [
-    'https://www.googleapis.com/auth/spreadsheets',
-    'https://www.googleapis.com/auth/drive.file'
-]
+scopes = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file('google_sheets_key.json', scopes=scopes)
 gc = gspread.authorize(creds)
-drive_service = build('drive', 'v3', credentials=creds)
 
 SHEET_ID = '14tqKftTqlesnb0NqJZU-_f1EsWWywYqO36NiuDdmaTo'
 worksheet = gc.open_by_key(SHEET_ID).worksheet('Phòng mạch')
@@ -223,7 +217,7 @@ create_title_image(title_text, bg_image_url, title_image_path)
 # Stage 4: Download images
 def download_images_with_icrawler(keyword, num_images, output_dir):
     print("Stage 4: Attempting to download images...")
-    keyword_dir = os.path.join(output_dir, keyword.replace(' ', '_')[:50])
+    keyword_dir = os.path.join(output_dir, re.sub(r'[^\w\s-]', '', keyword.replace(' ', '_'))[:50])
     os.makedirs(keyword_dir, exist_ok=True)
 
     try:
@@ -276,7 +270,7 @@ def download_images_with_icrawler(keyword, num_images, output_dir):
 
     return image_paths
 
-keyword = title_text[:50].replace(' ', '_')
+keyword = title_text[:50]
 additional_images = download_images_with_icrawler(keyword, 7, output_dir)
 image_paths = [title_image_path] + additional_images
 print(f"  Retrieved {len(additional_images)} images")
@@ -321,43 +315,18 @@ create_video(image_paths, audio_path, output_video_path)
 
 print(f"Video created successfully at: {output_video_path}")
 
-# Stage 6: Upload to Google Drive and update sheet
-print("Stage 6: Uploading video to Google Drive and updating sheet...")
+# Stage 6: Update sheet with video URL (from env, set by workflow)
+print("Stage 6: Updating sheet with video URL...")
+video_url = os.environ.get('VIDEO_URL', output_video_path)  # Fallback to local if no env
 try:
-    folder_metadata = {
-        'name': 'Videos',
-        'mimeType': 'application/vnd.google-apps.folder',
-        'parents': ['root']
-    }
-    folders = drive_service.files().list(q="name='Videos' and mimeType='application/vnd.google-apps.folder'", fields="files(id)").execute().get('files', [])
-    if not folders:
-        folder = drive_service.files().create(body=folder_metadata, fields='id').execute()
-        folder_id = folder.get('id')
-    else:
-        folder_id = folders[0]['id']
-
-    file_metadata = {
-        'name': f"video_row_{selected_row_num}_{title_text[:50]}.mp4",
-        'parents': [folder_id]
-    }
-    media = MediaFileUpload(output_video_path, mimetype='video/mp4', resumable=True)
-    uploaded_file = drive_service.files().create(body=file_metadata, media_body=media, fields='id').execute()
-    file_id = uploaded_file.get('id')
-
-    drive_service.permissions().create(fileId=file_id, body={'type': 'anyone', 'role': 'reader'}).execute()
-    video_url = f"https://drive.google.com/file/d/{file_id}/view?usp=sharing"
-
-    worksheet.update_cell(selected_row_num, 8, video_url)
+    worksheet.update_cell(selected_row_num, 8, video_url)  # Column H = 8
     print(f"  Updated sheet row {selected_row_num}, column H with URL: {video_url}")
-
 except Exception as e:
-    print(f"  Error uploading/updating: {e}")
-    worksheet.update_cell(selected_row_num, 8, output_video_path)
-    print("  Fallback: Updated with local path")
+    print(f"  Error updating sheet: {e}")
 
 # Clean up temporary files
 print("Cleaning up temporary files...")
-for file in glob.glob(os.path.join(output_dir, keyword, "*.jpg")):
+for file in glob.glob(os.path.join(output_dir, keyword.replace(' ', '_')[:50], "*.jpg")):
     try:
         os.remove(file)
     except:
