@@ -68,7 +68,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           # Ensure output folder exists
           mkdir -p output
-          # Move video to output (already created by main.py)
+          # Add and commit video
           git add output/output_video_*.mp4
           git commit -m "Add video for row $ROW_NUM" || echo "No new video to commit"
           git push
@@ -84,25 +84,34 @@ jobs:
       - name: Cleanup old videos
         if: always()
         run: |
+          # Debug: Print working directory and check .git
+          pwd
+          ls -la
+          if [ ! -d ".git" ]; then
+            echo "Error: Not a git repository. Exiting cleanup."
+            exit 0
+          fi
           # Get current timestamp and 90 days ago (in seconds)
           CURRENT_TIME=$(date +%s)
           THREE_MONTHS_AGO=$((CURRENT_TIME - 90*24*60*60))
           # List commits touching output folder
-          COMMITS=$(git log --name-only --pretty=format:%H:%ct -- output | grep -B1 'output/output_video_' | grep -v '^--$' | grep -v '^output/')
+          COMMITS=$(git log --name-only --pretty=format:%H:%ct -- output | grep -B1 'output/output_video_' | grep -v '^--$' | grep -v '^output/' || true)
+          DELETED_FILES=false
           while read -r COMMIT_HASH COMMIT_TIME; do
-            if [ -n "$COMMIT_HASH" ] && [ "$COMMIT_TIME" -lt "$THREE_MONTHS_AGO" ]; then
+            if [ -n "$COMMIT_HASH" ] && [ -n "$COMMIT_TIME" ] && [ "$COMMIT_TIME" -lt "$THREE_MONTHS_AGO" ]; then
               echo "Found old commit: $COMMIT_HASH at $(date -d @$COMMIT_TIME)"
               # Get files changed in this commit
-              FILES=$(git show --name-only --pretty="" $COMMIT_HASH | grep '^output/output_video_.*\.mp4$')
+              FILES=$(git show --name-only --pretty="" $COMMIT_HASH | grep '^output/output_video_.*\.mp4$' || true)
               for FILE in $FILES; do
                 echo "Deleting old video: $FILE"
-                git rm $FILE
+                git rm $FILE || echo "File $FILE already deleted or not found"
+                DELETED_FILES=true
               done
             fi
           done <<< "$COMMITS"
           # Commit cleanup if there were deletions
-          if git status --porcelain | grep '^D'; then
-            git commit -m "Cleanup videos older than 90 days"
+          if [ "$DELETED_FILES" = true ]; then
+            git commit -m "Cleanup videos older than 90 days" || echo "No changes to commit"
             git push
           else
             echo "No old videos to clean up"
