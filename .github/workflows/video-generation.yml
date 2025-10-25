@@ -13,21 +13,22 @@ jobs:
       # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_TOKEN }} # Use PAT for push
 
       # Set up Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.9'
-          cache: 'pip' # Cache pip dependencies for faster runs
+          cache: 'pip'
 
       # Install system dependencies
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg fonts-dejavu fonts-liberation gh
+          sudo apt-get install -y ffmpeg fonts-dejavu fonts-liberation
           ffmpeg -version
-          gh --version
 
       # Install Python dependencies
       - name: Install Python dependencies
@@ -59,39 +60,52 @@ jobs:
       - name: Run video generation script
         run: python main.py
 
-      # Upload video as single-file artifact
-      - name: Upload video artifact
+      # Commit video to output folder
+      - name: Commit video to output folder
         if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: generated-video
-          path: output/output_video.mp4
-          retention-days: 30
-          compression-level: 0
-
-      # Get artifact download URL using gh CLI
-      - name: Get artifact URL
-        if: success()
-        id: get-url
         run: |
-          RUN_ID=${{ github.run_id }}
-          # Debug: Print full API response
-          echo "Fetching artifacts for run $RUN_ID..."
-          RESPONSE=$(gh api repos/${{ github.repository }}/actions/runs/$RUN_ID/artifacts)
-          echo "API Response: $RESPONSE"
-          ARTIFACT_URL=$(echo "$RESPONSE" | jq -r '.artifacts[0].archive_download_url // ""')
-          if [ -z "$ARTIFACT_URL" ]; then
-            echo "Error: Could not retrieve artifact URL"
-            exit 1
-          fi
-          echo "VIDEO_URL=$ARTIFACT_URL" >> $GITHUB_ENV
-          echo "artifact_url=$ARTIFACT_URL" >> $GITHUB_OUTPUT
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          # Ensure output folder exists
+          mkdir -p output
+          # Move video to output (already created by main.py)
+          git add output/output_video_*.mp4
+          git commit -m "Add video for row $ROW_NUM" || echo "No new video to commit"
+          git push
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ROW_NUM: $(cat output/selected_row_num.txt 2>/dev/null || echo "unknown")
 
-      # Update sheet with artifact URL
-      - name: Update sheet with artifact URL
+      # Update sheet with raw URL
+      - name: Update sheet with raw URL
         if: success()
         run: python update_sheet.py
+
+      # Cleanup old videos (older than 90 days)
+      - name: Cleanup old videos
+        if: always()
+        run: |
+          # Get current timestamp and 90 days ago (in seconds)
+          CURRENT_TIME=$(date +%s)
+          THREE_MONTHS_AGO=$((CURRENT_TIME - 90*24*60*60))
+          # List commits touching output folder
+          COMMITS=$(git log --name-only --pretty=format:%H:%ct -- output | grep -B1 'output/output_video_' | grep -v '^--$' | grep -v '^output/')
+          while read -r COMMIT_HASH COMMIT_TIME; do
+            if [ -n "$COMMIT_HASH" ] && [ "$COMMIT_TIME" -lt "$THREE_MONTHS_AGO" ]; then
+              echo "Found old commit: $COMMIT_HASH at $(date -d @$COMMIT_TIME)"
+              # Get files changed in this commit
+              FILES=$(git show --name-only --pretty="" $COMMIT_HASH | grep '^output/output_video_.*\.mp4$')
+              for FILE in $FILES; do
+                echo "Deleting old video: $FILE"
+                git rm $FILE
+              done
+            fi
+          done <<< "$COMMITS"
+          # Commit cleanup if there were deletions
+          if git status --porcelain | grep '^D'; then
+            git commit -m "Cleanup videos older than 90 days"
+            git push
+          else
+            echo "No old videos to clean up"
+          fi
         env:
-          VIDEO_URL: ${{ steps.get-url.outputs.artifact_url }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
