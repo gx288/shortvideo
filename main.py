@@ -164,7 +164,7 @@ def create_title_image(title, bg_image_url, output_path):
         font = ImageFont.load_default()
 
     max_width = 864  # 80% of 1080
-    max_height = 800  # 80% of 1920
+    max_height = 1536  # 80% of 1920
     min_height = 768
     line_spacing = 15  # Giảm line_spacing để chữ nhỏ hơn
 
@@ -346,8 +346,9 @@ def create_video(image_paths, audio_path, output_path):
         print(f"  Error saving video: {e}. Exiting.")
         exit(1)
 
+# Define output_path before calling create_video
 output_video_path = os.path.join(output_dir, f"output_video_{clean_title}.mp4")
-create_video(image_paths, audio_path, output_path)
+create_video(image_paths, audio_path, output_video_path)
 
 print(f"Video created successfully at: {output_video_path}")
 
