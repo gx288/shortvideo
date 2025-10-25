@@ -21,19 +21,19 @@ jobs:
           python-version: '3.9'
           cache: 'pip' # Cache pip dependencies for faster runs
 
-      # Install system dependencies (thêm gh CLI)
+      # Install system dependencies
       - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y ffmpeg fonts-dejavu fonts-liberation gh
-          ffmpeg -version # Verify ffmpeg installation
-          gh --version # Verify gh CLI
+          ffmpeg -version
+          gh --version
 
       # Install Python dependencies
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install Pillow==10.4.0 moviepy==1.0.3 requests==2.32.3 numpy==1.26.4 icrawler==0.6.10 google-cloud-texttospeech gspread google-api-python-client google-auth google-auth-oauthlib google-auth-httplib2 oauth2client
+          pip install Pillow==10.4.0 moviepy==1.0.3 requests==2.32.3 numpy==1.26.4 icrawler==0.6.10 google-cloud-texttospeech gspread
           pip show moviepy
           pip show Pillow requests numpy icrawler google-cloud-texttospeech gspread
 
@@ -58,18 +58,16 @@ jobs:
       # Run the script
       - name: Run video generation script
         run: python main.py
-        env:
-          VIDEO_URL: ""  # Placeholder, sẽ set sau
 
-      # Upload video as single-file artifact (không ZIP)
+      # Upload video as single-file artifact
       - name: Upload video artifact
         if: success()
         uses: actions/upload-artifact@v4
         with:
           name: generated-video
           path: output/output_video.mp4
-          retention-days: 30  # Tăng lên 30 days
-          compression-level: 0  # No compression for direct MP4
+          retention-days: 30
+          compression-level: 0
 
       # Get artifact download URL using gh CLI
       - name: Get artifact URL
@@ -78,39 +76,14 @@ jobs:
         run: |
           RUN_ID=${{ github.run_id }}
           ARTIFACT_URL=$(gh api repos/${{ github.repository }}/actions/runs/$RUN_ID/artifacts --jq '.[0].archive_download_url' | tr -d '"')
-          echo "ARTIFACT_URL=$ARTIFACT_URL" >> $GITHUB_ENV
+          echo "VIDEO_URL=$ARTIFACT_URL" >> $GITHUB_ENV
           echo "artifact_url=$ARTIFACT_URL" >> $GITHUB_OUTPUT
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Built-in token for gh auth
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Re-run Python to update sheet with URL (vì script chạy trước upload)
+      # Update sheet with artifact URL
       - name: Update sheet with artifact URL
         if: success()
-        run: |
-          echo "VIDEO_URL=${{ steps.get-url.outputs.artifact_url }}" > update_env.env
-          source update_env.env && python -c "
-import os
-import gspread
-from google.oauth2.service_account import Credentials
-scopes = ['https://www.googleapis.com/auth/spreadsheets']
-creds = Credentials.from_service_account_file('google_sheets_key.json', scopes=scopes)
-gc = gspread.authorize(creds)
-SHEET_ID = '14tqKftTqlesnb0NqJZU-_f1EsWWywYqO36NiuDdmaTo'
-worksheet = gc.open_by_key(SHEET_ID).worksheet('Phòng mạch')
-# Assume selected_row_num from file or hardcode for simplicity; in practice, save it from main.py
-# For now, assume last processed row; adjust if needed
-rows = worksheet.get_all_values()
-selected_row_num = None
-for i, row in enumerate(rows):
-    if i == 0: continue
-    if len(row) > 7 and not row[7].strip():
-        selected_row_num = i + 1
-        break
-if selected_row_num:
-    worksheet.update_cell(selected_row_num, 8, os.environ['VIDEO_URL'])
-    print(f'Updated row {selected_row_num} with {os.environ['VIDEO_URL']}')
-else:
-    print('No row to update')
-          "
+        run: python update_sheet.py
         env:
           VIDEO_URL: ${{ steps.get-url.outputs.artifact_url }}
