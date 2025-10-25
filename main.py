@@ -145,7 +145,7 @@ def create_title_image(title, bg_image_url, output_path):
     final_image.paste(bg_image, (paste_x, paste_y))
 
     draw = ImageDraw.Draw(final_image)
-    font_size = 60
+    font_size = 80
     font_paths = [
         "Roboto-Bold.ttf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
@@ -167,7 +167,7 @@ def create_title_image(title, bg_image_url, output_path):
     min_height = 768  # 40% of 1920
     max_height = 1152  # 60% of 1920
     line_spacing = 15
-    wrap_width = 30  # Fixed wrap_width, natural line breaks
+    wrap_width = 20  # Reduced to allow more natural line breaks for long titles
 
     def get_text_dimensions(text, font, wrap_width):
         wrapped_text = textwrap.wrap(text, width=wrap_width)
@@ -187,19 +187,18 @@ def create_title_image(title, bg_image_url, output_path):
     tried_font_sizes = set()
     best_font_size = font_size
     best_height = total_height
-    best_width_diff = abs(max_text_width - max_width)
     max_attempts = 50  # Prevent infinite loop
 
     attempt = 0
-    while (total_height < min_height or total_height > max_height or max_text_width > max_width) and font_size > 20 and font_size < 150 and attempt < max_attempts:
+    while (total_height < min_height or max_text_width > max_width) and font_size > 20 and font_size < 150 and attempt < max_attempts:
         if font_size in tried_font_sizes:
             print(f"  Loop detected at font_size: {font_size}. Using best font_size: {best_font_size}")
             font_size = best_font_size
             break
         tried_font_sizes.add(font_size)
 
-        if max_text_width > max_width or total_height > max_height:
-            font_size -= 2  # Reduce font_size if too wide or too tall
+        if max_text_width > max_width:
+            font_size -= 2  # Reduce font_size if too wide
         elif total_height < min_height:
             font_size += 2  # Increase font_size if too short
 
@@ -215,11 +214,9 @@ def create_title_image(title, bg_image_url, output_path):
 
         wrapped_text, max_text_width, total_height = get_text_dimensions(title, font, wrap_width)
 
-        # Update best font_size if height is valid and width is closer to target
-        width_diff = abs(max_text_width - max_width)
-        if total_height >= min_height and total_height <= max_height and (width_diff < best_width_diff or total_height > best_height):
+        # Update best font_size if height is valid and width is acceptable
+        if total_height >= min_height and total_height <= max_height and max_text_width <= max_width:
             best_font_size = font_size
-            best_width_diff = width_diff
             best_height = total_height
 
         print(f"  Adjusted font_size: {font_size}, max_text_width: {max_text_width}, total_height: {total_height}, lines: {len(wrapped_text)}")
