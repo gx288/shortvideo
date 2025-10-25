@@ -39,7 +39,7 @@ jobs:
       # Create Google Cloud credentials file from secret
       - name: Set up Google Cloud credentials
         env:
-          GOOGLE_TTS_KEY: ${{ secrets.GOOGLE_TTS }}
+          GOOGLE_TTS_KEY: ${{ secrets.GOOGLE_TTS_KEY }}
         run: |
           echo "$GOOGLE_TTS_KEY" > google_tts_key.json
           export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/google_tts_key.json
