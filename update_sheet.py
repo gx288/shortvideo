@@ -10,6 +10,9 @@ except FileNotFoundError:
     print("Error: selected_row_num.txt not found. Cannot update sheet.")
     exit(1)
 
+# Construct raw GitHub URL
+video_url = f"https://raw.githubusercontent.com/gx288/shortvideo/main/output/output_video_{selected_row_num}.mp4"
+
 # Update sheet
 scopes = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file('google_sheets_key.json', scopes=scopes)
@@ -17,7 +20,6 @@ gc = gspread.authorize(creds)
 SHEET_ID = '14tqKftTqlesnb0NqJZU-_f1EsWWywYqO36NiuDdmaTo'
 worksheet = gc.open_by_key(SHEET_ID).worksheet('Phòng mạch')
 
-video_url = os.environ.get('VIDEO_URL', 'output/output_video.mp4')
 try:
     worksheet.update_cell(selected_row_num, 8, video_url)
     print(f"Updated row {selected_row_num} with {video_url}")
