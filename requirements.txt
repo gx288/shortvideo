@@ -1,0 +1,7 @@
+gTTS==2.5.3
+Pillow==10.4.0
+moviepy==1.0.3
+requests==2.32.3
+numpy==1.26.4
+icrawler==0.6.10
+pydub
