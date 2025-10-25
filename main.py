@@ -145,7 +145,7 @@ def create_title_image(title, bg_image_url, output_path):
     final_image.paste(bg_image, (paste_x, paste_y))
 
     draw = ImageDraw.Draw(final_image)
-    font_size = 60  # Giảm khởi đầu từ 80 xuống 60
+    font_size = 60
     font_paths = [
         "Roboto-Bold.ttf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
@@ -164,9 +164,9 @@ def create_title_image(title, bg_image_url, output_path):
         font = ImageFont.load_default()
 
     max_width = 864  # 80% of 1080
-    max_height = 1536  # 80% of 1920
-    min_height = 768
-    line_spacing = 15  # Giảm line_spacing để chữ nhỏ hơn
+    min_height = 768  # 40% of 1920
+    max_height = 1152  # 60% of 1920
+    line_spacing = 15
 
     def get_text_dimensions(text, font, wrap_width):
         wrapped_text = textwrap.wrap(text, width=wrap_width)
@@ -178,15 +178,17 @@ def create_title_image(title, bg_image_url, output_path):
             text_height = text_bbox[3] - text_bbox[1]
             max_text_width = max(max_text_width, text_width)
             total_height += text_height + line_spacing
-        return wrapped_text, max_text_width, total_height
+        return wrapped_text, max_text_width, total_height - line_spacing  # Subtract last line_spacing
 
-    wrap_width = 22  # Tăng wrap_width để chia dòng nhiều hơn
+    wrap_width = 22
     wrapped_text, max_text_width, total_height = get_text_dimensions(title, font, wrap_width)
 
-    while (max_text_width > max_width or total_height > max_height or len(wrapped_text) < 4) and font_size > 20:
-        if len(wrapped_text) < 4:
-            wrap_width -= 1
-        font_size -= 2  # Giảm nhỏ hơn để kiểm soát tốt hơn
+    # Adjust font size and wrap width to fit width and height constraints
+    while (max_text_width > max_width or total_height > max_height or total_height < min_height) and font_size > 20:
+        if max_text_width > max_width or total_height > max_height:
+            font_size -= 2  # Reduce font size if too wide or too tall
+        elif total_height < min_height:
+            wrap_width -= 1  # Reduce wrap width to add more lines if too short
         font = None
         for font_path in font_paths:
             try:
@@ -207,11 +209,11 @@ def create_title_image(title, bg_image_url, output_path):
     for line in wrapped_text:
         text_bbox = text_draw.textbbox((0, 0), line, font=font)
         text_width = text_bbox[2] - text_bbox[0]
-        text_x = (1080 - text_width) // 2  # Căn giữa
+        text_x = (1080 - text_width) // 2  # Center horizontally
         text_draw.text((text_x, current_y), line, font=font, fill=(255, 255, 255), stroke_width=2, stroke_fill=(0, 0, 0))
         current_y += (text_bbox[3] - text_bbox[1]) + line_spacing
 
-    text_y = (1920 - text_area_height) // 2  # Đảm bảo căn giữa theo chiều dọc
+    text_y = (1920 - text_area_height) // 2  # Center vertically
     final_image = final_image.convert("RGBA")
     final_image.paste(text_area, (0, text_y), text_area)
     final_image = final_image.convert("RGB")
