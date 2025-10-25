@@ -75,7 +75,15 @@ jobs:
         id: get-url
         run: |
           RUN_ID=${{ github.run_id }}
-          ARTIFACT_URL=$(gh api repos/${{ github.repository }}/actions/runs/$RUN_ID/artifacts --jq '.[0].archive_download_url' | tr -d '"')
+          # Debug: Print full API response
+          echo "Fetching artifacts for run $RUN_ID..."
+          RESPONSE=$(gh api repos/${{ github.repository }}/actions/runs/$RUN_ID/artifacts)
+          echo "API Response: $RESPONSE"
+          ARTIFACT_URL=$(echo "$RESPONSE" | jq -r '.artifacts[0].archive_download_url // ""')
+          if [ -z "$ARTIFACT_URL" ]; then
+            echo "Error: Could not retrieve artifact URL"
+            exit 1
+          fi
           echo "VIDEO_URL=$ARTIFACT_URL" >> $GITHUB_ENV
           echo "artifact_url=$ARTIFACT_URL" >> $GITHUB_OUTPUT
         env:
