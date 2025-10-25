@@ -40,13 +40,14 @@ jobs:
           GOOGLE_TTS_KEY: ${{ secrets.GOOGLE_TTS_KEY }}
         run: |
           echo "$GOOGLE_TTS_KEY" > google_tts_key.json
-          export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/google_tts_key.json
+          ls -l google_tts_key.json # Verify file creation
+          cat google_tts_key.json # Debug: Print file contents (sanitized by GitHub)
+          export GOOGLE_APPLICATION_CREDENTIALS=$PWD/google_tts_key.json
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS" >> $GITHUB_ENV
 
       # Run the script
       - name: Run video generation script
         run: python main.py
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: $(pwd)/google_tts_key.json
 
       # Upload the generated video as an artifact
       - name: Upload video artifact
