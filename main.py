@@ -145,7 +145,7 @@ def create_title_image(title, bg_image_url, output_path):
     final_image.paste(bg_image, (paste_x, paste_y))
 
     draw = ImageDraw.Draw(final_image)
-    font_size = 80  # Reduced further
+    font_size = 60  # Giảm khởi đầu từ 80 xuống 60
     font_paths = [
         "Roboto-Bold.ttf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
@@ -163,10 +163,10 @@ def create_title_image(title, bg_image_url, output_path):
         print("  Warning: No custom font found. Using default font.")
         font = ImageFont.load_default()
 
-    max_width = 918  # 85% of 1080
-    max_height = 960
+    max_width = 864  # 80% of 1080
+    max_height = 800  # 80% of 1920
     min_height = 768
-    line_spacing = 20
+    line_spacing = 15  # Giảm line_spacing để chữ nhỏ hơn
 
     def get_text_dimensions(text, font, wrap_width):
         wrapped_text = textwrap.wrap(text, width=wrap_width)
@@ -180,13 +180,13 @@ def create_title_image(title, bg_image_url, output_path):
             total_height += text_height + line_spacing
         return wrapped_text, max_text_width, total_height
 
-    wrap_width = 20  # Increased for smaller font
+    wrap_width = 22  # Tăng wrap_width để chia dòng nhiều hơn
     wrapped_text, max_text_width, total_height = get_text_dimensions(title, font, wrap_width)
 
-    while (max_text_width > max_width or total_height > max_height or len(wrapped_text) < 4) and font_size > 30:
+    while (max_text_width > max_width or total_height > max_height or len(wrapped_text) < 4) and font_size > 20:
         if len(wrapped_text) < 4:
             wrap_width -= 1
-        font_size -= 5
+        font_size -= 2  # Giảm nhỏ hơn để kiểm soát tốt hơn
         font = None
         for font_path in font_paths:
             try:
@@ -197,19 +197,7 @@ def create_title_image(title, bg_image_url, output_path):
         if not font:
             font = ImageFont.load_default()
         wrapped_text, max_text_width, total_height = get_text_dimensions(title, font, wrap_width)
-
-    while total_height < min_height and font_size < 180 and len(wrapped_text) <= 5:
-        font_size += 5
-        font = None
-        for font_path in font_paths:
-            try:
-                font = ImageFont.truetype(font_path, font_size)
-                break
-            except:
-                continue
-        if not font:
-            font = ImageFont.load_default()
-        wrapped_text, max_text_width, total_height = get_text_dimensions(title, font, wrap_width)
+        print(f"  Adjusted font_size: {font_size}, max_text_width: {max_text_width}, total_height: {total_height}")
 
     text_area_height = total_height + 40
     text_area = Image.new("RGBA", (1080, text_area_height), (0, 0, 0, int(255 * 0.7)))
@@ -219,11 +207,11 @@ def create_title_image(title, bg_image_url, output_path):
     for line in wrapped_text:
         text_bbox = text_draw.textbbox((0, 0), line, font=font)
         text_width = text_bbox[2] - text_bbox[0]
-        text_x = (1080 - text_width) // 2
-        text_draw.text((text_x, current_y), line, font=font, fill=(255, 255, 255), stroke_width=3, stroke_fill=(0, 0, 0))
+        text_x = (1080 - text_width) // 2  # Căn giữa
+        text_draw.text((text_x, current_y), line, font=font, fill=(255, 255, 255), stroke_width=2, stroke_fill=(0, 0, 0))
         current_y += (text_bbox[3] - text_bbox[1]) + line_spacing
 
-    text_y = (1920 - text_area_height) // 2
+    text_y = (1920 - text_area_height) // 2  # Đảm bảo căn giữa theo chiều dọc
     final_image = final_image.convert("RGBA")
     final_image.paste(text_area, (0, text_y), text_area)
     final_image = final_image.convert("RGB")
@@ -359,7 +347,7 @@ def create_video(image_paths, audio_path, output_path):
         exit(1)
 
 output_video_path = os.path.join(output_dir, f"output_video_{clean_title}.mp4")
-create_video(image_paths, audio_path, output_video_path)
+create_video(image_paths, audio_path, output_path)
 
 print(f"Video created successfully at: {output_video_path}")
 
