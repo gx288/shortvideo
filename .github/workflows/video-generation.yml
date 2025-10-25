@@ -32,13 +32,23 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install gTTS==2.5.3 Pillow==10.4.0 moviepy==1.0.3 requests==2.32.3 numpy==1.26.4 icrawler==0.6.10 pydub
+          pip install Pillow==10.4.0 moviepy==1.0.3 requests==2.32.3 numpy==1.26.4 icrawler==0.6.10 google-cloud-texttospeech
           pip show moviepy # Verify moviepy installation
-          pip show gTTS Pillow requests numpy icrawler pydub # Verify other dependencies
+          pip show Pillow requests numpy icrawler google-cloud-texttospeech # Verify other dependencies
+
+      # Create Google Cloud credentials file from secret
+      - name: Set up Google Cloud credentials
+        env:
+          GOOGLE_TTS_KEY: ${{ secrets.GOOGLE_TTS }}
+        run: |
+          echo "$GOOGLE_TTS_KEY" > google_tts_key.json
+          export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/google_tts_key.json
 
       # Run the script
       - name: Run video generation script
         run: python main.py
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: $(pwd)/google_tts_key.json
 
       # Upload the generated video as an artifact
       - name: Upload video artifact
