@@ -140,7 +140,7 @@ def create_title_image(title, bg_image_url, output_path):
     final_image.paste(bg_image, (paste_x, paste_y))
 
     draw = ImageDraw.Draw(final_image)
-    font_size = 100  # Reduced further from 120
+    font_size = 80  # Reduced further
     font_paths = [
         "Roboto-Bold.ttf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
@@ -175,7 +175,7 @@ def create_title_image(title, bg_image_url, output_path):
             total_height += text_height + line_spacing
         return wrapped_text, max_text_width, total_height
 
-    wrap_width = 18  # Increased for smaller font
+    wrap_width = 20  # Increased for smaller font
     wrapped_text, max_text_width, total_height = get_text_dimensions(title, font, wrap_width)
 
     while (max_text_width > max_width or total_height > max_height or len(wrapped_text) < 4) and font_size > 30:
@@ -301,39 +301,39 @@ def create_video(image_paths, audio_path, output_path):
         exit(1)
 
     clips = []
-    duration_per_image = audio_duration / max(len(image_paths), 1)
+    num_images = len(image_paths)
+    title_duration = audio_duration * 1.2 / num_images  # Title longer by 20%
+    other_duration = (audio_duration - title_duration) / (num_images - 1) if num_images > 1 else audio_duration
 
     # Define transition effects
     def zoom_in(t, duration):
-        return 1 + 0.02 * t  # Original zoom-in
+        return 1 + 0.02 * (t / duration)
 
     def zoom_out(t, duration):
-        return 1.2 - 0.02 * t  # Zoom out
+        return 1.2 - 0.02 * (t / duration)
 
     def pan_left(t, duration):
-        return (1, 0.05 * t / duration)  # Move right (image shifts left)
+        return (0.05 * (t / duration) * 1080, 'center')
 
     def pan_right(t, duration):
-        return (1, -0.05 * t / duration)  # Move left (image shifts right)
+        return (-0.05 * (t / duration) * 1080, 'center')
 
     def pan_up(t, duration):
-        return (0.05 * t / duration, 1)  # Move down (image shifts up)
+        return ('center', 0.05 * (t / duration) * 1920)
 
     def pan_down(t, duration):
-        return (-0.05 * t / duration, 1)  # Move up (image shifts down)
+        return ('center', -0.05 * (t / duration) * 1920)
 
     transitions = [zoom_in, zoom_out, pan_left, pan_right, pan_up, pan_down]
 
     # Cycle through transitions for variety
     for i, img_path in enumerate(image_paths):
         try:
-            clip = ImageClip(img_path, duration=duration_per_image)
+            duration = title_duration if i == 0 else other_duration
+            clip = ImageClip(img_path, duration=duration)
             # Cycle transition
             transition = transitions[i % len(transitions)]
-            if transition in [zoom_in, zoom_out]:
-                clip = clip.resize(lambda t: transition(t, duration_per_image))
-            else:
-                clip = clip.set_position(lambda t: transition(t, duration_per_image))
+            clip = clip.resize(lambda t: transition(t, duration) if transition in [zoom_in, zoom_out] else 1.0).set_position(lambda t: transition(t, duration) if transition not in [zoom_in, zoom_out] else 'center')
             clips.append(clip)
             print(f"  Applied transition {transition.__name__} to {img_path}")
         except Exception as e:
