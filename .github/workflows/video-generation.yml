@@ -70,10 +70,10 @@ jobs:
           mkdir -p output
           # Add and commit video
           git add output/output_video_*.mp4
-          git commit -m "Add video for row $ROW_NUM" || echo "No new video to commit"
+          git commit -m "Add video for $TITLE" || echo "No new video to commit"
           git push
         env:
-          ROW_NUM: $(cat output/selected_row_num.txt 2>/dev/null || echo "unknown")
+          TITLE: $(cat output/clean_title.txt 2>/dev/null || echo "unknown")
 
       # Update sheet with raw URL
       - name: Update sheet with raw URL
@@ -101,20 +101,4 @@ jobs:
             if [ -n "$COMMIT_HASH" ] && [ -n "$COMMIT_TIME" ] && [ "$COMMIT_TIME" -lt "$THREE_MONTHS_AGO" ]; then
               echo "Found old commit: $COMMIT_HASH at $(date -d @$COMMIT_TIME)"
               # Get files changed in this commit
-              FILES=$(git show --name-only --pretty="" $COMMIT_HASH | grep '^output/output_video_.*\.mp4$' || true)
-              for FILE in $FILES; do
-                echo "Deleting old video: $FILE"
-                git rm $FILE || echo "File $FILE already deleted or not found"
-                DELETED_FILES=true
-              done
-            fi
-          done <<< "$COMMITS"
-          # Commit cleanup if there were deletions
-          if [ "$DELETED_FILES" = true ]; then
-            git commit -m "Cleanup videos older than 90 days" || echo "No changes to commit"
-            git push
-          else
-            echo "No old videos to clean up"
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+              FILES=$(git show --name-only --
