@@ -92,7 +92,8 @@ try:
     audio_config = texttospeech.AudioConfig(
         audio_encoding=texttospeech.AudioEncoding.MP3,
         speaking_rate=1.25,
-        pitch=0.0
+        pitch=0.0,
+        sample_rate_hertz=44100  # Standardize sample rate
     )
     response = client.synthesize_speech(
         input=synthesis_input, voice=voice, audio_config=audio_config
@@ -105,12 +106,16 @@ except Exception as e:
     print(f"  Error creating audio: {e}. Exiting.")
     exit(1)
 
-# Cut audio to max 55s
-audio = AudioFileClip(audio_path)
-if audio.duration > 55:
-    audio = audio.subclip(0, 55)
-    audio.write_audiofile(audio_path, codec='mp3')
-    print("  Cut audio to 55s")
+# Cut audio to max 55s using ffmpeg
+try:
+    temp_audio = os.path.join(output_dir, "temp_voiceover.mp3")
+    subprocess.run([
+        "ffmpeg", "-i", audio_path, "-t", "55", "-c:a", "mp3", "-b:a", "128k", temp_audio
+    ], check=True, capture_output=True)
+    os.replace(temp_audio, audio_path)
+    print("  Cut audio to 55s with ffmpeg")
+except Exception as e:
+    print(f"  Warning: Failed to cut audio with ffmpeg: {e}. Using original audio.")
 
 # Stage 3: Create title image
 def create_title_image(title, bg_image_url, output_path):
@@ -347,7 +352,7 @@ def create_video(image_paths, audio_path, output_path):
     try:
         video = concatenate_videoclips(clips, method="compose")
         video = video.set_audio(audio)
-        video.write_videofile(output_path, codec="libx264", audio_codec="aac", fps=24, bitrate="1000k", audio_bitrate="64k", ffmpeg_params=["-preset", "ultrafast"])
+        video.write_videofile(output_path, codec="libx264", audio_codec="aac", fps=24, bitrate="1000k", audio_bitrate="128k", ffmpeg_params=["-preset", "ultrafast"])
         print(f"  Saved video at: {output_path}")
     except Exception as e:
         print(f"  Error saving video: {e}. Exiting.")
