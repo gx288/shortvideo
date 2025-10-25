@@ -21,8 +21,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            /var/cache/apt/archives
-            /var/lib/apt/lists
+            /var/cache/apt/archives/*.deb
+            /var/lib/apt/lists/*.*
           key: apt-cache-${{ runner.os }}-${{ hashFiles('**/video-generation.yml') }}
           restore-keys: |
             apt-cache-${{ runner.os }}-
@@ -41,7 +41,7 @@ jobs:
           sudo apt-get install -y --no-install-recommends ffmpeg fonts-dejavu-core
           ffmpeg -version
         env:
-          DEBIAN_FRONTEND: noninteractive # Avoid interactive prompts
+          DEBIAN_FRONTEND: noninteractive
 
       # Install Python dependencies
       - name: Install Python dependencies
@@ -72,6 +72,16 @@ jobs:
       # Run the script
       - name: Run video generation script
         run: python main.py
+
+      # Debug audio
+      - name: Debug audio
+        if: always()
+        run: |
+          if [ -f output/voiceover.mp3 ]; then
+            ffprobe -v error -show_entries format=duration,bit_rate output/voiceover.mp3
+          else
+            echo "Error: voiceover.mp3 not found"
+          fi
 
       # Commit video to output folder
       - name: Commit video to output folder
