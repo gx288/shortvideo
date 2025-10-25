@@ -1,4 +1,5 @@
 import os
+import re
 import requests
 import subprocess
 import textwrap
@@ -7,9 +8,12 @@ from moviepy.editor import ImageClip, concatenate_videoclips, AudioFileClip
 import numpy as np
 import glob
 from google.cloud import texttospeech
+import gspread
+from google.oauth2.service_account import Credentials
+from googleapiclient.discovery import build
+from googleapiclient.http import MediaFileUpload
 
 # Fallback for ANTIALIAS in Pillow
-from PIL import Image
 Image.ANTIALIAS = Image.LANCZOS
 
 # Check for ffmpeg
@@ -28,18 +32,56 @@ print("Stage 1: Creating output directory...")
 os.makedirs(output_dir, exist_ok=True)
 print(f"  Created directory: {output_dir}")
 
-# Text content (Unicode)
-title_text = "ĂN NHIỀU 15 SIÊU THỰC PHẨM NÀY, ĐƯỜNG RUỘT SẼ “CẢM ƠN“ BẠN"
-content_text = """Đường ruột được ví như hệ thống rễ quan trọng của cơ thể, nơi hấp thụ các chất dinh dưỡng thiết yếu để duy trì mọi chức năng sống. Việc chăm sóc đường ruột đúng cách là chìa khóa vàng cho sức khỏe tổng thể, và những siêu thực phẩm chính là trợ thủ đắc lực giúp bạn đạt được điều đó.
+# Stage 0: Read from Google Sheets
+print("Stage 0: Reading from Google Sheets...")
+scopes = [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/drive.file'
+]
+creds = Credentials.from_service_account_file('google_sheets_key.json', scopes=scopes)
+gc = gspread.authorize(creds)
+drive_service = build('drive', 'v3', credentials=creds)
 
-Các loại siêu thực phẩm không chỉ cung cấp nguồn dưỡng chất phong phú mà còn hỗ trợ đường ruột xây dựng một hàng rào bảo vệ vững chắc. Điều này giúp ngăn chặn hiệu quả sự xâm nhập của vi khuẩn có hại, ký sinh trùng, nấm men và các độc tố, từ đó giảm thiểu nguy cơ mắc các vấn đề tiêu hóa và tăng cường khả năng miễn dịch.
+SHEET_ID = '14tqKftTqlesnb0NqJZU-_f1EsWWywYqO36NiuDdmaTo'
+worksheet = gc.open_by_key(SHEET_ID).worksheet('Phòng mạch')
 
-Bằng cách bổ sung đều đặn các siêu thực phẩm này vào chế độ ăn uống hàng ngày, đường ruột sẽ được nuôi dưỡng từ sâu bên trong, hoạt động hiệu quả hơn. Đây là phương pháp tự nhiên để duy trì một hệ tiêu hóa khỏe mạnh, giúp cơ thể hấp thu tối đa dưỡng chất và tràn đầy năng lượng, mang lại cảm giác dễ chịu và một cuộc sống chất lượng hơn."""
+rows = worksheet.get_all_values()
+selected_row = None
+selected_row_num = None
+for i, row in enumerate(rows):
+    if i == 0:  # Skip header
+        continue
+    if len(row) > 7 and (not row[7] or row[7].strip() == ''):
+        selected_row = row
+        selected_row_num = i + 1  # 1-based index
+        break
+
+if not selected_row:
+    print("  No unprocessed rows found. Skipping video creation.")
+    exit(0)
+
+print(f"  Processing row {selected_row_num}...")
+
+# Extract and clean text from column B (index 1)
+raw_content = selected_row[1] if len(selected_row) > 1 else ''
+raw_content = re.sub(r'\*+', '', raw_content)  # Remove asterisks
+raw_content = re.sub(r'[\U0001F600-\U0001F64F\U0001F300-\U0001F5FF\U0001F680-\U0001F6FF\U0001F1E0-\U0001F1FF\U00002702-\U000027B0\U000024C2-\U0001F251]+', '', raw_content)  # Remove emojis
+raw_content = re.sub(r'#\w+\s*', '', raw_content)  # Remove hashtags
+lines = [line.strip() for line in raw_content.split('\n') if line.strip()]
+title_text = lines[0].replace('Tiêu đề:', '').strip() if lines else 'Untitled'
+content_text = '\n'.join(lines[1:]) if len(lines) > 1 else title_text
+
+print(f"  Clean title: {title_text}")
+print(f"  Clean content length: {len(content_text)} chars")
+
+# Extract cover image URL from column D (index 3)
+bg_image_url = selected_row[3] if len(selected_row) > 3 else 'https://via.placeholder.com/1080x1920?text=No+Image'
+print(f"  Cover image URL: {bg_image_url}")
 
 # Stage 2: Create audio with Google Cloud TTS
 print("Stage 2: Creating audio with Google Cloud TTS...")
 try:
-    client = texttospeech.TextToSpeechClient()
+    client = texttospeech.TextToSpeechClient.from_service_account_file('google_tts_key.json')
     synthesis_input = texttospeech.SynthesisInput(text=content_text)
     voice = texttospeech.VoiceSelectionParams(
         language_code="vi-VN",
@@ -61,7 +103,7 @@ except Exception as e:
     print(f"  Error creating audio: {e}. Exiting.")
     exit(1)
 
-# Stage 3: Create title image (unchanged)
+# Stage 3: Create title image
 def create_title_image(title, bg_image_url, output_path):
     print("Stage 3: Creating title image...")
     try:
@@ -176,16 +218,12 @@ def create_title_image(title, bg_image_url, output_path):
     print(f"  Saved title image at: {output_path}")
 
 title_image_path = os.path.join(output_dir, "title_image.jpg")
-create_title_image(
-    title_text,
-    "https://cdn.24h.com.vn/upload/4-2025/images/2025-10-20/1760944625-616-thumbnail-width740height495_anh_cat_3_2_anh_cat_4_3.jpg",
-    title_image_path
-)
+create_title_image(title_text, bg_image_url, title_image_path)
 
-# Stage 4: Download images (unchanged)
+# Stage 4: Download images
 def download_images_with_icrawler(keyword, num_images, output_dir):
     print("Stage 4: Attempting to download images...")
-    keyword_dir = os.path.join(output_dir, keyword.replace(' ', '_'))
+    keyword_dir = os.path.join(output_dir, keyword.replace(' ', '_')[:50])
     os.makedirs(keyword_dir, exist_ok=True)
 
     try:
@@ -238,12 +276,12 @@ def download_images_with_icrawler(keyword, num_images, output_dir):
 
     return image_paths
 
-keyword = "siêu thực phẩm đường ruột"
+keyword = title_text[:50].replace(' ', '_')
 additional_images = download_images_with_icrawler(keyword, 7, output_dir)
 image_paths = [title_image_path] + additional_images
 print(f"  Retrieved {len(additional_images)} images")
 
-# Stage 5: Create video (unchanged except for bitrate, already set)
+# Stage 5: Create video
 def create_video(image_paths, audio_path, output_path):
     print("Stage 5: Creating video...")
     try:
@@ -283,9 +321,43 @@ create_video(image_paths, audio_path, output_video_path)
 
 print(f"Video created successfully at: {output_video_path}")
 
-# Clean up temporary files (unchanged)
+# Stage 6: Upload to Google Drive and update sheet
+print("Stage 6: Uploading video to Google Drive and updating sheet...")
+try:
+    folder_metadata = {
+        'name': 'Videos',
+        'mimeType': 'application/vnd.google-apps.folder',
+        'parents': ['root']
+    }
+    folders = drive_service.files().list(q="name='Videos' and mimeType='application/vnd.google-apps.folder'", fields="files(id)").execute().get('files', [])
+    if not folders:
+        folder = drive_service.files().create(body=folder_metadata, fields='id').execute()
+        folder_id = folder.get('id')
+    else:
+        folder_id = folders[0]['id']
+
+    file_metadata = {
+        'name': f"video_row_{selected_row_num}_{title_text[:50]}.mp4",
+        'parents': [folder_id]
+    }
+    media = MediaFileUpload(output_video_path, mimetype='video/mp4', resumable=True)
+    uploaded_file = drive_service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+    file_id = uploaded_file.get('id')
+
+    drive_service.permissions().create(fileId=file_id, body={'type': 'anyone', 'role': 'reader'}).execute()
+    video_url = f"https://drive.google.com/file/d/{file_id}/view?usp=sharing"
+
+    worksheet.update_cell(selected_row_num, 8, video_url)
+    print(f"  Updated sheet row {selected_row_num}, column H with URL: {video_url}")
+
+except Exception as e:
+    print(f"  Error uploading/updating: {e}")
+    worksheet.update_cell(selected_row_num, 8, output_video_path)
+    print("  Fallback: Updated with local path")
+
+# Clean up temporary files
 print("Cleaning up temporary files...")
-for file in glob.glob(os.path.join(output_dir, "siêu_thực_phẩm_đường_ruột", "*.jpg")):
+for file in glob.glob(os.path.join(output_dir, keyword, "*.jpg")):
     try:
         os.remove(file)
     except:
