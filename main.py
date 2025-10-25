@@ -313,16 +313,26 @@ def create_video(image_paths, audio_path, output_path):
         print(f"  Error saving video: {e}. Exiting.")
         exit(1)
 
-output_video_path = os.path.join(output_dir, "output_video.mp4")
+output_video_path = os.path.join(output_dir, f"output_video_{selected_row_num}.mp4")
 create_video(image_paths, audio_path, output_video_path)
 
 print(f"Video created successfully at: {output_video_path}")
 
-# Clean up temporary files
+# Clean up temporary files (except video)
 print("Cleaning up temporary files...")
 for file in glob.glob(os.path.join(output_dir, keyword.replace(' ', '_')[:50], "*.jpg")):
     try:
         os.remove(file)
+    except:
+        pass
+if os.path.exists(audio_path):
+    try:
+        os.remove(audio_path)
+    except:
+        pass
+if os.path.exists(title_image_path):
+    try:
+        os.remove(title_image_path)
     except:
         pass
 print("Cleanup complete.")
