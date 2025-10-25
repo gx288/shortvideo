@@ -61,10 +61,9 @@ except Exception as e:
     print(f"  Error creating audio: {e}. Exiting.")
     exit(1)
 
-# Stage 3: Create title image
+# Stage 3: Create title image (unchanged)
 def create_title_image(title, bg_image_url, output_path):
     print("Stage 3: Creating title image...")
-    # Download background image or use fallback
     try:
         bg_image = Image.open(requests.get(bg_image_url, stream=True, timeout=10).raw).convert("RGB")
         print("  Downloaded background image.")
@@ -72,7 +71,6 @@ def create_title_image(title, bg_image_url, output_path):
         print(f"  Warning: Failed to download background image: {e}. Using black background.")
         bg_image = Image.new("RGB", (1080, 1920), (0, 0, 0))
 
-    # Resize image while maintaining aspect ratio
     target_size = (1080, 1920)
     img_ratio = bg_image.width / bg_image.height
     target_ratio = target_size[0] / target_size[1]
@@ -90,10 +88,7 @@ def create_title_image(title, bg_image_url, output_path):
     paste_y = (target_size[1] - new_height) // 2
     final_image.paste(bg_image, (paste_x, paste_y))
 
-    # Create draw object
     draw = ImageDraw.Draw(final_image)
-
-    # Load font with fallbacks
     font_size = 150
     font_paths = [
         "Roboto-Bold.ttf",
@@ -112,10 +107,9 @@ def create_title_image(title, bg_image_url, output_path):
         print("  Warning: No custom font found. Using default font.")
         font = ImageFont.load_default()
 
-    # Wrap text and adjust font size
-    max_width = 918  # 85% of 1080
-    max_height = 960  # 50% of 1920
-    min_height = 768  # 40% of 1920
+    max_width = 918
+    max_height = 960
+    min_height = 768
     line_spacing = 20
 
     def get_text_dimensions(text, font, wrap_width):
@@ -161,12 +155,10 @@ def create_title_image(title, bg_image_url, output_path):
             font = ImageFont.load_default()
         wrapped_text, max_text_width, total_height = get_text_dimensions(title, font, wrap_width)
 
-    # Create semi-transparent text background
     text_area_height = total_height + 40
     text_area = Image.new("RGBA", (1080, text_area_height), (0, 0, 0, int(255 * 0.7)))
     text_draw = ImageDraw.Draw(text_area)
 
-    # Draw text on transparent background
     current_y = 20
     for line in wrapped_text:
         text_bbox = text_draw.textbbox((0, 0), line, font=font)
@@ -175,13 +167,11 @@ def create_title_image(title, bg_image_url, output_path):
         text_draw.text((text_x, current_y), line, font=font, fill=(255, 255, 255), stroke_width=3, stroke_fill=(0, 0, 0))
         current_y += (text_bbox[3] - text_bbox[1]) + line_spacing
 
-    # Paste text area onto image
     text_y = (1920 - text_area_height) // 2
     final_image = final_image.convert("RGBA")
     final_image.paste(text_area, (0, text_y), text_area)
     final_image = final_image.convert("RGB")
 
-    # Save title image
     final_image.save(output_path)
     print(f"  Saved title image at: {output_path}")
 
@@ -192,7 +182,7 @@ create_title_image(
     title_image_path
 )
 
-# Stage 4: Download images (with fallback)
+# Stage 4: Download images (unchanged)
 def download_images_with_icrawler(keyword, num_images, output_dir):
     print("Stage 4: Attempting to download images...")
     keyword_dir = os.path.join(output_dir, keyword.replace(' ', '_'))
@@ -210,7 +200,6 @@ def download_images_with_icrawler(keyword, num_images, output_dir):
         print(f"  Warning: Image crawling failed: {e}. Using fallback images.")
         return [title_image_path] * max(2, num_images)
 
-    # Process downloaded images
     image_pattern = os.path.join(keyword_dir, "*.jpg")
     downloaded_files = glob.glob(image_pattern)
     image_paths = []
@@ -249,13 +238,12 @@ def download_images_with_icrawler(keyword, num_images, output_dir):
 
     return image_paths
 
-# Download up to 7 images
 keyword = "siêu thực phẩm đường ruột"
 additional_images = download_images_with_icrawler(keyword, 7, output_dir)
 image_paths = [title_image_path] + additional_images
 print(f"  Retrieved {len(additional_images)} images")
 
-# Stage 5: Create video with MoviePy
+# Stage 5: Create video (unchanged except for bitrate, already set)
 def create_video(image_paths, audio_path, output_path):
     print("Stage 5: Creating video...")
     try:
@@ -295,7 +283,7 @@ create_video(image_paths, audio_path, output_video_path)
 
 print(f"Video created successfully at: {output_video_path}")
 
-# Clean up temporary files
+# Clean up temporary files (unchanged)
 print("Cleaning up temporary files...")
 for file in glob.glob(os.path.join(output_dir, "siêu_thực_phẩm_đường_ruột", "*.jpg")):
     try:
