@@ -180,15 +180,16 @@ def create_title_image(title, bg_image_url, output_path):
             total_height += text_height + line_spacing
         return wrapped_text, max_text_width, total_height - line_spacing  # Subtract last line_spacing
 
-    wrap_width = 22
+    # Start with a reasonable wrap_width to allow natural line breaks
+    wrap_width = 30  # Increased to reduce forced line breaks
     wrapped_text, max_text_width, total_height = get_text_dimensions(title, font, wrap_width)
 
-    # Adjust font size and wrap width to fit width and height constraints
+    # Adjust font size to fit width and height constraints
     while (max_text_width > max_width or total_height > max_height or total_height < min_height) and font_size > 20:
         if max_text_width > max_width or total_height > max_height:
             font_size -= 2  # Reduce font size if too wide or too tall
         elif total_height < min_height:
-            wrap_width -= 1  # Reduce wrap width to add more lines if too short
+            font_size += 2  # Increase font size if too short
         font = None
         for font_path in font_paths:
             try:
@@ -200,6 +201,34 @@ def create_title_image(title, bg_image_url, output_path):
             font = ImageFont.load_default()
         wrapped_text, max_text_width, total_height = get_text_dimensions(title, font, wrap_width)
         print(f"  Adjusted font_size: {font_size}, max_text_width: {max_text_width}, total_height: {total_height}")
+
+    # Ensure width is close to 80% by fine-tuning font size
+    while max_text_width < max_width * 0.9 and total_height < max_height and font_size < 120:  # Allow font size up to 120
+        font_size += 2
+        font = None
+        for font_path in font_paths:
+            try:
+                font = ImageFont.truetype(font_path, font_size)
+                break
+            except:
+                continue
+        if not font:
+            font = ImageFont.load_default()
+        wrapped_text, max_text_width, total_height = get_text_dimensions(title, font, wrap_width)
+        if total_height > max_height or max_text_width > max_width:
+            font_size -= 2  # Revert last increment
+            font = None
+            for font_path in font_paths:
+                try:
+                    font = ImageFont.truetype(font_path, font_size)
+                    break
+                except:
+                    continue
+            if not font:
+                font = ImageFont.load_default()
+            wrapped_text, max_text_width, total_height = get_text_dimensions(title, font, wrap_width)
+            break
+        print(f"  Fine-tuned font_size: {font_size}, max_text_width: {max_text_width}, total_height: {total_height}")
 
     text_area_height = total_height + 40
     text_area = Image.new("RGBA", (1080, text_area_height), (0, 0, 0, int(255 * 0.7)))
