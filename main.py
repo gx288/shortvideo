@@ -318,11 +318,11 @@ create_video(image_paths, audio_path, output_video_path)
 
 print(f"Video created successfully at: {output_video_path}")
 
-# Stage 6: Update sheet with video URL (from env, set by workflow)
-print("Stage 6: Updating sheet with video URL...")
-video_url = os.environ.get('VIDEO_URL', output_video_path)  # Fallback to local if no env
-try:
-    worksheet.update_cell(selected_row_num, 8, video_url)  # Column H = 8
-    print(f"  Updated sheet row {selected_row_num}, column H with URL: {video_url}")
-except Exception as e:
-    print(f"  Error updating sheet: {e}")
+# Clean up temporary files
+print("Cleaning up temporary files...")
+for file in glob.glob(os.path.join(output_dir, keyword.replace(' ', '_')[:50], "*.jpg")):
+    try:
+        os.remove(file)
+    except:
+        pass
+print("Cleanup complete.")
