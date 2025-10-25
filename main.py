@@ -10,6 +10,7 @@ import glob
 from google.cloud import texttospeech
 import gspread
 from google.oauth2.service_account import Credentials
+import random
 
 # Fallback for ANTIALIAS in Pillow
 Image.ANTIALIAS = Image.LANCZOS
@@ -55,11 +56,7 @@ if not selected_row:
     exit(0)
 
 print(f"  Processing row {selected_row_num}...")
-# Save selected_row_num for update_sheet.py
-with open(os.path.join(output_dir, "selected_row_num.txt"), "w") as f:
-    f.write(str(selected_row_num))
-
-# Extract and clean text from column B (index 1)
+# Extract and clean title for filename
 raw_content = selected_row[1] if len(selected_row) > 1 else ''
 raw_content = re.sub(r'\*+', '', raw_content)  # Remove asterisks
 raw_content = re.sub(r'[\U0001F600-\U0001F64F\U0001F300-\U0001F5FF\U0001F680-\U0001F6FF\U0001F1E0-\U0001F1FF\U00002702-\U000027B0\U000024C2-\U0001F251]+', '', raw_content)  # Remove emojis
@@ -68,8 +65,16 @@ lines = [line.strip() for line in raw_content.split('\n') if line.strip()]
 title_text = lines[0].replace('Tiêu đề:', '').strip() if lines else 'Untitled'
 content_text = '\n'.join(lines[1:]) if len(lines) > 1 else title_text
 
+# Clean title for filename
+clean_title = re.sub(r'[^\w\s-]', '', title_text.replace(' ', '_'))[:50]  # Remove special chars, limit length
+clean_title = clean_title.lower() if clean_title else f"video_{selected_row_num}"
 print(f"  Clean title: {title_text}")
+print(f"  Clean title for filename: {clean_title}")
 print(f"  Clean content length: {len(content_text)} chars")
+
+# Save clean_title for update_sheet.py
+with open(os.path.join(output_dir, "clean_title.txt"), "w") as f:
+    f.write(clean_title)
 
 # Extract cover image URL from column D (index 3)
 bg_image_url = selected_row[3] if len(selected_row) > 3 else 'https://via.placeholder.com/1080x1920?text=No+Image'
@@ -128,7 +133,7 @@ def create_title_image(title, bg_image_url, output_path):
     final_image.paste(bg_image, (paste_x, paste_y))
 
     draw = ImageDraw.Draw(final_image)
-    font_size = 150
+    font_size = 120  # Reduced from 150 to ~80%
     font_paths = [
         "Roboto-Bold.ttf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
@@ -163,10 +168,10 @@ def create_title_image(title, bg_image_url, output_path):
             total_height += text_height + line_spacing
         return wrapped_text, max_text_width, total_height
 
-    wrap_width = 12
+    wrap_width = 15  # Increased to account for smaller font
     wrapped_text, max_text_width, total_height = get_text_dimensions(title, font, wrap_width)
 
-    while (max_text_width > max_width or total_height > max_height or len(wrapped_text) < 4) and font_size > 50:
+    while (max_text_width > max_width or total_height > max_height or len(wrapped_text) < 4) and font_size > 40:
         if len(wrapped_text) < 4:
             wrap_width -= 1
         font_size -= 5
@@ -181,7 +186,7 @@ def create_title_image(title, bg_image_url, output_path):
             font = ImageFont.load_default()
         wrapped_text, max_text_width, total_height = get_text_dimensions(title, font, wrap_width)
 
-    while total_height < min_height and font_size < 250 and len(wrapped_text) <= 5:
+    while total_height < min_height and font_size < 200 and len(wrapped_text) <= 5:
         font_size += 5
         font = None
         for font_path in font_paths:
@@ -278,7 +283,7 @@ additional_images = download_images_with_icrawler(keyword, 7, output_dir)
 image_paths = [title_image_path] + additional_images
 print(f"  Retrieved {len(additional_images)} images")
 
-# Stage 5: Create video
+# Stage 5: Create video with varied transitions
 def create_video(image_paths, audio_path, output_path):
     print("Stage 5: Creating video...")
     try:
@@ -291,11 +296,32 @@ def create_video(image_paths, audio_path, output_path):
     clips = []
     duration_per_image = audio_duration / max(len(image_paths), 1)
 
+    # Define transition effects
+    def zoom_in(t, duration):
+        return 1 + 0.02 * t  # Original zoom-in
+
+    def pan_left(t, duration):
+        return (1, 0.05 * t / duration)  # Move right (image shifts left)
+
+    def pan_right(t, duration):
+        return (1, -0.05 * t / duration)  # Move left (image shifts right)
+
+    def pan_up(t, duration):
+        return (0.05 * t / duration, 1)  # Move down (image shifts up)
+
+    def pan_down(t, duration):
+        return (-0.05 * t / duration, 1)  # Move up (image shifts down)
+
+    transitions = [zoom_in, pan_left, pan_right, pan_up, pan_down]
+
     for img_path in image_paths:
         try:
             clip = ImageClip(img_path, duration=duration_per_image)
-            clip = clip.resize(lambda t: 1 + 0.02 * t)
+            # Randomly select a transition
+            transition = random.choice(transitions)
+            clip = clip.set_position(transition if transition != zoom_in else lambda t: ('center', 'center')).resize(transition if transition == zoom_in else lambda t: 1)
             clips.append(clip)
+            print(f"  Applied transition {transition.__name__} to {img_path}")
         except Exception as e:
             print(f"  Warning: Failed to process image {img_path}: {e}")
             continue
@@ -313,7 +339,7 @@ def create_video(image_paths, audio_path, output_path):
         print(f"  Error saving video: {e}. Exiting.")
         exit(1)
 
-output_video_path = os.path.join(output_dir, f"output_video_{selected_row_num}.mp4")
+output_video_path = os.path.join(output_dir, f"output_video_{clean_title}.mp4")
 create_video(image_paths, audio_path, output_video_path)
 
 print(f"Video created successfully at: {output_video_path}")
