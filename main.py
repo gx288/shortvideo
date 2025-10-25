@@ -55,6 +55,9 @@ if not selected_row:
     exit(0)
 
 print(f"  Processing row {selected_row_num}...")
+# Save selected_row_num for update_sheet.py
+with open(os.path.join(output_dir, "selected_row_num.txt"), "w") as f:
+    f.write(str(selected_row_num))
 
 # Extract and clean text from column B (index 1)
 raw_content = selected_row[1] if len(selected_row) > 1 else ''
@@ -323,12 +326,3 @@ try:
     print(f"  Updated sheet row {selected_row_num}, column H with URL: {video_url}")
 except Exception as e:
     print(f"  Error updating sheet: {e}")
-
-# Clean up temporary files
-print("Cleaning up temporary files...")
-for file in glob.glob(os.path.join(output_dir, keyword.replace(' ', '_')[:50], "*.jpg")):
-    try:
-        os.remove(file)
-    except:
-        pass
-print("Cleanup complete.")
