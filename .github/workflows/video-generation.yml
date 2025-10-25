@@ -16,6 +16,17 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }} # Use PAT for push
 
+      # Cache apt-get packages
+      - name: Cache apt-get packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            /var/cache/apt/archives
+            /var/lib/apt/lists
+          key: apt-cache-${{ runner.os }}-${{ hashFiles('**/video-generation.yml') }}
+          restore-keys: |
+            apt-cache-${{ runner.os }}-
+
       # Set up Python
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -27,8 +38,10 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg fonts-dejavu fonts-liberation
+          sudo apt-get install -y --no-install-recommends ffmpeg fonts-dejavu-core
           ffmpeg -version
+        env:
+          DEBIAN_FRONTEND: noninteractive # Avoid interactive prompts
 
       # Install Python dependencies
       - name: Install Python dependencies
