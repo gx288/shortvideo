@@ -26,34 +26,41 @@ jobs:
           sudo apt-get install -y ffmpeg fonts-dejavu fonts-liberation
           ffmpeg -version # Verify ffmpeg installation
 
-      # Install Python dependencies with specific versions
+      # Install Python dependencies
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install Pillow==10.4.0 moviepy==1.0.3 requests==2.32.3 numpy==1.26.4 icrawler==0.6.10 google-cloud-texttospeech
-          pip show moviepy # Verify moviepy installation
-          pip show Pillow requests numpy icrawler google-cloud-texttospeech # Verify other dependencies
+          pip install Pillow==10.4.0 moviepy==1.0.3 requests==2.32.3 numpy==1.26.4 icrawler==0.6.10 google-cloud-texttospeech gspread google-api-python-client google-auth google-auth-oauthlib google-auth-httplib2 oauth2client
+          pip show moviepy
+          pip show Pillow requests numpy icrawler google-cloud-texttospeech gspread google-api-python-client google-auth google-auth-oauthlib google-auth-httplib2 oauth2client
 
-      # Create Google Cloud credentials file from secret
-      - name: Set up Google Cloud credentials
+      # Set up Google Cloud credentials for TTS
+      - name: Set up Google TTS credentials
         env:
           GOOGLE_TTS_KEY: ${{ secrets.GOOGLE_TTS_KEY }}
         run: |
           echo "$GOOGLE_TTS_KEY" > google_tts_key.json
-          ls -l google_tts_key.json # Verify file creation
-          cat google_tts_key.json # Debug: Print file contents (sanitized by GitHub)
+          ls -l google_tts_key.json
           export GOOGLE_APPLICATION_CREDENTIALS=$PWD/google_tts_key.json
           echo "GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS" >> $GITHUB_ENV
+
+      # Set up Google Sheets credentials
+      - name: Set up Google Sheets credentials
+        env:
+          GOOGLE_SHEETS_KEY: ${{ secrets.GOOGLE_SHEETS_KEY }}
+        run: |
+          echo "$GOOGLE_SHEETS_KEY" > google_sheets_key.json
+          ls -l google_sheets_key.json
 
       # Run the script
       - name: Run video generation script
         run: python main.py
 
-      # Upload the generated video as an artifact
+      # Upload video artifact
       - name: Upload video artifact
-        if: success() # Only upload if the script runs successfully
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: generated-video
           path: output/output_video.mp4
-          retention-days: 7
+          retention-days: 1
