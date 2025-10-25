@@ -145,9 +145,11 @@ def create_title_image(title, bg_image_url, output_path):
     final_image.paste(bg_image, (paste_x, paste_y))
 
     draw = ImageDraw.Draw(final_image)
-    font_size = 80
+    font_size = 80  # Fixed font size
     font_paths = [
         "Roboto-Bold.ttf",
+        "C:/Windows/Fonts/Arialbd.ttf",  # Added Windows font
+        "C:/Windows/Fonts/Calibrib.ttf",  # Added Windows font
         "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
         "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf"
     ]
@@ -160,85 +162,67 @@ def create_title_image(title, bg_image_url, output_path):
         except:
             continue
     if not font:
-        print("  Warning: No custom font found. Using default font.")
-        font = ImageFont.load_default()
+        print("  Error: No custom font found. Default font is not suitable for font_size = 80. Please install a font like Arial or Roboto.")
+        return  # Exit if no suitable font is found
 
     max_width = 864  # 80% of 1080
-    min_height = 768  # 40% of 1920
+    min_height = 600  # Minimum height (updated to 600px as per request)
     max_height = 1152  # 60% of 1920
+    target_height = 800  # Target height
     line_spacing = 15
-    wrap_width = 20  # Reduced to allow more natural line breaks for long titles
+    wrap_width = 30  # Start with larger wrap_width for longer lines
 
     def get_text_dimensions(text, font, wrap_width):
-        wrapped_text = textwrap.wrap(text, width=wrap_width)
+        # Wrap text to maximize width while keeping max_text_width <= max_width
+        wrapped_text = []
+        current_line = ""
+        for word in text.split():
+            test_line = current_line + (" " if current_line else "") + word
+            text_bbox = draw.textbbox((0, 0), test_line, font=font)
+            text_width = text_bbox[2] - text_bbox[0]
+            if text_width <= max_width:  # Only check max_width, not wrap_width for adding words
+                current_line = test_line
+            else:
+                if current_line:
+                    wrapped_text.append(current_line)
+                current_line = word
+        if current_line:
+            wrapped_text.append(current_line)
+
         total_height = 0
         max_text_width = 0
         for line in wrapped_text:
             text_bbox = draw.textbbox((0, 0), line, font=font)
             text_width = text_bbox[2] - text_bbox[0]
             text_height = text_bbox[3] - text_bbox[1]
-            max_text_width = max(max_text_width, text_width)
+            max_text_width = max(max_text_width, text_width)  # Track width of longest line
             total_height += text_height + line_spacing
         return wrapped_text, max_text_width, total_height - line_spacing  # Subtract last line_spacing
 
     wrapped_text, max_text_width, total_height = get_text_dimensions(title, font, wrap_width)
 
-    # Track tried font sizes to prevent infinite loop
-    tried_font_sizes = set()
-    best_font_size = font_size
-    best_height = total_height
-    max_attempts = 50  # Prevent infinite loop
-
+    # Adjust wrap_width to reach target_height ~800px while keeping max_text_width <= 864px
+    max_attempts = 20
     attempt = 0
-    while (total_height < min_height or max_text_width > max_width) and font_size > 20 and font_size < 150 and attempt < max_attempts:
-        if font_size in tried_font_sizes:
-            print(f"  Loop detected at font_size: {font_size}. Using best font_size: {best_font_size}")
-            font_size = best_font_size
+    while (total_height < min_height or total_height > max_height) and wrap_width >= 10 and attempt < max_attempts:
+        if total_height < min_height:
+            wrap_width -= 1  # Reduce wrap_width to increase lines
+        elif total_height > max_height:
+            wrap_width += 1  # Increase wrap_width to reduce lines
+
+        if wrap_width < 10:
+            print("  Warning: wrap_width reached minimum (10). Cannot increase lines further.")
             break
-        tried_font_sizes.add(font_size)
-
-        if max_text_width > max_width:
-            font_size -= 2  # Reduce font_size if too wide
-        elif total_height < min_height:
-            font_size += 2  # Increase font_size if too short
-
-        font = None
-        for font_path in font_paths:
-            try:
-                font = ImageFont.truetype(font_path, font_size)
-                break
-            except:
-                continue
-        if not font:
-            font = ImageFont.load_default()
 
         wrapped_text, max_text_width, total_height = get_text_dimensions(title, font, wrap_width)
-
-        # Update best font_size if height is valid and width is acceptable
-        if total_height >= min_height and total_height <= max_height and max_text_width <= max_width:
-            best_font_size = font_size
-            best_height = total_height
-
-        print(f"  Adjusted font_size: {font_size}, max_text_width: {max_text_width}, total_height: {total_height}, lines: {len(wrapped_text)}")
+        print(f"  Adjusted wrap_width: {wrap_width}, max_text_width: {max_text_width}, total_height: {total_height}, lines: {len(wrapped_text)}")
         attempt += 1
 
-    # Use best_font_size if loop ends
-    if font_size != best_font_size:
-        font_size = best_font_size
-        font = None
-        for font_path in font_paths:
-            try:
-                font = ImageFont.truetype(font_path, font_size)
-                break
-            except:
-                continue
-        if not font:
-            font = ImageFont.load_default()
-        wrapped_text, max_text_width, total_height = get_text_dimensions(title, font, wrap_width)
-        print(f"  Final font_size: {font_size}, max_text_width: {max_text_width}, total_height: {total_height}, lines: {len(wrapped_text)}")
+    # Final log
+    print(f"  Final font_size: {font_size}, wrap_width: {wrap_width}, max_text_width: {max_text_width}, total_height: {total_height}, lines: {len(wrapped_text)}")
 
     text_area_height = total_height + 40
-    text_area = Image.new("RGBA", (1080, text_area_height), (0, 0, 0, int(255 * 0.7)))
+    text_area = Image.new("RGBA", (1080, text_area_height), (0, 0, 0, int(255 * 0.7)))  # Semi-transparent black background
     text_draw = ImageDraw.Draw(text_area)
 
     current_y = 20
@@ -246,7 +230,7 @@ def create_title_image(title, bg_image_url, output_path):
         text_bbox = text_draw.textbbox((0, 0), line, font=font)
         text_width = text_bbox[2] - text_bbox[0]
         text_x = (1080 - text_width) // 2  # Center horizontally
-        text_draw.text((text_x, current_y), line, font=font, fill=(255, 255, 255), stroke_width=2, stroke_fill=(0, 0, 0))
+        text_draw.text((text_x, current_y), line, font=font, fill=(255, 255, 255), stroke_width=2, stroke_fill=(0, 0, 0))  # White text with black stroke
         current_y += (text_bbox[3] - text_bbox[1]) + line_spacing
 
     text_y = (1920 - text_area_height) // 2  # Center vertically
