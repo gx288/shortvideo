@@ -6,6 +6,7 @@ from PIL import Image, ImageDraw, ImageFont
 from moviepy.editor import ImageClip, concatenate_videoclips, AudioFileClip
 import numpy as np
 import glob
+from google.cloud import texttospeech
 
 # Fallback for ANTIALIAS in Pillow
 from PIL import Image
@@ -35,55 +36,30 @@ Các loại siêu thực phẩm không chỉ cung cấp nguồn dưỡng chất 
 
 Bằng cách bổ sung đều đặn các siêu thực phẩm này vào chế độ ăn uống hàng ngày, đường ruột sẽ được nuôi dưỡng từ sâu bên trong, hoạt động hiệu quả hơn. Đây là phương pháp tự nhiên để duy trì một hệ tiêu hóa khỏe mạnh, giúp cơ thể hấp thu tối đa dưỡng chất và tràn đầy năng lượng, mang lại cảm giác dễ chịu và một cuộc sống chất lượng hơn."""
 
-# Stage 2: Create audio with gTTS and speed up
-print("Stage 2: Creating audio with gTTS...")
+# Stage 2: Create audio with Google Cloud TTS
+print("Stage 2: Creating audio with Google Cloud TTS...")
 try:
-    from gtts import gTTS
-    tts = gTTS(text=content_text, lang='vi', slow=False)
+    client = texttospeech.TextToSpeechClient()
+    synthesis_input = texttospeech.SynthesisInput(text=content_text)
+    voice = texttospeech.VoiceSelectionParams(
+        language_code="vi-VN",
+        name="vi-VN-Wavenet-A"
+    )
+    audio_config = texttospeech.AudioConfig(
+        audio_encoding=texttospeech.AudioEncoding.MP3,
+        speaking_rate=1.25,
+        pitch=0.0
+    )
+    response = client.synthesize_speech(
+        input=synthesis_input, voice=voice, audio_config=audio_config
+    )
     audio_path = os.path.join(output_dir, "voiceover.mp3")
-    tts.save(audio_path)
-    print(f"  Saved original audio at: {audio_path}")
-except ImportError:
-    print("  Error: gTTS not installed. Exiting.")
-    exit(1)
+    with open(audio_path, "wb") as out:
+        out.write(response.audio_content)
+    print(f"  Saved audio at: {audio_path}")
 except Exception as e:
     print(f"  Error creating audio: {e}. Exiting.")
     exit(1)
-
-# Speed up audio to 130%
-print("  Speeding up audio to 130%...")
-audio_path_sped = os.path.join(output_dir, "voiceover_sped.mp3")
-if not os.path.exists(audio_path):
-    print(f"  Error: Audio file {audio_path} not found. Exiting.")
-    exit(1)
-
-if check_ffmpeg():
-    try:
-        from pydub import AudioSegment
-        audio = AudioSegment.from_file(audio_path)
-        audio_sped = audio.speedup(playback_speed=1.3)
-        audio_sped.export(audio_path_sped, format="mp3")
-        print(f"  Saved sped-up audio at: {audio_path_sped}")
-    except ImportError:
-        print("  Warning: pydub not installed. Using MoviePy fallback.")
-        audio = AudioFileClip(audio_path)
-        audio_duration = audio.duration / 1.3
-        audio_sped = audio.set_duration(audio_duration)
-        audio_sped.write_audiofile(audio_path_sped)
-        print(f"  Saved shortened audio at: {audio_path_sped}")
-    except Exception as e:
-        print(f"  Error processing audio with pydub: {e}. Using MoviePy fallback.")
-        audio = AudioFileClip(audio_path)
-        audio_duration = audio.duration / 1.3
-        audio_sped = audio.set_duration(audio_duration)
-        audio_sped.write_audiofile(audio_path_sped)
-        print(f"  Saved shortened audio at: {audio_path_sped}")
-else:
-    audio = AudioFileClip(audio_path)
-    audio_duration = audio.duration / 1.3
-    audio_sped = audio.set_duration(audio_duration)
-    audio_sped.write_audiofile(audio_path_sped)
-    print(f"  Saved shortened audio at: {audio_path_sped}")
 
 # Stage 3: Create title image
 def create_title_image(title, bg_image_url, output_path):
@@ -308,14 +284,14 @@ def create_video(image_paths, audio_path, output_path):
     try:
         video = concatenate_videoclips(clips, method="compose")
         video = video.set_audio(audio)
-        video.write_videofile(output_path, codec="libx264", audio_codec="aac", fps=24, ffmpeg_params=["-preset", "ultrafast"])
+        video.write_videofile(output_path, codec="libx264", audio_codec="aac", fps=24, bitrate="1000k", audio_bitrate="64k", ffmpeg_params=["-preset", "ultrafast"])
         print(f"  Saved video at: {output_path}")
     except Exception as e:
         print(f"  Error saving video: {e}. Exiting.")
         exit(1)
 
 output_video_path = os.path.join(output_dir, "output_video.mp4")
-create_video(image_paths, audio_path_sped, output_video_path)
+create_video(image_paths, audio_path, output_video_path)
 
 print(f"Video created successfully at: {output_video_path}")
 
