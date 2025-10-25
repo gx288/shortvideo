@@ -31,7 +31,7 @@ print("Stage 1: Creating output directory...")
 os.makedirs(output_dir, exist_ok=True)
 print(f"  Created directory: {output_dir}")
 
-# Stage 0: Read from Google Sheets
+# Stage 0: Reading from Google Sheets...
 print("Stage 0: Reading from Google Sheets...")
 scopes = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file('google_sheets_key.json', scopes=scopes)
@@ -105,6 +105,13 @@ except Exception as e:
     print(f"  Error creating audio: {e}. Exiting.")
     exit(1)
 
+# Cut audio to max 55s
+audio = AudioFileClip(audio_path)
+if audio.duration > 55:
+    audio = audio.subclip(0, 55)
+    audio.write_audiofile(audio_path, codec='mp3')
+    print("  Cut audio to 55s")
+
 # Stage 3: Create title image
 def create_title_image(title, bg_image_url, output_path):
     print("Stage 3: Creating title image...")
@@ -133,7 +140,7 @@ def create_title_image(title, bg_image_url, output_path):
     final_image.paste(bg_image, (paste_x, paste_y))
 
     draw = ImageDraw.Draw(final_image)
-    font_size = 120  # Reduced from 150 to ~80%
+    font_size = 100  # Reduced further from 120
     font_paths = [
         "Roboto-Bold.ttf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
@@ -151,7 +158,7 @@ def create_title_image(title, bg_image_url, output_path):
         print("  Warning: No custom font found. Using default font.")
         font = ImageFont.load_default()
 
-    max_width = 918
+    max_width = 918  # 85% of 1080
     max_height = 960
     min_height = 768
     line_spacing = 20
@@ -168,10 +175,10 @@ def create_title_image(title, bg_image_url, output_path):
             total_height += text_height + line_spacing
         return wrapped_text, max_text_width, total_height
 
-    wrap_width = 15  # Increased to account for smaller font
+    wrap_width = 18  # Increased for smaller font
     wrapped_text, max_text_width, total_height = get_text_dimensions(title, font, wrap_width)
 
-    while (max_text_width > max_width or total_height > max_height or len(wrapped_text) < 4) and font_size > 40:
+    while (max_text_width > max_width or total_height > max_height or len(wrapped_text) < 4) and font_size > 30:
         if len(wrapped_text) < 4:
             wrap_width -= 1
         font_size -= 5
@@ -186,7 +193,7 @@ def create_title_image(title, bg_image_url, output_path):
             font = ImageFont.load_default()
         wrapped_text, max_text_width, total_height = get_text_dimensions(title, font, wrap_width)
 
-    while total_height < min_height and font_size < 200 and len(wrapped_text) <= 5:
+    while total_height < min_height and font_size < 180 and len(wrapped_text) <= 5:
         font_size += 5
         font = None
         for font_path in font_paths:
@@ -279,7 +286,7 @@ def download_images_with_icrawler(keyword, num_images, output_dir):
     return image_paths
 
 keyword = title_text[:50]
-additional_images = download_images_with_icrawler(keyword, 7, output_dir)
+additional_images = download_images_with_icrawler(keyword, 15, output_dir)
 image_paths = [title_image_path] + additional_images
 print(f"  Retrieved {len(additional_images)} images")
 
@@ -300,6 +307,9 @@ def create_video(image_paths, audio_path, output_path):
     def zoom_in(t, duration):
         return 1 + 0.02 * t  # Original zoom-in
 
+    def zoom_out(t, duration):
+        return 1.2 - 0.02 * t  # Zoom out
+
     def pan_left(t, duration):
         return (1, 0.05 * t / duration)  # Move right (image shifts left)
 
@@ -312,14 +322,18 @@ def create_video(image_paths, audio_path, output_path):
     def pan_down(t, duration):
         return (-0.05 * t / duration, 1)  # Move up (image shifts down)
 
-    transitions = [zoom_in, pan_left, pan_right, pan_up, pan_down]
+    transitions = [zoom_in, zoom_out, pan_left, pan_right, pan_up, pan_down]
 
-    for img_path in image_paths:
+    # Cycle through transitions for variety
+    for i, img_path in enumerate(image_paths):
         try:
             clip = ImageClip(img_path, duration=duration_per_image)
-            # Randomly select a transition
-            transition = random.choice(transitions)
-            clip = clip.set_position(transition if transition != zoom_in else lambda t: ('center', 'center')).resize(transition if transition == zoom_in else lambda t: 1)
+            # Cycle transition
+            transition = transitions[i % len(transitions)]
+            if transition in [zoom_in, zoom_out]:
+                clip = clip.resize(lambda t: transition(t, duration_per_image))
+            else:
+                clip = clip.set_position(lambda t: transition(t, duration_per_image))
             clips.append(clip)
             print(f"  Applied transition {transition.__name__} to {img_path}")
         except Exception as e:
