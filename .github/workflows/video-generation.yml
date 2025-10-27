@@ -2,7 +2,7 @@ name: Generate Video
 
 on:
   schedule:
-    - cron: '10 2,8,15,20 * * *' # Runs daily at 2:10, 8:10, 15:10, 20:10 UTC
+    - cron: '2 8,15,20 * * *' # Runs daily at 2:10, 8:10, 15:10, 20:10 UTC
   workflow_dispatch: # Allows manual triggering
 
 jobs:
