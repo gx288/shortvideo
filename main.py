@@ -393,7 +393,7 @@ for worksheet_name in WORKSHEET_LIST:
                 try:
                     video = concatenate_videoclips(clips, method="compose")
                     video = video.set_audio(audio)
-                    video.write_videofile(output_path, codec="libx265", audio_codec="aac", fps=15, bitrate="1000k", audio_bitrate="96k", ffmpeg_params=["-preset", "medium"])
+                    video.write_videofile(output_path, codec="libx265", audio_codec="aac", fps=15, bitrate="700k", audio_bitrate="96k", ffmpeg_params=["-preset", "medium"])
                     print(f"  Saved video at: {output_path}")
                     return True
                 except Exception as e:
