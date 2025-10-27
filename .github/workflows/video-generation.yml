@@ -2,7 +2,7 @@ name: Generate Video
 
 on:
   schedule:
-    - cron: '10 2,8,15,20 * * *' # Runs daily at midnight UTC
+    - cron: '10 2,8,15,20 * * *' # Runs daily at 2:10, 8:10, 15:10, 20:10 UTC
   workflow_dispatch: # Allows manual triggering
 
 jobs:
@@ -83,6 +83,24 @@ jobs:
             echo "Error: voiceover.mp3 not found"
           fi
 
+      # Debug video size
+      - name: Debug video size
+        if: always()
+        run: |
+          if [ -f output/clean_title.txt ]; then
+            CLEAN_TITLE=$(cat output/clean_title.txt)
+            VIDEO_PATH="output/output_video_${CLEAN_TITLE}.mp4"
+            if [ -f "$VIDEO_PATH" ]; then
+              SIZE=$(ls -l $VIDEO_PATH | awk '{print $5}')
+              SIZE_MB=$(echo "scale=2; $SIZE / 1024 / 1024" | bc)
+              echo "Video size: $SIZE_MB MB"
+            else
+              echo "Error: Video file $VIDEO_PATH not found"
+            fi
+          else
+            echo "Error: clean_title.txt not found"
+          fi
+
       # Commit video to output folder
       - name: Commit video to output folder
         if: success()
@@ -98,8 +116,8 @@ jobs:
         env:
           TITLE: $(cat output/clean_title.txt 2>/dev/null || echo "unknown")
 
-      # Update sheet with raw URL
-      - name: Update sheet with raw URL
+      # Update sheet with raw URL and check file size
+      - name: Update sheet with raw URL and file size
         if: success()
         run: python update_sheet.py
 
