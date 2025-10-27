@@ -37,11 +37,17 @@ def check_ffmpeg():
 
 # Hàm xử lý tên file để loại bỏ dấu và ký tự đặc biệt
 def clean_filename(text, max_length=50):
+    # Chuẩn hóa Unicode: chuyển các ký tự có dấu thành không dấu
     text = unicodedata.normalize('NFKD', text).encode('ASCII', 'ignore').decode('ASCII')
+    # Thay khoảng trắng bằng dấu gạch dưới
     text = text.replace(' ', '_')
+    # Chỉ giữ chữ cái, số, dấu gạch dưới, và dấu gạch ngang
     text = re.sub(r'[^\w-]', '', text)
+    # Loại bỏ các dấu gạch dưới liên tiếp
     text = re.sub(r'_+', '_', text)
+    # Cắt ngắn tên file nếu quá dài
     text = text[:max_length].strip('_')
+    # Nếu tên rỗng hoặc chỉ chứa ký tự không hợp lệ, trả về tên mặc định
     if not text or text == '':
         text = f"video_{random.randint(1000, 9999)}"
     return text.lower()
@@ -66,7 +72,8 @@ videos_created = 0
 for worksheet_name in WORKSHEET_LIST:
     if videos_created >= NUM_VIDEOS_TO_CREATE:
         break
-    print(f"\nChecking worksheet: {worksheet_name}")
+    clean_worksheet_name = clean_filename(worksheet_name)  # Clean worksheet name
+    print(f"\nChecking worksheet: {worksheet_name} (cleaned: {clean_worksheet_name})")
     try:
         worksheet = gc.open_by_key(SHEET_ID).worksheet(worksheet_name)
     except gspread.exceptions.WorksheetNotFound:
@@ -100,7 +107,7 @@ for worksheet_name in WORKSHEET_LIST:
             print(f"  Clean content length: {len(content_text)} chars")
 
             # Save clean_title for update_sheet.py
-            with open(os.path.join(output_dir, f"clean_title_{worksheet_name}_{selected_row_num}.txt"), "w") as f:
+            with open(os.path.join(output_dir, "clean_title.txt"), "w") as f:
                 f.write(clean_title)
 
             # Extract cover image URL from column D (index 3)
@@ -114,7 +121,7 @@ for worksheet_name in WORKSHEET_LIST:
                 synthesis_input = texttospeech.SynthesisInput(text=content_text)
                 voice = texttospeech.VoiceSelectionParams(
                     language_code="vi-VN",
-                    name="vi-VN-Wavenet-A"
+                    name="vi-VN-Wavenet-C"
                 )
                 audio_config = texttospeech.AudioConfig(
                     audio_encoding=texttospeech.AudioEncoding.MP3,
@@ -125,7 +132,7 @@ for worksheet_name in WORKSHEET_LIST:
                 response = client.synthesize_speech(
                     input=synthesis_input, voice=voice, audio_config=audio_config
                 )
-                audio_path = os.path.join(output_dir, f"voiceover_{worksheet_name}_{selected_row_num}.mp3")
+                audio_path = os.path.join(output_dir, f"voiceover_{clean_worksheet_name}_{selected_row_num}.mp3")
                 with open(audio_path, "wb") as out:
                     out.write(response.audio_content)
                 print(f"  Saved audio at: {audio_path}")
@@ -135,7 +142,7 @@ for worksheet_name in WORKSHEET_LIST:
 
             # Cut audio to max 55s using ffmpeg
             try:
-                temp_audio = os.path.join(output_dir, f"temp_voiceover_{worksheet_name}_{selected_row_num}.mp3")
+                temp_audio = os.path.join(output_dir, f"temp_voiceover_{clean_worksheet_name}_{selected_row_num}.mp3")
                 subprocess.run([
                     "ffmpeg", "-i", audio_path, "-t", "55", "-c:a", "mp3", "-b:a", "96k", temp_audio
                 ], check=True, capture_output=True)
@@ -264,7 +271,7 @@ for worksheet_name in WORKSHEET_LIST:
                 final_image.save(output_path)
                 print(f"  Saved title image at: {output_path}")
 
-            title_image_path = os.path.join(output_dir, f"title_image_{worksheet_name}_{selected_row_num}.jpg")
+            title_image_path = os.path.join(output_dir, f"title_image_{clean_worksheet_name}_{selected_row_num}.jpg")
             create_title_image(title_text, bg_image_url, title_image_path)
             if not os.path.exists(title_image_path):
                 print(f"  Error: Failed to create title image for row {selected_row_num}. Skipping.")
@@ -393,7 +400,7 @@ for worksheet_name in WORKSHEET_LIST:
                     print(f"  Error saving video: {e}. Skipping row {selected_row_num}.")
                     return False
 
-            output_video_path = os.path.join(output_dir, f"output_video_{worksheet_name}_{clean_title}_{selected_row_num}.mp4")
+            output_video_path = os.path.join(output_dir, f"output_video_{clean_worksheet_name}_{clean_title}.mp4")
             if create_video(image_paths, audio_path, output_video_path):
                 videos_created += 1
                 print(f"Video created successfully at: {output_video_path}")
