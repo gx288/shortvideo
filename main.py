@@ -17,8 +17,8 @@ import unicodedata
 NUM_VIDEOS_TO_CREATE = 1  # Number of videos to create per run
 WORKSHEET_LIST = [
     "Phòng mạch",
-    #"Sheet2",
-    #"Sheet3",
+    "Sheet2",
+    "Sheet3",
     # Add more sheet names here
 ]
 
@@ -72,8 +72,7 @@ videos_created = 0
 for worksheet_name in WORKSHEET_LIST:
     if videos_created >= NUM_VIDEOS_TO_CREATE:
         break
-    clean_worksheet_name = clean_filename(worksheet_name)  # Clean worksheet name
-    print(f"\nChecking worksheet: {worksheet_name} (cleaned: {clean_worksheet_name})")
+    print(f"\nChecking worksheet: {worksheet_name}")
     try:
         worksheet = gc.open_by_key(SHEET_ID).worksheet(worksheet_name)
     except gspread.exceptions.WorksheetNotFound:
@@ -94,9 +93,9 @@ for worksheet_name in WORKSHEET_LIST:
 
             # Extract and clean title for filename
             raw_content = selected_row[1] if len(selected_row) > 1 else ''
-            raw_content = re.sub(r'\*+', '', raw_content)
-            raw_content = re.sub(r'[\U0001F600-\U0001F64F\U0001F300-\U0001F5FF\U0001F680-\U0001F6FF\U0001F1E0-\U0001F1FF\U00002702-\U000027B0\U000024C2-\U0001F251]+', '', raw_content)
-            raw_content = re.sub(r'#\w+\s*', '', raw_content)
+            raw_content = re.sub(r'\*+', '', raw_content)  # Remove asterisks
+            raw_content = re.sub(r'[\U0001F600-\U0001F64F\U0001F300-\U0001F5FF\U0001F680-\U0001F6FF\U0001F1E0-\U0001F1FF\U00002702-\U000027B0\U000024C2-\U0001F251]+', '', raw_content)  # Remove emojis
+            raw_content = re.sub(r'#\w+\s*', '', raw_content)  # Remove hashtags
             lines = [line.strip() for line in raw_content.split('\n') if line.strip()]
             title_text = lines[0].replace('Tiêu đề:', '').strip() if lines else 'Untitled'
             content_text = '\n'.join(lines[1:]) if len(lines) > 1 else title_text
@@ -121,7 +120,7 @@ for worksheet_name in WORKSHEET_LIST:
                 synthesis_input = texttospeech.SynthesisInput(text=content_text)
                 voice = texttospeech.VoiceSelectionParams(
                     language_code="vi-VN",
-                    name="vi-VN-Wavenet-C"
+                    name="vi-VN-Wavenet-C"  # Changed from vi-VN-Wavenet-A to vi-VN-Wavenet-C
                 )
                 audio_config = texttospeech.AudioConfig(
                     audio_encoding=texttospeech.AudioEncoding.MP3,
@@ -132,7 +131,7 @@ for worksheet_name in WORKSHEET_LIST:
                 response = client.synthesize_speech(
                     input=synthesis_input, voice=voice, audio_config=audio_config
                 )
-                audio_path = os.path.join(output_dir, f"voiceover_{clean_worksheet_name}_{selected_row_num}.mp3")
+                audio_path = os.path.join(output_dir, "voiceover.mp3")
                 with open(audio_path, "wb") as out:
                     out.write(response.audio_content)
                 print(f"  Saved audio at: {audio_path}")
@@ -142,7 +141,7 @@ for worksheet_name in WORKSHEET_LIST:
 
             # Cut audio to max 55s using ffmpeg
             try:
-                temp_audio = os.path.join(output_dir, f"temp_voiceover_{clean_worksheet_name}_{selected_row_num}.mp3")
+                temp_audio = os.path.join(output_dir, "temp_voiceover.mp3")
                 subprocess.run([
                     "ffmpeg", "-i", audio_path, "-t", "55", "-c:a", "mp3", "-b:a", "96k", temp_audio
                 ], check=True, capture_output=True)
@@ -202,6 +201,7 @@ for worksheet_name in WORKSHEET_LIST:
                 max_width = 576
                 min_height = 400
                 max_height = 768
+                target_height = 533
                 line_spacing = 15
                 wrap_width = 30
 
@@ -271,7 +271,7 @@ for worksheet_name in WORKSHEET_LIST:
                 final_image.save(output_path)
                 print(f"  Saved title image at: {output_path}")
 
-            title_image_path = os.path.join(output_dir, f"title_image_{clean_worksheet_name}_{selected_row_num}.jpg")
+            title_image_path = os.path.join(output_dir, "title_image.jpg")
             create_title_image(title_text, bg_image_url, title_image_path)
             if not os.path.exists(title_image_path):
                 print(f"  Error: Failed to create title image for row {selected_row_num}. Skipping.")
@@ -280,7 +280,7 @@ for worksheet_name in WORKSHEET_LIST:
             # Stage 4: Download images
             def download_images_with_icrawler(keyword, num_images, output_dir):
                 print("Stage 4: Attempting to download images...")
-                keyword_clean = clean_filename(keyword)
+                keyword_clean = clean_filename(keyword)  # Clean keyword for directory
                 keyword_dir = os.path.join(output_dir, keyword_clean)
                 os.makedirs(keyword_dir, exist_ok=True)
 
@@ -339,7 +339,7 @@ for worksheet_name in WORKSHEET_LIST:
             image_paths = [title_image_path] + additional_images
             print(f"  Retrieved {len(additional_images)} images")
 
-            # Stage 5: Create video
+            # Stage 5: Create video with varied transitions
             def create_video(image_paths, audio_path, output_path):
                 print("Stage 5: Creating video...")
                 try:
@@ -400,7 +400,7 @@ for worksheet_name in WORKSHEET_LIST:
                     print(f"  Error saving video: {e}. Skipping row {selected_row_num}.")
                     return False
 
-            output_video_path = os.path.join(output_dir, f"output_video_{clean_worksheet_name}_{clean_title}.mp4")
+            output_video_path = os.path.join(output_dir, f"output_video_{clean_title}.mp4")
             if create_video(image_paths, audio_path, output_video_path):
                 videos_created += 1
                 print(f"Video created successfully at: {output_video_path}")
@@ -408,7 +408,7 @@ for worksheet_name in WORKSHEET_LIST:
             else:
                 print(f"Failed to create video for row {selected_row_num} in worksheet '{worksheet_name}'.")
 
-            # Clean up temporary files
+            # Clean up temporary files (except video)
             print("Cleaning up temporary files...")
             keyword_clean = clean_filename(keyword)
             for file in glob.glob(os.path.join(output_dir, keyword_clean, "*.jpg")):
@@ -426,7 +426,7 @@ for worksheet_name in WORKSHEET_LIST:
                     os.remove(title_image_path)
                 except:
                     pass
-            print("Cleanup complete for row.")
+            print("Cleanup complete.")
 
 if videos_created == 0:
     print("No videos were created. Exiting.")
