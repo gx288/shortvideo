@@ -11,6 +11,7 @@ from google.cloud import texttospeech
 import gspread
 from google.oauth2.service_account import Credentials
 import random
+import unicodedata
 
 # Fallback for ANTIALIAS in Pillow
 Image.ANTIALIAS = Image.LANCZOS
@@ -24,6 +25,23 @@ def check_ffmpeg():
     except (subprocess.CalledProcessError, FileNotFoundError):
         print("  Warning: ffmpeg not found. Some audio processing may fail.")
         return False
+
+# Hàm xử lý tên file để loại bỏ dấu và ký tự đặc biệt
+def clean_filename(text, max_length=50):
+    # Chuẩn hóa Unicode: chuyển các ký tự có dấu thành không dấu
+    text = unicodedata.normalize('NFKD', text).encode('ASCII', 'ignore').decode('ASCII')
+    # Thay khoảng trắng bằng dấu gạch dưới
+    text = text.replace(' ', '_')
+    # Chỉ giữ chữ cái, số, dấu gạch dưới, và dấu gạch ngang
+    text = re.sub(r'[^\w-]', '', text)
+    # Loại bỏ các dấu gạch dưới liên tiếp
+    text = re.sub(r'_+', '_', text)
+    # Cắt ngắn tên file nếu quá dài
+    text = text[:max_length].strip('_')
+    # Nếu tên rỗng hoặc chỉ chứa ký tự không hợp lệ, trả về tên mặc định
+    if not text or text == '':
+        text = f"video_{random.randint(1000, 9999)}"
+    return text.lower()
 
 # Directory setup
 output_dir = "output"
@@ -65,10 +83,9 @@ lines = [line.strip() for line in raw_content.split('\n') if line.strip()]
 title_text = lines[0].replace('Tiêu đề:', '').strip() if lines else 'Untitled'
 content_text = '\n'.join(lines[1:]) if len(lines) > 1 else title_text
 
-# Clean title for filename
-clean_title = re.sub(r'[^\w\s-]', '', title_text.replace(' ', '_'))[:50]  # Remove special chars, limit length
-clean_title = clean_title.lower() if clean_title else f"video_{selected_row_num}"
-print(f"  Clean title: {title_text}")
+# Clean title for filename using new function
+clean_title = clean_filename(title_text)
+print(f"  Original title: {title_text}")
 print(f"  Clean title for filename: {clean_title}")
 print(f"  Clean content length: {len(content_text)} chars")
 
@@ -93,7 +110,7 @@ try:
         audio_encoding=texttospeech.AudioEncoding.MP3,
         speaking_rate=1.25,
         pitch=0.0,
-        sample_rate_hertz=44100  # Standardize sample rate
+        sample_rate_hertz=44100
     )
     response = client.synthesize_speech(
         input=synthesis_input, voice=voice, audio_config=audio_config
@@ -145,11 +162,11 @@ def create_title_image(title, bg_image_url, output_path):
     final_image.paste(bg_image, (paste_x, paste_y))
 
     draw = ImageDraw.Draw(final_image)
-    font_size = 80  # Fixed font size
+    font_size = 80
     font_paths = [
         "Roboto-Bold.ttf",
-        "C:/Windows/Fonts/Arialbd.ttf",  # Added Windows font
-        "C:/Windows/Fonts/Calibrib.ttf",  # Added Windows font
+        "C:/Windows/Fonts/Arialbd.ttf",
+        "C:/Windows/Fonts/Calibrib.ttf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
         "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf"
     ]
@@ -163,24 +180,23 @@ def create_title_image(title, bg_image_url, output_path):
             continue
     if not font:
         print("  Error: No custom font found. Default font is not suitable for font_size = 80. Please install a font like Arial or Roboto.")
-        return  # Exit if no suitable font is found
+        return
 
-    max_width = 864  # 80% of 1080
-    min_height = 600  # Minimum height (updated to 600px as per request)
-    max_height = 1152  # 60% of 1920
-    target_height = 800  # Target height
+    max_width = 864
+    min_height = 600
+    max_height = 1152
+    target_height = 800
     line_spacing = 15
-    wrap_width = 30  # Start with larger wrap_width for longer lines
+    wrap_width = 30
 
     def get_text_dimensions(text, font, wrap_width):
-        # Wrap text to maximize width while keeping max_text_width <= max_width
         wrapped_text = []
         current_line = ""
         for word in text.split():
             test_line = current_line + (" " if current_line else "") + word
             text_bbox = draw.textbbox((0, 0), test_line, font=font)
             text_width = text_bbox[2] - text_bbox[0]
-            if text_width <= max_width:  # Only check max_width, not wrap_width for adding words
+            if text_width <= max_width:
                 current_line = test_line
             else:
                 if current_line:
@@ -195,20 +211,19 @@ def create_title_image(title, bg_image_url, output_path):
             text_bbox = draw.textbbox((0, 0), line, font=font)
             text_width = text_bbox[2] - text_bbox[0]
             text_height = text_bbox[3] - text_bbox[1]
-            max_text_width = max(max_text_width, text_width)  # Track width of longest line
+            max_text_width = max(max_text_width, text_width)
             total_height += text_height + line_spacing
-        return wrapped_text, max_text_width, total_height - line_spacing  # Subtract last line_spacing
+        return wrapped_text, max_text_width, total_height - line_spacing
 
     wrapped_text, max_text_width, total_height = get_text_dimensions(title, font, wrap_width)
 
-    # Adjust wrap_width to reach target_height ~800px while keeping max_text_width <= 864px
     max_attempts = 20
     attempt = 0
     while (total_height < min_height or total_height > max_height) and wrap_width >= 10 and attempt < max_attempts:
         if total_height < min_height:
-            wrap_width -= 1  # Reduce wrap_width to increase lines
+            wrap_width -= 1
         elif total_height > max_height:
-            wrap_width += 1  # Increase wrap_width to reduce lines
+            wrap_width += 1
 
         if wrap_width < 10:
             print("  Warning: wrap_width reached minimum (10). Cannot increase lines further.")
@@ -218,22 +233,21 @@ def create_title_image(title, bg_image_url, output_path):
         print(f"  Adjusted wrap_width: {wrap_width}, max_text_width: {max_text_width}, total_height: {total_height}, lines: {len(wrapped_text)}")
         attempt += 1
 
-    # Final log
     print(f"  Final font_size: {font_size}, wrap_width: {wrap_width}, max_text_width: {max_text_width}, total_height: {total_height}, lines: {len(wrapped_text)}")
 
     text_area_height = total_height + 40
-    text_area = Image.new("RGBA", (1080, text_area_height), (0, 0, 0, int(255 * 0.7)))  # Semi-transparent black background
+    text_area = Image.new("RGBA", (1080, text_area_height), (0, 0, 0, int(255 * 0.7)))
     text_draw = ImageDraw.Draw(text_area)
 
     current_y = 20
     for line in wrapped_text:
         text_bbox = text_draw.textbbox((0, 0), line, font=font)
         text_width = text_bbox[2] - text_bbox[0]
-        text_x = (1080 - text_width) // 2  # Center horizontally
-        text_draw.text((text_x, current_y), line, font=font, fill=(255, 255, 255), stroke_width=2, stroke_fill=(0, 0, 0))  # White text with black stroke
+        text_x = (1080 - text_width) // 2
+        text_draw.text((text_x, current_y), line, font=font, fill=(255, 255, 255), stroke_width=2, stroke_fill=(0, 0, 0))
         current_y += (text_bbox[3] - text_bbox[1]) + line_spacing
 
-    text_y = (1920 - text_area_height) // 2  # Center vertically
+    text_y = (1920 - text_area_height) // 2
     final_image = final_image.convert("RGBA")
     final_image.paste(text_area, (0, text_y), text_area)
     final_image = final_image.convert("RGB")
@@ -247,7 +261,8 @@ create_title_image(title_text, bg_image_url, title_image_path)
 # Stage 4: Download images
 def download_images_with_icrawler(keyword, num_images, output_dir):
     print("Stage 4: Attempting to download images...")
-    keyword_dir = os.path.join(output_dir, re.sub(r'[^\w\s-]', '', keyword.replace(' ', '_'))[:50])
+    keyword_clean = clean_filename(keyword)  # Clean keyword for directory
+    keyword_dir = os.path.join(output_dir, keyword_clean)
     os.makedirs(keyword_dir, exist_ok=True)
 
     try:
@@ -317,10 +332,9 @@ def create_video(image_paths, audio_path, output_path):
 
     clips = []
     num_images = len(image_paths)
-    title_duration = audio_duration * 1.2 / num_images  # Title longer by 20%
+    title_duration = audio_duration * 1.2 / num_images
     other_duration = (audio_duration - title_duration) / (num_images - 1) if num_images > 1 else audio_duration
 
-    # Define transition effects
     def zoom_in(t, duration):
         return 1 + 0.02 * (t / duration)
 
@@ -341,12 +355,10 @@ def create_video(image_paths, audio_path, output_path):
 
     transitions = [zoom_in, zoom_out, pan_left, pan_right, pan_up, pan_down]
 
-    # Cycle through transitions for variety
     for i, img_path in enumerate(image_paths):
         try:
             duration = title_duration if i == 0 else other_duration
             clip = ImageClip(img_path, duration=duration)
-            # Cycle transition
             transition = transitions[i % len(transitions)]
             clip = clip.resize(lambda t: transition(t, duration) if transition in [zoom_in, zoom_out] else 1.0).set_position(lambda t: transition(t, duration) if transition not in [zoom_in, zoom_out] else 'center')
             clips.append(clip)
@@ -368,7 +380,7 @@ def create_video(image_paths, audio_path, output_path):
         print(f"  Error saving video: {e}. Exiting.")
         exit(1)
 
-# Define output_path before calling create_video
+# Sử dụng clean_title trong tên file video
 output_video_path = os.path.join(output_dir, f"output_video_{clean_title}.mp4")
 create_video(image_paths, audio_path, output_video_path)
 
@@ -376,7 +388,8 @@ print(f"Video created successfully at: {output_video_path}")
 
 # Clean up temporary files (except video)
 print("Cleaning up temporary files...")
-for file in glob.glob(os.path.join(output_dir, keyword.replace(' ', '_')[:50], "*.jpg")):
+keyword_clean = clean_filename(keyword)
+for file in glob.glob(os.path.join(output_dir, keyword_clean, "*.jpg")):
     try:
         os.remove(file)
     except:
