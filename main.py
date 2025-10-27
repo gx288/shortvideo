@@ -336,22 +336,22 @@ def create_video(image_paths, audio_path, output_path):
     other_duration = (audio_duration - title_duration) / (num_images - 1) if num_images > 1 else audio_duration
 
     def zoom_in(t, duration):
-        return 1 + 0.02 * (t / duration)
+        return 1 + 0.2 * (t / duration)
 
     def zoom_out(t, duration):
-        return 1.2 - 0.02 * (t / duration)
+        return 1.2 - 0.2 * (t / duration)
 
     def pan_left(t, duration):
-        return (0.05 * (t / duration) * 1080, 'center')
+        return (0.2 * (t / duration) * 1080, 'center')
 
     def pan_right(t, duration):
-        return (-0.05 * (t / duration) * 1080, 'center')
+        return (-0.2 * (t / duration) * 1080, 'center')
 
     def pan_up(t, duration):
-        return ('center', 0.05 * (t / duration) * 1920)
+        return ('center', 0.2 * (t / duration) * 1920)
 
     def pan_down(t, duration):
-        return ('center', -0.05 * (t / duration) * 1920)
+        return ('center', -0.2 * (t / duration) * 1920)
 
     transitions = [zoom_in, zoom_out, pan_left, pan_right, pan_up, pan_down]
 
@@ -374,7 +374,7 @@ def create_video(image_paths, audio_path, output_path):
     try:
         video = concatenate_videoclips(clips, method="compose")
         video = video.set_audio(audio)
-        video.write_videofile(output_path, codec="libx264", audio_codec="aac", fps=24, bitrate="1000k", audio_bitrate="128k", ffmpeg_params=["-preset", "ultrafast"])
+        video.write_videofile(output_path, codec="libx264", audio_codec="aac", fps=24, bitrate="500k", audio_bitrate="128k", ffmpeg_params=["-preset", "ultrafast"])
         print(f"  Saved video at: {output_path}")
     except Exception as e:
         print(f"  Error saving video: {e}. Exiting.")
