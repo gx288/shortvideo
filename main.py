@@ -127,7 +127,7 @@ except Exception as e:
 try:
     temp_audio = os.path.join(output_dir, "temp_voiceover.mp3")
     subprocess.run([
-        "ffmpeg", "-i", audio_path, "-t", "55", "-c:a", "mp3", "-b:a", "128k", temp_audio
+        "ffmpeg", "-i", audio_path, "-t", "55", "-c:a", "mp3", "-b:a", "96k", temp_audio
     ], check=True, capture_output=True)
     os.replace(temp_audio, audio_path)
     print("  Cut audio to 55s with ffmpeg")
@@ -142,9 +142,9 @@ def create_title_image(title, bg_image_url, output_path):
         print("  Downloaded background image.")
     except Exception as e:
         print(f"  Warning: Failed to download background image: {e}. Using black background.")
-        bg_image = Image.new("RGB", (1080, 1920), (0, 0, 0))
+        bg_image = Image.new("RGB", (720, 1280), (0, 0, 0))
 
-    target_size = (1080, 1920)
+    target_size = (720, 1280)
     img_ratio = bg_image.width / bg_image.height
     target_ratio = target_size[0] / target_size[1]
 
@@ -182,10 +182,10 @@ def create_title_image(title, bg_image_url, output_path):
         print("  Error: No custom font found. Default font is not suitable for font_size = 80. Please install a font like Arial or Roboto.")
         return
 
-    max_width = 864
-    min_height = 600
-    max_height = 1152
-    target_height = 800
+    max_width = 576
+    min_height = 400
+    max_height = 768
+    target_height = 533
     line_spacing = 15
     wrap_width = 30
 
@@ -236,18 +236,18 @@ def create_title_image(title, bg_image_url, output_path):
     print(f"  Final font_size: {font_size}, wrap_width: {wrap_width}, max_text_width: {max_text_width}, total_height: {total_height}, lines: {len(wrapped_text)}")
 
     text_area_height = total_height + 40
-    text_area = Image.new("RGBA", (1080, text_area_height), (0, 0, 0, int(255 * 0.7)))
+    text_area = Image.new("RGBA", (720, text_area_height), (0, 0, 0, int(255 * 0.7)))
     text_draw = ImageDraw.Draw(text_area)
 
     current_y = 20
     for line in wrapped_text:
         text_bbox = text_draw.textbbox((0, 0), line, font=font)
         text_width = text_bbox[2] - text_bbox[0]
-        text_x = (1080 - text_width) // 2
+        text_x = (720 - text_width) // 2
         text_draw.text((text_x, current_y), line, font=font, fill=(255, 255, 255), stroke_width=2, stroke_fill=(0, 0, 0))
         current_y += (text_bbox[3] - text_bbox[1]) + line_spacing
 
-    text_y = (1920 - text_area_height) // 2
+    text_y = (1280 - text_area_height) // 2
     final_image = final_image.convert("RGBA")
     final_image.paste(text_area, (0, text_y), text_area)
     final_image = final_image.convert("RGB")
@@ -289,19 +289,19 @@ def download_images_with_icrawler(keyword, num_images, output_dir):
         try:
             img = Image.open(full_path).convert("RGB")
             img_ratio = img.width / img.height
-            target_ratio = 1080 / 1920
+            target_ratio = 720 / 1280
 
             if img_ratio > target_ratio:
-                new_height = 1920
+                new_height = 1280
                 new_width = int(new_height * img_ratio)
             else:
-                new_width = 1080
+                new_width = 720
                 new_height = int(new_width / img_ratio)
 
             img = img.resize((new_width, new_height), Image.LANCZOS)
-            final_image = Image.new("RGB", (1080, 1920), (0, 0, 0))
-            paste_x = (1080 - new_width) // 2
-            paste_y = (1920 - new_height) // 2
+            final_image = Image.new("RGB", (720, 1280), (0, 0, 0))
+            paste_x = (720 - new_width) // 2
+            paste_y = (1280 - new_height) // 2
             final_image.paste(img, (paste_x, paste_y))
             final_image.save(full_path)
             image_paths.append(full_path)
@@ -316,7 +316,7 @@ def download_images_with_icrawler(keyword, num_images, output_dir):
     return image_paths
 
 keyword = title_text[:50]
-additional_images = download_images_with_icrawler(keyword, 15, output_dir)
+additional_images = download_images_with_icrawler(keyword, 10, output_dir)
 image_paths = [title_image_path] + additional_images
 print(f"  Retrieved {len(additional_images)} images")
 
@@ -342,16 +342,16 @@ def create_video(image_paths, audio_path, output_path):
         return 1.2 - 0.2 * (t / duration)
 
     def pan_left(t, duration):
-        return (0.2 * (t / duration) * 1080, 'center')
+        return (0.2 * (t / duration) * 720, 'center')
 
     def pan_right(t, duration):
-        return (-0.2 * (t / duration) * 1080, 'center')
+        return (-0.2 * (t / duration) * 720, 'center')
 
     def pan_up(t, duration):
-        return ('center', 0.2 * (t / duration) * 1920)
+        return ('center', 0.2 * (t / duration) * 1280)
 
     def pan_down(t, duration):
-        return ('center', -0.2 * (t / duration) * 1920)
+        return ('center', -0.2 * (t / duration) * 1280)
 
     transitions = [zoom_in, zoom_out, pan_left, pan_right, pan_up, pan_down]
 
@@ -374,7 +374,7 @@ def create_video(image_paths, audio_path, output_path):
     try:
         video = concatenate_videoclips(clips, method="compose")
         video = video.set_audio(audio)
-        video.write_videofile(output_path, codec="libx264", audio_codec="aac", fps=24, bitrate="500k", audio_bitrate="128k", ffmpeg_params=["-preset", "ultrafast"])
+        video.write_videofile(output_path, codec="libx265", audio_codec="aac", fps=15, bitrate="1000k", audio_bitrate="96k", ffmpeg_params=["-preset", "medium"])
         print(f"  Saved video at: {output_path}")
     except Exception as e:
         print(f"  Error saving video: {e}. Exiting.")
@@ -385,6 +385,9 @@ output_video_path = os.path.join(output_dir, f"output_video_{clean_title}.mp4")
 create_video(image_paths, audio_path, output_video_path)
 
 print(f"Video created successfully at: {output_video_path}")
+
+# In kích thước file video
+print(f"Video size: {os.path.getsize(output_video_path) / (1024 * 1024):.2f} MB")
 
 # Clean up temporary files (except video)
 print("Cleaning up temporary files...")
