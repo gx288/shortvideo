@@ -113,7 +113,7 @@ for worksheet_name in WORKSHEET_LIST:
             synthesis_input = texttospeech.SynthesisInput(text=content_text)
             voice = texttospeech.VoiceSelectionParams(
                 language_code="vi-VN",
-                name="vi-VN-Wavenet-A"
+                name="vi-VN-Standard-A"
             )
             audio_config = texttospeech.AudioConfig(
                 audio_encoding=texttospeech.AudioEncoding.MP3,
