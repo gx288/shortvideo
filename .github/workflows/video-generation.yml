@@ -2,7 +2,7 @@ name: Generate Video
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs daily at midnight UTC
+    - cron: '10 2,8,15,20 * * *' # Runs daily at midnight UTC
   workflow_dispatch: # Allows manual triggering
 
 jobs:
@@ -139,5 +139,13 @@ jobs:
           else
             echo "No old videos to clean up"
           fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      # Delete videos marked as used in Google Sheet (column I not empty)
+      - name: Delete videos marked as used in Google Sheet
+        if: always()
+        run: |
+          python delete_used_videos.py
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
