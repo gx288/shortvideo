@@ -14,7 +14,7 @@ import random
 import unicodedata
 
 # Configuration options (modify these as needed)
-NUM_VIDEOS_TO_CREATE = 3  # Number of videos to create per run
+NUM_VIDEOS_TO_CREATE = 1  # Number of videos to create per run
 WORKSHEET_LIST = [
     "Phòng mạch",
     "Sheet2",
