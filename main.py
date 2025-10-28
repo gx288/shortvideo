@@ -212,11 +212,17 @@ for worksheet_name in WORKSHEET_LIST:
 
                     # TITLE OVERLAY FULL VIDEO
                     txt_clip = TextClip(
-                        title_text, fontsize=70, color='white', font='Arial-Bold',
-                        stroke_color='black', stroke_width=2,
-                        size=(576, None), method='caption', align='center'
+                        title_text, 
+                        fontsize=70, 
+                        color='white', 
+                        font='Arial-Bold',
+                        stroke_color='black', 
+                        stroke_width=2,
+                        size=(576, None), 
+                        method='label',  # <--- CHỈ SỬA DÒNG NÀY
+                        align='center'
                     ).set_position('center').set_duration(total_duration)
-
+                    
                     bg_txt = TextClip("", color='black', size=(620, txt_clip.h + 40)
                                     ).set_opacity(0.6).set_position('center').set_duration(total_duration)
 
