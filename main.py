@@ -203,13 +203,14 @@ for worksheet_name in WORKSHEET_LIST:
                         clip = ImageClip(path).set_duration(duration_per_clip)
                         trans = transitions[idx % len(transitions)]
                         if idx < 2:
-                            clip = clip.resize(trans)
+                            clip = clip.resize(lambda t: trans(t, duration_per_clip))
                         else:
-                            clip = clip.set_position(trans)
+                            clip = clip.set_position(lambda t: trans(t, duration_per_clip))
                         clips.append(clip)
 
                     video = concatenate_videoclips(clips, method="compose")
 
+                    # TITLE OVERLAY FULL VIDEO
                     txt_clip = TextClip(
                         title_text, fontsize=70, color='white', font='Arial-Bold',
                         stroke_color='black', stroke_width=2,
