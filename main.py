@@ -258,7 +258,7 @@ for worksheet_name in WORKSHEET_LIST:
 
                         overlay_path = os.path.join(output_dir, "title_overlay.png")
                         overlay.convert("RGB").save(overlay_path)
-                        title_clip = ImageClip(overlay_path).set_duration(total_duration)
+                        title_clip = ImageClip(overlay_path).set_duration(total_duration).set_position((0, 0))
 
                         final = CompositeVideoClip([video, title_clip]).set_audio(audio)
 
