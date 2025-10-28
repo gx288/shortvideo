@@ -291,6 +291,24 @@ for worksheet_name in WORKSHEET_LIST:
                 print(f"  FATAL ERROR at row {selected_row_num}: {e}")
                 sys.exit(1)
 
+def resize_and_crop(img, target_size):
+    target_w, target_h = target_size
+    img_ratio = img.width / img.height
+    target_ratio = target_w / target_h
+
+    if img_ratio > target_ratio:
+        new_h = target_h
+        new_w = int(new_h * img_ratio)
+    else:
+        new_w = target_w
+        new_h = int(new_w / img_ratio)
+
+    img = img.resize((new_w, new_h), Image.LANCZOS)
+    left = (new_w - target_w) // 2
+    top = (new_h - target_h) // 2
+    img = img.crop((left, top, left + target_w, top + target_h))
+    return img
+    
 # Final
 if videos_created == 0:
     print("No videos created.")
