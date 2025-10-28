@@ -197,7 +197,7 @@ for worksheet_name in WORKSHEET_LIST:
 
             print(f"Retrieved {len(additional_images)} images")
 
-            # Stage 5: Create video with title overlay throughout
+            # === CHỈ SỬA PHẦN NÀY: create_video ===
             def create_video(image_paths, audio_path, output_path, title_text):
                 print("Stage 5: Creating video with persistent title overlay...")
                 try:
@@ -207,9 +207,13 @@ for worksheet_name in WORKSHEET_LIST:
                     print(f"Error loading audio {audio_path}: {e}. Skipping row.")
                     return False
 
+                if not image_paths:
+                    print("No images to process.")
+                    return False
+
                 clips = []
                 num_images = len(image_paths)
-                duration_per_image = audio_duration / num_images if num_images > 0 else 5.0
+                duration_per_image = audio_duration / num_images
 
                 # Load font
                 font_size = 80
@@ -280,15 +284,15 @@ for worksheet_name in WORKSHEET_LIST:
                     return overlay
 
                 title_overlay_img = create_title_overlay()
-                title_overlay_clip = ImageClip(np.array(title_overlay_img)).set_duration(audio_duration).set_position('center')
+                title_overlay_clip = ImageClip(np.array(title_overlay_img)).set_duration(audio_duration)
 
                 # Transitions
                 def zoom_in(t, duration): return 1 + 0.2 * (t / duration)
                 def zoom_out(t, duration): return 1.2 - 0.2 * (t / duration)
-                def pan_left(t, duration): return (0.2 * (t / duration) * 720, 'center')
-                def pan_right(t, duration): return (-0.2 * (t / duration) * 720, 'center')
-                def pan_up(t, duration): return ('center', 0.2 * (t / duration) * 1280)
-                def pan_down(t, duration): return ('center', -0.2 * (t / duration) * 1280)
+                def pan_left(t, duration): return 0.2 * (t / duration) * 720, 'center'
+                def pan_right(t, duration): return -0.2 * (t / duration) * 720, 'center'
+                def pan_up(t, duration): return 'center', 0.2 * (t / duration) * 1280
+                def pan_down(t, duration): return 'center', -0.2 * (t / duration) * 1280
                 transitions = [zoom_in, zoom_out, pan_left, pan_right, pan_up, pan_down]
 
                 for i, img_path in enumerate(image_paths):
@@ -310,17 +314,23 @@ for worksheet_name in WORKSHEET_LIST:
 
                         clip = ImageClip(np.array(final_img), duration=duration_per_image)
                         transition = transitions[i % len(transitions)]
+
+                        # Áp dụng hiệu ứng
                         if transition in [zoom_in, zoom_out]:
                             clip = clip.resize(lambda t: transition(t, duration_per_image)).set_position('center')
                         else:
-                            clip = clip.set_position(lambda t: transition(t, duration_per_image))
+                            pos_func = lambda t: transition(t, duration_per_image)
+                            clip = clip.set_position(pos_func)
 
+                        # Cắt overlay theo thời gian ảnh
                         start_time = i * duration_per_image
                         end_time = (i + 1) * duration_per_image
                         overlay_part = title_overlay_clip.subclip(start_time, end_time).set_position('center')
 
-                        composite = CompositeVideoClip([clip.set_duration(duration_per_image), overlay_part])
+                        # Ghép background + overlay
+                        composite = CompositeVideoClip([clip, overlay_part])
                         clips.append(composite)
+
                         print(f"Applied {transition.__name__} to image {i+1}/{num_images}")
                     except Exception as e:
                         print(f"Warning: Failed to process image {img_path}: {e}")
@@ -350,6 +360,7 @@ for worksheet_name in WORKSHEET_LIST:
                     print(f"Error saving video: {e}")
                     return False
 
+            # Gọi hàm create_video
             output_video_path = os.path.join(output_dir, f"output_video_{clean_title}.mp4")
             if create_video(additional_images, audio_path, output_video_path, title_text):
                 videos_created += 1
