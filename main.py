@@ -183,6 +183,7 @@ for worksheet_name in WORKSHEET_LIST:
                     sys.exit(1)
 
                 # === STAGE 3: VIDEO + TITLE FULL ===
+                # === STAGE 3: VIDEO + TITLE FULL ===
                 print("Stage 3: Creating video...")
                 try:
                     audio = AudioFileClip(audio_path)
@@ -210,23 +211,60 @@ for worksheet_name in WORKSHEET_LIST:
 
                     video = concatenate_videoclips(clips, method="compose")
 
-                    # TITLE OVERLAY FULL VIDEO
-                    txt_clip = TextClip(
-                        title_text, 
-                        fontsize=70, 
-                        color='white', 
-                        font='Arial-Bold',
-                        stroke_color='black', 
-                        stroke_width=2,
-                        size=(576, None), 
-                        method='label',  # <--- CHỈ SỬA DÒNG NÀY
-                        align='center'
-                    ).set_position('center').set_duration(total_duration)
-                    
-                    bg_txt = TextClip("", color='black', size=(620, txt_clip.h + 40)
-                                    ).set_opacity(0.6).set_position('center').set_duration(total_duration)
+                    # === TITLE OVERLAY FULL VIDEO – DÙNG PILLOW ===
+                    print("  Creating title overlay with Pillow...")
+                    try:
+                        overlay = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
+                        draw = ImageDraw.Draw(overlay)
+                        font_size = 70
+                        try:
+                            font = ImageFont.truetype("Arial-Bold", font_size)
+                        except:
+                            try:
+                                font = ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", font_size)
+                            except:
+                                font = ImageFont.load_default()
 
-                    final = CompositeVideoClip([video, bg_txt, txt_clip]).set_audio(audio)
+                        max_width = 576
+                        lines = []
+                        words = title_text.split()
+                        current = ""
+                        for word in words:
+                            test = current + (" " if current else "") + word
+                            if draw.textbbox((0, 0), test, font=font)[2] <= max_width:
+                                current = test
+                            else:
+                                if current: lines.append(current)
+                                current = word
+                        if current: lines.append(current)
+
+                        line_height = font.getbbox("A")[3] - font.getbbox("A")[1] + 10
+                        total_h = len(lines) * line_height + 40
+                        box_h = total_h
+                        box_w = 620
+                        box_y = (1280 - box_h) // 2
+
+                        box = Image.new("RGBA", (box_w, box_h), (0, 0, 0, int(255 * 0.6)))
+                        overlay.paste(box, ((720 - box_w) // 2, box_y), box)
+
+                        y = box_y + 20
+                        for line in lines:
+                            bbox = draw.textbbox((0, 0), line, font=font)
+                            w = bbox[2] - bbox[0]
+                            x = (720 - w) // 2
+                            draw.text((x, y), line, font=font, fill=(255, 255, 255),
+                                      stroke_width=2, stroke_fill=(0, 0, 0))
+                            y += line_height
+
+                        overlay_path = os.path.join(output_dir, "title_overlay.png")
+                        overlay.convert("RGB").save(overlay_path)
+                        title_clip = ImageClip(overlay_path).set_duration(total_duration)
+
+                        final = CompositeVideoClip([video, title_clip]).set_audio(audio)
+
+                    except Exception as e:
+                        print(f"  ERROR creating title overlay: {e}")
+                        sys.exit(1)
 
                     output_path = os.path.join(output_dir, f"output_video_{clean_title}.mp4")
                     final.write_videofile(
@@ -240,6 +278,10 @@ for worksheet_name in WORKSHEET_LIST:
                     try:
                         worksheet.update_cell(selected_row_num, 8, "DONE")
                     except: pass
+
+                    # Cleanup overlay
+                    if os.path.exists(overlay_path):
+                        os.remove(overlay_path)
 
                 except Exception as e:
                     print(f"  ERROR: Video failed: {e}")
