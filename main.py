@@ -197,7 +197,7 @@ for worksheet_name in WORKSHEET_LIST:
 
             print(f"Retrieved {len(additional_images)} images")
 
-            # === CHỈ SỬA PHẦN NÀY: create_video ===
+            # === CHỈ SỬA HÀM NÀY: create_video ===
             def create_video(image_paths, audio_path, output_path, title_text):
                 print("Stage 5: Creating video with persistent title overlay...")
                 try:
@@ -319,7 +319,11 @@ for worksheet_name in WORKSHEET_LIST:
                         if transition in [zoom_in, zoom_out]:
                             clip = clip.resize(lambda t: transition(t, duration_per_image)).set_position('center')
                         else:
-                            pos_func = lambda t: transition(t, duration_per_image)
+                            # FIX LỖI 'center' → moviepy không hiểu str trong tuple
+                            def pos_func(t):
+                                x, y = transition(t, duration_per_image)
+                                return (x, y) if isinstance(x, (int, float)) and isinstance(y, (int, float)) else \
+                                       ('center', y) if x == 'center' else (x, 'center')
                             clip = clip.set_position(pos_func)
 
                         # Cắt overlay theo thời gian ảnh
@@ -360,7 +364,8 @@ for worksheet_name in WORKSHEET_LIST:
                     print(f"Error saving video: {e}")
                     return False
 
-            # Gọi hàm create_video
+            # === KẾT THÚC SỬA ===
+
             output_video_path = os.path.join(output_dir, f"output_video_{clean_title}.mp4")
             if create_video(additional_images, audio_path, output_video_path, title_text):
                 videos_created += 1
