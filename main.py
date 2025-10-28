@@ -3,7 +3,7 @@ import re
 import requests
 import subprocess
 from PIL import Image, ImageDraw, ImageFont
-from moviepy.editor import ImageClip, concatenate_videoclips, AudioFileClip
+from moviepy.editor import ImageClip, concatenate_videoclips, AudioFileClip, CompositeVideoClip, TextClip
 import glob
 from google.cloud import texttospeech
 import gspread
@@ -17,6 +17,8 @@ NUM_VIDEOS_TO_CREATE = 1
 WORKSHEET_LIST = ["Phòng mạch", "Sheet2", "Sheet3"]
 # ====================================================
 
+Image.ANTIALIAS = Image.LANCZOS, Image.LANCZOS
+
 def clean_filename(text, max_length=50):
     text = unicodedata.normalize('NFKD', text).encode('ASCII', 'ignore').decode('ASCII')
     text = text.replace(' ', '_')
@@ -25,64 +27,54 @@ def clean_filename(text, max_length=50):
     text = text[:max_length].strip('_')
     return text.lower() if text else f"video_{random.randint(1000, 9999)}"
 
-def draw_text_on_image(image_path, text, output_path):
+# HÀM MỚI: GHI TIÊU ĐỀ VÀO ẢNH
+def add_title_to_image(image_path, title, output_path):
     try:
         img = Image.open(image_path).convert("RGB")
         draw = ImageDraw.Draw(img)
-        width, height = img.size
+        w, h = img.size
 
-        # Font
         font_size = 70
         try:
             font = ImageFont.truetype("Arial-Bold", font_size)
         except:
-            try:
-                font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", font_size)
-            except:
-                font = ImageFont.load_default()
+            font = ImageFont.load_default()
 
-        # Bọc text
-        max_width = width * 0.8
+        max_w = w * 0.8
         lines = []
-        words = text.split()
-        current = ""
+        words = title.split()
+        line = ""
         for word in words:
-            test = current + (" " if current else "") + word
-            bbox = draw.textbbox((0, 0), test, font=font)
-            if bbox[2] - bbox[0] <= max_width:
-                current = test
+            test = line + (" " if line else "") + word
+            if draw.textbbox((0,0), test, font=font)[2] <= max_w:
+                line = test
             else:
-                if current:
-                    lines.append(current)
-                current = word
-        if current:
-            lines.append(current)
+                lines.append(line)
+                line = word
+        if line: lines.append(line)
 
-        # Tính chiều cao
-        line_height = font.getbbox("A")[3] - font.getbbox("A")[1] + 10
-        total_h = len(lines) * line_height + 40
+        line_h = font.getbbox("A")[3] - font.getbbox("A")[1] + 10
+        total_h = len(lines) * line_h + 40
         box_h = total_h
-        box_w = width * 0.86
-        box_y = (height - box_h) // 2
+        box_w = w * 0.86
+        box_y = (h - box_h) // 2
 
-        # Vẽ nền mờ
         box = Image.new("RGBA", (int(box_w), int(box_h)), (0, 0, 0, 153))
-        img.paste(box, (int((width - box_w) // 2), int(box_y)), box)
+        img.paste(box, (int((w - box_w)//2), int(box_y)), box)
 
-        # Vẽ chữ
         y = box_y + 20
         for line in lines:
-            bbox = draw.textbbox((0, 0), line, font=font)
-            w = bbox[2] - bbox[0]
-            x = (width - w) // 2
-            draw.text((x, y), line, font=font, fill=(255, 255, 255),
-                      stroke_width=2, stroke_fill=(0, 0, 0))
-            y += line_height
+            bbox = draw.textbbox((0,0), line, font=font)
+            text_w = bbox[2] - bbox[0]
+            x = (w - text_w) // 2
+            draw.text((x, y), line, font=font, fill=(255,255,255),
+                      stroke_width=2, stroke_fill=(0,0,0))
+            y += line_h
 
         img.save(output_path)
         return True
     except Exception as e:
-        print(f"  ERROR drawing text on {image_path}: {e}")
+        print(f"  ERROR adding title: {e}")
         return False
 
 # ====================== MAIN ======================
@@ -138,9 +130,12 @@ for worksheet_name in WORKSHEET_LIST:
             content_text = '\n'.join(lines[1:]) if len(lines) > 1 else title_text
             clean_title = clean_filename(title_text)
 
-            bg_image_url = selected_row[3] if len(selected_row) > 3 else 'https://via.placeholder.com/720x1280'
+            with open(os.path.join(output_dir, "clean_title.txt"), "w", encoding="utf-8") as f:
+                f.write(clean_title)
 
-            # STAGE 1: DOWNLOAD IMAGES
+            bg_image_url = selected_row[3] if len(selected_row) > 3 else 'https://via.placeholder.com/1080x1920'
+
+            # STAGE 1: DOWNLOAD IMAGES FIRST
             print("Stage 1: Downloading images...")
             image_paths = []
             cover_path = os.path.join(output_dir, "cover.jpg")
@@ -157,7 +152,6 @@ for worksheet_name in WORKSHEET_LIST:
                 print(f"  ERROR downloading cover: {e}")
                 sys.exit(1)
 
-            # Additional images
             try:
                 from icrawler.builtin import GoogleImageCrawler
                 keyword_clean = clean_filename(title_text[:50])
@@ -175,7 +169,7 @@ for worksheet_name in WORKSHEET_LIST:
                     except:
                         continue
             except:
-                print("  icrawler failed or not installed.")
+                print("  icrawler failed.")
 
             if len(image_paths) < 2:
                 image_paths = [image_paths[0]] * 10
@@ -198,32 +192,41 @@ for worksheet_name in WORKSHEET_LIST:
                 with open(audio_path, "wb") as f:
                     f.write(response.audio_content)
 
-                # Cut to 55s
+                # CẮT AUDIO – CHỈ SỬA ĐOẠN NÀY
                 temp = audio_path + ".tmp"
-                subprocess.run([
-                    "ffmpeg", "-y", "-i", audio_path, "-t", "55", "-c:a", "libmp3lame", "-b:a", "96k", "-ar", "44100", temp
-                ], check=True, capture_output=True)
-                os.replace(temp, audio_path)
+                try:
+                    subprocess.run([
+                        "ffmpeg", "-y", "-i", audio_path, "-t", "55",
+                        "-c:a", "libmp3lame", "-b:a", "96k", "-ar", "44100", temp
+                    ], check=True, capture_output=True)
+                    os.replace(temp, audio_path)
+                    print("  Audio cut to 55s")
+                except subprocess.CalledProcessError as e:
+                    print(f"  ERROR: ffmpeg failed: {e}")
+                    if os.path.exists(temp):
+                        os.remove(temp)
+                    sys.exit(1)
+
             except Exception as e:
                 print(f"  ERROR: TTS failed: {e}")
                 sys.exit(1)
 
-            # STAGE 3: DRAW TITLE ON EACH IMAGE
-            print("Stage 3: Drawing title on each image...")
-            processed_images = []
+            # THÊM: GHI TIÊU ĐỀ VÀO TỪNG ẢNH
+            print("Stage 2.5: Adding title to all images...")
+            titled_images = []
             for idx, img_path in enumerate(image_paths):
-                output_img = os.path.join(output_dir, f"img_with_text_{idx}.jpg")
-                if draw_text_on_image(img_path, title_text, output_img):
-                    processed_images.append(output_img)
+                titled_path = os.path.join(output_dir, f"titled_{idx}.jpg")
+                if add_title_to_image(img_path, title_text, titled_path):
+                    titled_images.append(titled_path)
                 else:
-                    processed_images.append(img_path)  # fallback
+                    titled_images.append(img_path)
 
-            # STAGE 4: CREATE VIDEO
-            print("Stage 4: Creating video...")
+            # STAGE 3: CREATE VIDEO
+            print("Stage 3: Creating video...")
             try:
                 audio = AudioFileClip(audio_path)
                 total_duration = min(audio.duration, 55)
-                duration_per_clip = total_duration / len(processed_images)
+                duration_per_clip = total_duration / len(titled_images)
 
                 clips = []
                 transitions = [
@@ -235,7 +238,7 @@ for worksheet_name in WORKSHEET_LIST:
                     lambda t, d: ('center', -0.2 * (t/d) * 1280),
                 ]
 
-                for idx, path in enumerate(processed_images):
+                for idx, path in enumerate(titled_images):
                     clip = ImageClip(path).set_duration(duration_per_clip)
                     trans = transitions[idx % len(transitions)]
                     if idx < 2:
@@ -244,20 +247,31 @@ for worksheet_name in WORKSHEET_LIST:
                         clip = clip.set_position(lambda t: trans(t, duration_per_clip))
                     clips.append(clip)
 
-                final_video = concatenate_videoclips(clips, method="compose").set_audio(audio)
+                video = concatenate_videoclips(clips, method="compose")
+
+                # TITLE FULL DURATION (giữ nguyên)
+                txt = TextClip(
+                    title_text,
+                    fontsize=70, color='white', font='Arial-Bold',
+                    stroke_color='black', stroke_width=2,
+                    size=(576, None), method='caption', align='center'
+                ).set_position('center').set_duration(total_duration)
+
+                bg = TextClip("", color='black', size=(620, txt.h + 40)
+                            ).set_opacity(0.6).set_position('center').set_duration(total_duration)
+
+                final = CompositeVideoClip([video, bg, txt]).set_audio(audio)
 
                 output_video = os.path.join(output_dir, f"output_video_{clean_title}.mp4")
-                final_video.write_videofile(
+                final.write_videofile(
                     output_video, codec="libx265", audio_codec="aac",
                     fps=15, bitrate="700k", audio_bitrate="96k",
                     ffmpeg_params=["-preset", "medium"], threads=4
                 )
 
                 print(f"  SUCCESS: {output_video}")
-                print(f"  Size: {os.path.getsize(output_video)/(1024*1024):.2f} MB")
                 videos_created += 1
 
-                # Update Google Sheet
                 try:
                     worksheet.update_cell(selected_row_num, 8, "DONE")
                 except:
@@ -268,19 +282,19 @@ for worksheet_name in WORKSHEET_LIST:
                 sys.exit(1)
 
             # Cleanup
-            for f in [audio_path, cover_path] + processed_images:
+            for f in [audio_path, cover_path] + titled_images:
                 if os.path.exists(f): os.remove(f)
             import shutil
             for d in glob.glob(os.path.join(output_dir, clean_filename(title_text[:50]))):
                 if os.path.isdir(d): shutil.rmtree(d, ignore_errors=True)
 
         except Exception as e:
-            print(f"  FATAL ERROR at row {selected_row_num}: {e}")
+            print(f"  FATAL ERROR: {e}")
             sys.exit(1)
 
 if videos_created == 0:
     print("No videos created.")
     sys.exit(1)
 else:
-    print(f"\nDONE: {videos_created} video(s) created successfully.")
+    print(f"\nDONE: {videos_created} video(s) created.")
     sys.exit(0)
