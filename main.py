@@ -150,32 +150,74 @@ for worksheet_name in WORKSHEET_LIST:
                 image_paths = [image_paths[0]] * 10
             print(f"  {len(image_paths)} images ready.")
 
-            # STAGE 2: CREATE AUDIO (after images)
-            print("Stage 2: Creating TTS audio...")
-            audio_path = os.path.join(output_dir, "voiceover.mp3")
-            try:
-                client = texttospeech.TextToSpeechClient.from_service_account_file('google_tts_key.json')
-                response = client.synthesize_speech(
-                    input=texttospeech.SynthesisInput(text=content_text),
-                    voice=texttospeech.VoiceSelectionParams(language_code="vi-VN", name="vi-VN-Wavenet-C"),
-                    audio_config=texttospeech.AudioConfig(
-                        audio_encoding=texttospeech.AudioEncoding.MP3,
-                        speaking_rate=1.25,
-                        sample_rate_hertz=44100
-                    )
-                )
-                with open(audio_path, "wb") as f:
-                    f.write(response.audio_content)
+        # Stage 2: Create audio with Google Cloud TTS
+        print("Stage 2: Creating audio with Google Cloud TTS...")
+        audio_path = os.path.join(output_dir, "voiceover.mp3")
+        try:
+            client = texttospeech.TextToSpeechClient.from_service_account_file('google_tts_key.json')
+            synthesis_input = texttospeech.SynthesisInput(text=content_text)
+            voice = texttospeech.VoiceSelectionParams(
+                language_code="vi-VN",
+                name="vi-VN-Wavenet-C"
+            )
+            audio_config = texttospeech.AudioConfig(
+                audio_encoding=texttospeech.AudioEncoding.MP3,
+                speaking_rate=1.25,
+                pitch=0.0,
+                sample_rate_hertz=44100
+            )
+            response = client.synthesize_speech(
+                input=synthesis_input, voice=voice, audio_config=audio_config
+            )
 
-                # Cut to 55s
-                temp = audio_path + ".tmp"
-                subprocess.run([
-                    "ffmpeg", "-i", audio_path, "-t", "55", "-c:a", "mp3", "-b:a", "96k", temp
-                ], check=True, capture_output=True)
-                os.replace(temp, audio_path)
-            except Exception as e:
-                print(f"  ERROR: TTS failed: {e}")
-                sys.exit(1)
+            # GHI FILE AN TOÀN: DÙNG TEMP FILE
+            temp_path = audio_path + ".tmp"
+            with open(temp_path, "wb") as out:
+                out.write(response.audio_content)
+            print(f"  Saved raw audio: {temp_path}")
+
+            # KIỂM TRA FILE TRƯỚC KHI CẮT
+            result = subprocess.run([
+                "ffprobe", "-v", "error", "-show_entries", "format=duration",
+                "-of", "default=noprint_wrappers=1:nokey=1", temp_path
+            ], capture_output=True, text=True)
+
+            if result.returncode != 0:
+                print("  ERROR: File MP3 bị hỏng (ffprobe không đọc được)!")
+                if os.path.exists(temp_path):
+                    os.remove(temp_path)
+                raise Exception("Invalid MP3 file from TTS")
+
+            duration = float(result.stdout.strip())
+            print(f"  Audio duration: {duration:.2f}s")
+
+            # CẮT = 55s DỰ PHÒNG
+            cut_duration = min(duration, 55)
+            cut_temp = audio_path + ".cut.tmp"
+            subprocess.run([
+                "ffmpeg", "-y", "-i", temp_path,
+                "-t", str(cut_duration),
+                "-c:a", "libmp3lame", "-b:a", "96k", "-ar", "44100",
+                cut_temp
+            ], check=True, capture_output=True)
+
+            # CHỈ THAY THẾ KHI THÀNH CÔNG
+            if os.path.exists(audio_path):
+                os.remove(audio_path)
+            os.replace(cut_temp, audio_path)
+            if os.path.exists(temp_path):
+                os.remove(temp_path)
+
+            print(f"  Audio cut to {cut_duration:.1f}s: {audio_path}")
+
+        except Exception as e:
+            print(f"  ERROR creating/cutting audio: {e}")
+            # DỌN DẸP FILE LỖI
+            for p in [audio_path, temp_path, cut_temp]:
+                if 'p' in locals() and os.path.exists(p):
+                    try: os.remove(p)
+                    except: pass
+            raise  # DỪNG LUÔN
 
             # STAGE 3: CREATE VIDEO + TITLE FULL DURATION
             print("Stage 3: Creating video with full title overlay...")
