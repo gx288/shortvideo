@@ -289,7 +289,7 @@ def create_video(image_paths, audio_path, output_path):
             codec="libx265",
             audio_codec="aac",
             fps=24,
-            bitrate="800k",
+            bitrate="600k",
             audio_bitrate="128k",
             threads=4,
             preset="fast"
