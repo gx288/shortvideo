@@ -1,0 +1,11 @@
+# Bỏ qua các định dạng file nặng không cần thiết
+*.mp3
+*.zip
+
+# Bỏ qua các file tạm sinh ra trong quá trình chạy
+temp_*/
+__pycache__/
+*.tmp
+current_sheet.txt
+current_row.txt
+clean_title.txt

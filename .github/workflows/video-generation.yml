@@ -1,0 +1,107 @@
+name: Generate Video
+
+permissions:
+  contents: write
+
+on:
+  schedule:
+    - cron: '0 22 * * *'      # Chạy lúc 5:00 sáng giờ Việt Nam
+  workflow_dispatch:
+    inputs:
+      run_count:
+        description: 'Số video muốn tạo (mặc định 6)'
+        required: true
+        default: '6'
+        type: string
+
+jobs:
+  generate-video:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Cache apt packages
+        uses: actions/cache@v4
+        with:
+          path: /var/cache/apt/archives
+          key: apt-${{ runner.os }}-${{ hashFiles('**/video-generation.yml') }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu-core
+
+      - name: Install Python dependencies
+        run: |
+          pip install \
+            Pillow==10.4.0 \
+            moviepy==1.0.3 \
+            requests==2.32.3 \
+            numpy==1.26.4 \
+            icrawler==0.6.10 \
+            google-cloud-texttospeech \
+            gspread==5.12.0 \
+            packaging
+
+      - name: Set up Google credentials
+        env:
+          GOOGLE_TTS_KEY: ${{ secrets.GOOGLE_TTS_KEY }}
+          GOOGLE_SHEETS_KEY: ${{ secrets.GOOGLE_SHEETS_KEY }}
+        run: |
+          echo "$GOOGLE_TTS_KEY" > google_tts_key.json
+          echo "$GOOGLE_SHEETS_KEY" > google_sheets_key.json
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/google_tts_key.json" >> $GITHUB_ENV
+
+      - name: Determine run count
+        run: |
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+            echo "RUN_COUNT=6" >> $GITHUB_ENV          # Mặc định 6 video mỗi ngày
+          else
+            COUNT=${{ github.event.inputs.run_count }}
+            [[ $COUNT =~ ^[0-9]+$ ]] || COUNT=6
+            [[ $COUNT -gt 15 ]] && COUNT=15
+            [[ $COUNT -lt 1 ]] && COUNT=1
+            echo "RUN_COUNT=$COUNT" >> $GITHUB_ENV
+          fi
+
+      - name: Generate multiple videos
+        run: |
+          echo "========================================"
+          echo "🚀 BẮT ĐẦU TẠO $RUN_COUNT VIDEO"
+          echo "========================================"
+
+          for i in $(seq 1 $RUN_COUNT); do
+            echo "📹 Đang tạo video thứ $i/$RUN_COUNT..."
+            python main.py
+            echo "✅ Hoàn thành video thứ $i"
+            echo "----------------------------------------"
+          done
+
+      - name: Commit & Push all videos
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add output/output_video_*.mp4 output/clean_title.txt 2>/dev/null || true
+          
+          if git diff --cached --quiet; then
+            echo "Không có file mới để commit."
+          else
+            git commit -m "Add $RUN_COUNT new auto-generated video(s) [$(date '+%Y-%m-%d')]"
+            git push
+            echo "✅ Đã commit & push thành công $RUN_COUNT video."
+          fi
+
+
+
+      - name: Cleanup old videos
+        if: always()
+        run: python delete_used_videos.py || true
