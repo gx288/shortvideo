@@ -68,20 +68,36 @@ print(f"\nTổng số file video CẦN GIỮ (chưa đăng): {len(keep_filenames
 # Lấy danh sách toàn bộ các file .mp4 hiện có trong thư mục output
 all_mp4_files = glob.glob(os.path.join(output_dir, "*.mp4"))
 
+import subprocess
+
 deleted_count = 0
 for filepath in all_mp4_files:
     filename = os.path.basename(filepath)
     if filename not in keep_filenames:
-        # Xóa file vì nó đã đăng hoặc không tồn tại trong sheet (hoặc thuộc sheet không hợp lệ)
+        # Xóa file bằng git rm để xóa cả trên máy và trên repo
         try:
-            os.remove(filepath)
+            subprocess.run(["git", "rm", "-f", filepath], check=True, capture_output=True)
             print(f"✅ Đã xóa file dư thừa/đã đăng: {filename}")
             deleted_count += 1
         except Exception as e:
-            print(f"❌ Lỗi xóa file {filename}: {e}")
+            # Nếu git rm lỗi (file chưa được git theo dõi), xóa thủ công
+            try:
+                os.remove(filepath)
+                print(f"✅ Đã xóa file local: {filename}")
+                deleted_count += 1
+            except Exception as ex:
+                print(f"❌ Lỗi xóa file {filename}: {ex}")
 
 if deleted_count == 0:
     print("\nKhông có video nào dư thừa cần xóa.")
 else:
-    print(f"\nHOÀN TẤT! Đã xóa thành công {deleted_count} video.")
+    print(f"\nĐang đồng bộ việc xóa {deleted_count} video lên GitHub...")
+    try:
+        subprocess.run(["git", "config", "--global", "user.name", "github-actions[bot]"], check=True)
+        subprocess.run(["git", "config", "--global", "user.email", "github-actions[bot]@users.noreply.github.com"], check=True)
+        subprocess.run(["git", "commit", "-m", f"Auto delete {deleted_count} used/extra videos"], check=True, capture_output=True)
+        subprocess.run(["git", "push"], check=True, capture_output=True)
+        print("🎉 ĐÃ XÓA TRÊN GITHUB THÀNH CÔNG! Thư mục repo đã sạch sẽ.")
+    except Exception as e:
+        print(f"⚠️ Lỗi khi đồng bộ lên GitHub (Có thể do không có quyền push): {e}")
 
