@@ -244,60 +244,9 @@ for worksheet_name in WORKSHEET_LIST:
             continue
         text_overlay_path = os.path.join(output_dir, "text_overlay.png")
 
-        # ==================== TẢI ẢNH BING ====================
-        def download_images_with_icrawler(keyword, num_images, output_dir):
-            print("Stage 4: Downloading images with Bing...")
-            keyword_clean = clean_filename(keyword)[:40]
-            keyword_dir = os.path.join(output_dir, keyword_clean)
-            os.makedirs(keyword_dir, exist_ok=True)
-
-            existing = glob.glob(os.path.join(keyword_dir, "*.jpg"))
-            if len(existing) >= 25:
-                print(f"Using cached images: {len(existing)}")
-                return existing[:25]
-
-            try:
-                from icrawler.builtin import BingImageCrawler
-                bing_crawler = BingImageCrawler(storage={'root_dir': keyword_dir}, downloader_threads=2, log_level=40)
-                for offset in [0, 35]:
-                    if len(glob.glob(os.path.join(keyword_dir, "*.jpg"))) >= 30:
-                        break
-                    bing_crawler.crawl(keyword=keyword, filters={'safe': 'strict'}, offset=offset, max_num=35, min_size=(400, 400))
-            except Exception as e:
-                print(f"Warning: Bing crawl failed: {e}")
-
-            downloaded_files = glob.glob(os.path.join(keyword_dir, "*.*"))
-            image_paths = []
-            target_size = (720, 1280)
-            for full_path in downloaded_files:
-                if len(image_paths) >= 25:
-                    break
-                try:
-                    img = Image.open(full_path).convert("RGB")
-                    img_ratio = img.width / img.height
-                    target_ratio = target_size[0] / target_size[1]
-                    if img_ratio > target_ratio:
-                        new_height = target_size[1]
-                        new_width = int(new_height * img_ratio)
-                    else:
-                        new_width = target_size[0]
-                        new_height = int(new_width / img_ratio)
-                    img = img.resize((new_width, new_height), Image.LANCZOS)
-                    left = (new_width - target_size[0]) // 2
-                    top = (new_height - target_size[1]) // 2
-                    img = img.crop((left, top, left + target_size[0], top + target_size[1]))
-                    img.save(full_path, "JPEG", quality=85)
-                    image_paths.append(full_path)
-                except:
-                    try: os.remove(full_path)
-                    except: pass
-                    continue
-            print(f"Retrieved {len(image_paths)} valid images")
-            return image_paths
-
-        keyword = title_text[:50]
-        additional_images = download_images_with_icrawler(keyword, 25, output_dir)
-        image_paths = [title_image_path] + additional_images[:25]
+        # ==================== TẢI ẢNH BING (ĐÃ TẮT ĐỂ CHỐNG 18+) ====================
+        # Đã vô hiệu hóa theo yêu cầu để tránh rủi ro tải nhầm ảnh nhạy cảm
+        image_paths = [title_image_path]
         print(f"Total images used: {len(image_paths)}")
 
         # ==================== TẠO VIDEO ====================
