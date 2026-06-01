@@ -2,6 +2,7 @@ import os
 import re
 import requests
 import subprocess
+import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 from moviepy.editor import ImageClip, concatenate_videoclips, AudioFileClip
 import glob
