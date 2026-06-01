@@ -232,11 +232,7 @@ for worksheet_name in WORKSHEET_LIST:
                 text_draw.text((text_x, current_y), line, font=font, fill=(255, 255, 255), stroke_width=2, stroke_fill=(0, 0, 0))
                 current_y += (text_bbox[3] - text_bbox[1]) + line_spacing
 
-            target_center_y = 1280 - (1280 // 3)
-            text_y = target_center_y - (text_area_height // 2)
-            text_y = max(0, text_y)
-            bg_image = bg_image.convert("RGBA")
-            bg_image.paste(text_area, (0, text_y), text_area)
+            # Không dán text_area vào bg_image nữa để bg_image là nền trơn (phục vụ hiệu ứng panning)
             bg_image = bg_image.convert("RGB")
             bg_image.save(output_path)
             print(f"Saved title image: {output_path}")
