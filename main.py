@@ -277,33 +277,42 @@ for worksheet_name in WORKSHEET_LIST:
                     image_paths.pop()
 
             for i, (img_path, duration) in enumerate(zip(image_paths, durations)):
-                if duration <= 0:
-                    continue
                 try:
                     img = Image.open(img_path).convert("RGB")
-                    target_size = (720, 1280)
                     img_ratio = img.width / img.height
-                    target_ratio = target_size[0] / target_size[1]
+                    target_ratio = 720 / 1280
+                    
                     if img_ratio > target_ratio:
-                        new_height = target_size[1]
+                        new_height = 1280
                         new_width = int(new_height * img_ratio)
                     else:
-                        new_width = target_size[0]
+                        new_width = 720
                         new_height = int(new_width / img_ratio)
+                        
                     img = img.resize((new_width, new_height), Image.LANCZOS)
-                    left = (new_width - target_size[0]) // 2
-                    top = (new_height - target_size[1]) // 2
-                    img = img.crop((left, top, left + target_size[0], top + target_size[1]))
+                    left = (new_width - 720) // 2
+                    top = (new_height - 1280) // 2
+                    img = img.crop((left, top, left + 720, top + 1280))
+                    
+                    # Thêm lớp phủ văn bản vào img trước khi làm hiệu ứng
                     img = img.convert("RGBA")
-
                     target_center_y = 1280 - (1280 // 3)
                     text_y = target_center_y - (text_overlay.height // 2)
                     text_y = max(0, text_y)
                     img.paste(text_overlay, (0, text_y), text_overlay)
-
-                    temp_path = os.path.join(output_dir, f"temp_frame_{i}.png")
-                    img.convert("RGB").save(temp_path)
-                    clip = ImageClip(temp_path, duration=duration).set_position('center')
+                    
+                    # Khởi tạo ImageClip
+                    np_img = np.array(img.convert("RGB"))
+                    clip = ImageClip(np_img).set_duration(duration)
+                    
+                    # Thêm hiệu ứng zoom-in chậm
+                    def zoom(t):
+                        # Zoom từ 100% lên 110% trong thời gian duration
+                        return 1.0 + 0.1 * (t / duration)
+                        
+                    clip = clip.resize(zoom)
+                    clip = clip.crop(x_center=360, y_center=640, width=720, height=1280)
+                    
                     clips.append(clip)
                     print(f"Image {i}: {duration:.1f}s")
                 except Exception as e:
