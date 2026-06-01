@@ -302,34 +302,40 @@ for worksheet_name in WORKSHEET_LIST:
                     # Chọn ngẫu nhiên hướng di chuyển của camera
                     effect = random.choice(['pan_left', 'pan_right', 'pan_up', 'pan_down'])
                     
-                    # text_overlay có kích thước 720x1280, tạo mask và RGB sẵn để dùng cho numpy
+                    # Chuẩn bị thông số để blend text overlay (text_overlay có kích thước 720xH)
                     text_np = np.array(text_overlay)
                     text_rgb = text_np[:, :, :3]
                     text_alpha = (text_np[:, :, 3:4] / 255.0)
+                    
+                    target_center_y = 1280 - (1280 // 3)
+                    text_y = target_center_y - (text_overlay.height // 2)
+                    text_y = max(0, text_y)
                     
                     def pan_and_overlay(get_frame, t):
                         frame = get_frame(t)
                         progress = t / duration
                         
-                        if effect == 'pan_left': # Chuyển động sang trái
+                        if effect == 'pan_left':
                             x1 = int((1.0 - progress) * (828 - 720))
                             y1 = (1472 - 1280) // 2
-                        elif effect == 'pan_right': # Chuyển động sang phải
+                        elif effect == 'pan_right':
                             x1 = int(progress * (828 - 720))
                             y1 = (1472 - 1280) // 2
-                        elif effect == 'pan_up': # Chuyển động lên
+                        elif effect == 'pan_up':
                             x1 = (828 - 720) // 2
                             y1 = int((1.0 - progress) * (1472 - 1280))
-                        else: # pan_down # Chuyển động xuống
+                        else: # pan_down
                             x1 = (828 - 720) // 2
                             y1 = int(progress * (1472 - 1280))
                             
-                        # Cắt khung hình 720x1280
-                        cropped = frame[y1:y1+1280, x1:x1+720]
+                        # Cắt khung hình 720x1280 từ ảnh nền to
+                        cropped = frame[y1:y1+1280, x1:x1+720].copy()
                         
-                        # Blend text overlay bằng numpy (siêu nhanh)
-                        blended = cropped * (1.0 - text_alpha) + text_rgb * text_alpha
-                        return blended.astype(np.uint8)
+                        # Blend text overlay bằng numpy vào đúng tọa độ text_y
+                        roi = cropped[text_y:text_y+text_overlay.height, :]
+                        cropped[text_y:text_y+text_overlay.height, :] = roi * (1.0 - text_alpha) + text_rgb * text_alpha
+                        
+                        return cropped.astype(np.uint8)
                         
                     clip = clip.fl(lambda gf, t: pan_and_overlay(gf, t))
                     
