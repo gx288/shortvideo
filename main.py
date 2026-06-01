@@ -262,7 +262,7 @@ for worksheet_name in WORKSHEET_LIST:
                 for offset in [0, 35]:
                     if len(glob.glob(os.path.join(keyword_dir, "*.jpg"))) >= 30:
                         break
-                    bing_crawler.crawl(keyword=keyword, offset=offset, max_num=35, min_size=(400, 400))
+                    bing_crawler.crawl(keyword=keyword, filters={'safe': 'strict'}, offset=offset, max_num=35, min_size=(400, 400))
             except Exception as e:
                 print(f"Warning: Bing crawl failed: {e}")
 
