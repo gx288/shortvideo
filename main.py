@@ -1,4 +1,7 @@
 import os
+os.environ["GRPC_ENABLE_FORK_SUPPORT"] = "1"
+os.environ["GRPC_POLL_STRATEGY"] = "poll"
+
 import re
 import requests
 import subprocess
