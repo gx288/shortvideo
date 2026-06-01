@@ -280,43 +280,62 @@ for worksheet_name in WORKSHEET_LIST:
                 try:
                     img = Image.open(img_path).convert("RGB")
                     img_ratio = img.width / img.height
-                    target_ratio = 720 / 1280
                     
+                    # Kích thước khung hình lớn hơn 15% (828x1472) để có dư không gian cho Panning
+                    target_ratio = 828 / 1472
                     if img_ratio > target_ratio:
-                        new_height = 1280
+                        new_height = 1472
                         new_width = int(new_height * img_ratio)
                     else:
-                        new_width = 720
+                        new_width = 828
                         new_height = int(new_width / img_ratio)
                         
                     img = img.resize((new_width, new_height), Image.LANCZOS)
-                    left = (new_width - 720) // 2
-                    top = (new_height - 1280) // 2
-                    img = img.crop((left, top, left + 720, top + 1280))
+                    left = (new_width - 828) // 2
+                    top = (new_height - 1472) // 2
+                    img = img.crop((left, top, left + 828, top + 1472))
                     
-                    # Thêm lớp phủ văn bản vào img trước khi làm hiệu ứng
-                    img = img.convert("RGBA")
-                    target_center_y = 1280 - (1280 // 3)
-                    text_y = target_center_y - (text_overlay.height // 2)
-                    text_y = max(0, text_y)
-                    img.paste(text_overlay, (0, text_y), text_overlay)
-                    
-                    # Khởi tạo ImageClip
                     np_img = np.array(img.convert("RGB"))
                     clip = ImageClip(np_img).set_duration(duration)
                     
-                    # Thêm hiệu ứng zoom-in chậm
-                    def zoom(t):
-                        # Zoom từ 100% lên 110% trong thời gian duration
-                        return 1.0 + 0.1 * (t / duration)
+                    # Chọn ngẫu nhiên hướng di chuyển của camera
+                    effect = random.choice(['pan_left', 'pan_right', 'pan_up', 'pan_down'])
+                    
+                    # text_overlay có kích thước 720x1280, tạo mask và RGB sẵn để dùng cho numpy
+                    text_np = np.array(text_overlay)
+                    text_rgb = text_np[:, :, :3]
+                    text_alpha = (text_np[:, :, 3:4] / 255.0)
+                    
+                    def pan_and_overlay(get_frame, t):
+                        frame = get_frame(t)
+                        progress = t / duration
                         
-                    clip = clip.resize(zoom)
-                    clip = clip.crop(x_center=360, y_center=640, width=720, height=1280)
+                        if effect == 'pan_left': # Chuyển động sang trái
+                            x1 = int((1.0 - progress) * (828 - 720))
+                            y1 = (1472 - 1280) // 2
+                        elif effect == 'pan_right': # Chuyển động sang phải
+                            x1 = int(progress * (828 - 720))
+                            y1 = (1472 - 1280) // 2
+                        elif effect == 'pan_up': # Chuyển động lên
+                            x1 = (828 - 720) // 2
+                            y1 = int((1.0 - progress) * (1472 - 1280))
+                        else: # pan_down # Chuyển động xuống
+                            x1 = (828 - 720) // 2
+                            y1 = int(progress * (1472 - 1280))
+                            
+                        # Cắt khung hình 720x1280
+                        cropped = frame[y1:y1+1280, x1:x1+720]
+                        
+                        # Blend text overlay bằng numpy (siêu nhanh)
+                        blended = cropped * (1.0 - text_alpha) + text_rgb * text_alpha
+                        return blended.astype(np.uint8)
+                        
+                    clip = clip.fl(lambda gf, t: pan_and_overlay(gf, t))
                     
                     clips.append(clip)
-                    print(f"Image {i}: {duration:.1f}s")
+                    print(f"Image {i}: {duration:.1f}s - Effect: {effect}")
                 except Exception as e:
-                    print(f"Warning: Failed to process image {i}: {e}")
+                    print(f"Error processing image {img_path}: {e}")
                     continue
 
             if not clips:
