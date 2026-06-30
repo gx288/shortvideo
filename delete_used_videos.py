@@ -34,9 +34,10 @@ for worksheet in spreadsheet.worksheets():
     link_col = None
     status_col = None
     for idx, val in enumerate(header, 1):
-        if val.strip() == "Link video":
+        c = str(val).strip().lower()
+        if c == "link video":
             link_col = idx
-        elif val.strip() == "Đã đăng video?":
+        elif c == "đã đăng video?":
             status_col = idx
             
     if not link_col or not status_col:
