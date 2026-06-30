@@ -28,7 +28,13 @@ except Exception as e:
 # Danh sách tên các file CẦN GIỮ LẠI (Chưa đăng)
 keep_filenames = set()
 
-for worksheet in spreadsheet.worksheets():
+for worksheet_name in ["LiveScience_Raw"]:
+    try:
+        worksheet = spreadsheet.worksheet(worksheet_name)
+    except Exception as e:
+        print(f"Không tìm thấy sheet {worksheet_name}")
+        continue
+        
     print(f"\nKiểm tra sheet: {worksheet.title}")
     header = worksheet.row_values(1)
     link_col = None
