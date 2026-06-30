@@ -400,9 +400,14 @@ for worksheet_name in WORKSHEET_LIST:
             video_url = f"https://raw.githubusercontent.com/gx288/shortvideo/main/output/output_video_{clean_title}.mp4"
             try:
                 worksheet.update_cell(selected_row_num, LINK_COL, video_url)
-                # Ghi dung lượng vào cột P (cột số 16)
-                worksheet.update_cell(selected_row_num, 16, f"{file_size_mb:.2f} MB")
-                print(f"✅ Đã ghi link trực tiếp vào dòng {selected_row_num}, cột {LINK_COL} và dung lượng vào cột 16 (P)")
+                # Chỉ ghi dung lượng vào cột P (cột số 16) nếu dung lượng >= 5MB
+                if file_size_mb >= 5.0:
+                    worksheet.update_cell(selected_row_num, 16, f"{file_size_mb:.2f} MB")
+                    print(f"⚠️ Video >= 5MB. Đã ghi dung lượng vào cột 16 (P)")
+                else:
+                    worksheet.update_cell(selected_row_num, 16, "")
+                
+                print(f"✅ Đã ghi link trực tiếp vào dòng {selected_row_num}, cột {LINK_COL}")
             except Exception as e:
                 print(f"❌ Lỗi khi cập nhật sheet: {e}")
                 
