@@ -17,7 +17,7 @@ import unicodedata
 
 # ==================== CẤU HÌNH ====================
 NUM_VIDEOS_TO_CREATE = 1
-WORKSHEET_LIST = ["Khoahocyhoc"]
+WORKSHEET_LIST = ["LiveScience_Raw"]
 Image.ANTIALIAS = Image.LANCZOS
 
 # ==================== HÀM HỖ TRỢ ====================
@@ -43,16 +43,35 @@ SHEET_ID = '14tqKftTqlesnb0NqJZU-_f1EsWWywYqO36NiuDdmaTo'
 
 def get_column_indices(worksheet):
     header = worksheet.row_values(1)
-    link_col = None
-    status_col = None
+    cols = {
+        "link": None,
+        "status": None,
+        "title": None,
+        "content": None,
+        "image": None
+    }
+    
     for idx, cell in enumerate(header, 1):
-        if cell.strip() == "Link video":
-            link_col = idx
-        elif cell.strip() == "Đã đăng video?":
-            status_col = idx
-    if not link_col or not status_col:
-        raise ValueError("Không tìm thấy cột 'Link video' hoặc 'Đã đăng video?'")
-    return {"link": link_col, "status": status_col}
+        c = str(cell).strip().lower()
+        if c == "link video":
+            cols["link"] = idx
+        elif c == "đã đăng video?":
+            cols["status"] = idx
+        elif "tiêu đề" in c and "việt" in c:
+            cols["title"] = idx
+        elif "nội dung" in c and "việt" in c:
+            cols["content"] = idx
+        elif c in ["ảnh nền", "image url", "image", "ảnh"]:
+            cols["image"] = idx
+            
+    # Fallback cho form cũ (Khoahocyhoc)
+    if not cols["link"]: cols["link"] = 11
+    if not cols["status"]: cols["status"] = 12
+    if not cols["title"]: cols["title"] = 2
+    if not cols["content"]: cols["content"] = 2
+    if not cols["image"]: cols["image"] = 4
+    
+    return cols
 
 videos_created = 0
 
@@ -70,7 +89,10 @@ for worksheet_name in WORKSHEET_LIST:
         cols = get_column_indices(worksheet)
         LINK_COL = cols["link"]
         STATUS_COL = cols["status"]
-        print(f"Tìm thấy: Link video = cột {LINK_COL}, Đã đăng video? = cột {STATUS_COL}")
+        TITLE_COL = cols["title"]
+        CONTENT_COL = cols["content"]
+        IMAGE_COL = cols["image"]
+        print(f"Tìm thấy các cột: Title={TITLE_COL}, Content={CONTENT_COL}, Image={IMAGE_COL}, Link={LINK_COL}, Status={STATUS_COL}")
     except ValueError as e:
         print(f"Lỗi tiêu đề cột trong sheet '{worksheet_name}': {e}")
         continue
@@ -79,7 +101,7 @@ for worksheet_name in WORKSHEET_LIST:
     for i, row in enumerate(rows):
         if videos_created >= NUM_VIDEOS_TO_CREATE:
             break
-        if i == 0:
+        if i == 0: # Bỏ qua header
             continue
 
         link_value = row[LINK_COL - 1].strip() if len(row) >= LINK_COL else ""
@@ -90,24 +112,31 @@ for worksheet_name in WORKSHEET_LIST:
 
         # ==================== LƯU THÔNG TIN DÒNG ====================
         selected_row_num = i + 1
-
-
         selected_row = row
-        raw_content = selected_row[1] if len(selected_row) > 1 else ''
-        raw_content = re.sub(r'\*+', '', raw_content)
-        raw_content = re.sub(r'[\U0001F600-\U0001F64F\U0001F300-\U0001F5FF\U0001F680-\U0001F6FF\U0001F1E0-\U0001F1FF\U00002702-\U000027B0\U000024C2-\U0001F251]+', '', raw_content)
-        raw_content = re.sub(r'#\w+\s*', '', raw_content)
-
-        lines = [line.strip() for line in raw_content.split('\n') if line.strip()]
-        title_text = lines[0].replace('Tiêu đề:', '').strip() if lines else 'Untitled'
-        content_text = '\n'.join(lines[1:]) if len(lines) > 1 else title_text
         
+        raw_title = selected_row[TITLE_COL - 1] if len(selected_row) >= TITLE_COL else ''
+        raw_content = selected_row[CONTENT_COL - 1] if len(selected_row) >= CONTENT_COL else ''
+        
+        # Nếu dùng chung 1 cột (như form cũ Khoahocyhoc)
+        if TITLE_COL == CONTENT_COL:
+            raw_text = raw_title
+            raw_text = re.sub(r'\*+', '', raw_text)
+            raw_text = re.sub(r'[\U0001F600-\U0001F64F\U0001F300-\U0001F5FF\U0001F680-\U0001F6FF\U0001F1E0-\U0001F1FF\U00002702-\U000027B0\U000024C2-\U0001F251]+', '', raw_text)
+            raw_text = re.sub(r'#\w+\s*', '', raw_text)
+            lines = [line.strip() for line in raw_text.split('\n') if line.strip()]
+            title_text = lines[0].replace('Tiêu đề:', '').strip() if lines else 'Untitled'
+            content_text = '\n'.join(lines[1:]) if len(lines) > 1 else title_text
+        else:
+            # Nếu đã tách riêng cột Tiêu đề và Nội dung (LiveScience_Raw)
+            title_text = re.sub(r'\*+', '', raw_title).strip()
+            content_text = re.sub(r'\*+', '', raw_content).strip()
+            
         clean_title = clean_filename(title_text)
 
         print(f"Original title: {title_text}")
         print(f"Clean title: {clean_title}")
 
-        bg_image_url = selected_row[3] if len(selected_row) > 3 else 'https://via.placeholder.com/1080x1920?text=No+Image'
+        bg_image_url = selected_row[IMAGE_COL - 1] if len(selected_row) >= IMAGE_COL else 'https://via.placeholder.com/1080x1920?text=No+Image'
 
         # ==================== TTS ====================
         print("Stage 2: Creating audio with Google Cloud TTS...")
