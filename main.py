@@ -337,24 +337,24 @@ for worksheet_name in WORKSHEET_LIST:
                     
                     def pan_and_overlay(get_frame, t):
                         frame = get_frame(t)
-                        # Hiệu ứng Ping-Pong: di chuyển qua lại mỗi 10 giây
-                        cycle_time = 10.0
+                        # Chu kỳ 24s -> đi 1 chiều mất 12s, tốc độ mượt hơn rất nhiều
+                        cycle_time = 24.0
                         cycle_pos = (t % cycle_time) / (cycle_time / 2) # Đi từ 0 -> 2
                         progress = cycle_pos if cycle_pos <= 1.0 else 2.0 - cycle_pos
                         
-                        # Không gian trống để di chuyển: 900 - 720 = 180 (chiều ngang), 1600 - 1280 = 320 (chiều dọc)
+                        # Chuyển động chéo (Diagonal) cả X và Y để video sinh động hơn
                         if effect == 'pan_left':
                             x1 = int((1.0 - progress) * 180)
-                            y1 = 160 # (1600 - 1280) // 2
+                            y1 = int((1.0 - progress) * 320)
                         elif effect == 'pan_right':
                             x1 = int(progress * 180)
-                            y1 = 160
-                        elif effect == 'pan_up':
-                            x1 = 90 # (900 - 720) // 2
-                            y1 = int((1.0 - progress) * 320)
-                        else: # pan_down
-                            x1 = 90
                             y1 = int(progress * 320)
+                        elif effect == 'pan_up':
+                            x1 = int((1.0 - progress) * 180)
+                            y1 = int(progress * 320)
+                        else: # pan_down
+                            x1 = int(progress * 180)
+                            y1 = int((1.0 - progress) * 320)
                             
                         # Cắt khung hình 720x1280 từ ảnh nền to 900x1600
                         cropped = frame[y1:y1+1280, x1:x1+720].copy()
@@ -368,7 +368,7 @@ for worksheet_name in WORKSHEET_LIST:
                     clip = clip.fl(lambda gf, t: pan_and_overlay(gf, t))
                     
                     clips.append(clip)
-                    print(f"Image {i}: {duration:.1f}s - Effect: {effect}")
+                    print(f"Image {i}: {duration:.1f}s - Effect: {effect} (Diagonal)")
                 except Exception as e:
                     print(f"Error processing image {img_path}: {e}")
                     continue
@@ -383,8 +383,8 @@ for worksheet_name in WORKSHEET_LIST:
                     output_path,
                     codec="libx265",
                     audio_codec="aac",
-                    fps=15,
-                    bitrate="300k",
+                    fps=30,  # Tăng FPS lên 30 để khung hình mượt mà không bị giật
+                    bitrate="500k",
                     audio_bitrate="96k",
                     ffmpeg_params=["-preset", "medium"]
                 )
