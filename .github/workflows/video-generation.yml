@@ -96,7 +96,8 @@ jobs:
             echo "Không có file mới để commit."
           else
             git commit -m "Add $RUN_COUNT new auto-generated video(s) [$(date '+%Y-%m-%d')]"
-            git push
+            git pull --rebase origin main
+            git push origin main
             echo "✅ Đã commit & push thành công $RUN_COUNT video."
           fi
 

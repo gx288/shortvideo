@@ -103,7 +103,8 @@ else:
         subprocess.run(["git", "config", "--global", "user.name", "github-actions[bot]"], check=True)
         subprocess.run(["git", "config", "--global", "user.email", "github-actions[bot]@users.noreply.github.com"], check=True)
         subprocess.run(["git", "commit", "-m", f"Auto delete {deleted_count} used/extra videos"], check=True, capture_output=True)
-        subprocess.run(["git", "push"], check=True, capture_output=True)
+        subprocess.run(["git", "pull", "--rebase", "origin", "main"], check=True, capture_output=True)
+        subprocess.run(["git", "push", "origin", "main"], check=True, capture_output=True)
         print("🎉 ĐÃ XÓA TRÊN GITHUB THÀNH CÔNG! Thư mục repo đã sạch sẽ.")
     except Exception as e:
         print(f"⚠️ Lỗi khi đồng bộ lên GitHub (Có thể do không có quyền push): {e}")
