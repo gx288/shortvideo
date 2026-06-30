@@ -57,19 +57,24 @@ def get_column_indices(worksheet):
             cols["link"] = idx
         elif c == "đã đăng video?":
             cols["status"] = idx
-        elif "tiêu đề" in c and "việt" in c:
+        elif ("tiêu đề" in c or "title" in c) and "việt" in c:
             cols["title"] = idx
-        elif "nội dung" in c and "việt" in c:
+        elif ("nội dung" in c or "content" in c or "bài" in c) and "việt" in c:
             cols["content"] = idx
-        elif c in ["ảnh nền", "image url", "image", "ảnh"]:
+        elif c in ["ảnh nền", "image url", "image", "ảnh", "thumbnail"]:
             cols["image"] = idx
             
-    # Fallback cho form cũ (Khoahocyhoc)
-    if not cols["link"]: cols["link"] = 11
-    if not cols["status"]: cols["status"] = 12
-    if not cols["title"]: cols["title"] = 2
-    if not cols["content"]: cols["content"] = 2
-    if not cols["image"]: cols["image"] = 4
+    # Xóa các fallback ngầm để tránh bắt nhầm cột (như lấy nhầm cột Date)
+    missing = []
+    if not cols["link"]: missing.append("Link video")
+    if not cols["status"]: missing.append("Đã đăng video?")
+    if not cols["title"]: missing.append("Tiêu đề (Tiếng Việt)")
+    if not cols["content"]: missing.append("Nội dung (Tiếng Việt)")
+    if not cols["image"]: missing.append("Ảnh nền / Image")
+    
+    if missing:
+        headers_str = ", ".join([str(h) for h in header])
+        raise ValueError(f"Thiếu các cột: {', '.join(missing)}. Các cột hiện có là: {headers_str}")
     
     return cols
 
