@@ -296,38 +296,29 @@ for worksheet_name in WORKSHEET_LIST:
 
             text_overlay = Image.open(text_overlay_path).convert("RGBA")
             clips = []
-            durations = [7.0] + [2.0] * (len(image_paths) - 1)
-            total_duration = sum(durations)
-
-            while total_duration > audio_duration and len(durations) > 1:
-                durations.pop()
-                image_paths.pop()
-                total_duration = sum(durations)
-
-            if total_duration > audio_duration:
-                durations[-1] = audio_duration - sum(durations[:-1])
-                if durations[-1] < 0.5:
-                    durations.pop()
-                    image_paths.pop()
+            
+            # Vì chỉ dùng 1 ảnh nền, ta thiết lập thời lượng của nó bằng luôn audio_duration
+            durations = [audio_duration]
 
             for i, (img_path, duration) in enumerate(zip(image_paths, durations)):
                 try:
                     img = Image.open(img_path).convert("RGB")
                     img_ratio = img.width / img.height
                     
-                    # Kích thước khung hình lớn hơn 15% (828x1472) để có dư không gian cho Panning
-                    target_ratio = 828 / 1472
+                    # Tăng kích thước khung hình lên 900x1600 để có nhiều không gian panning hơn
+                    target_ratio = 900 / 1600
                     if img_ratio > target_ratio:
-                        new_height = 1472
+                        new_height = 1600
                         new_width = int(new_height * img_ratio)
                     else:
-                        new_width = 828
+                        new_width = 900
                         new_height = int(new_width / img_ratio)
                         
                     img = img.resize((new_width, new_height), Image.LANCZOS)
-                    left = (new_width - 828) // 2
-                    top = (new_height - 1472) // 2
-                    img = img.crop((left, top, left + 828, top + 1472))
+                    # Cắt lấy vùng trung tâm 900x1600
+                    left = (new_width - 900) // 2
+                    top = (new_height - 1600) // 2
+                    img = img.crop((left, top, left + 900, top + 1600))
                     
                     np_img = np.array(img.convert("RGB"))
                     clip = ImageClip(np_img).set_duration(duration)
@@ -346,22 +337,26 @@ for worksheet_name in WORKSHEET_LIST:
                     
                     def pan_and_overlay(get_frame, t):
                         frame = get_frame(t)
-                        progress = t / duration
+                        # Hiệu ứng Ping-Pong: di chuyển qua lại mỗi 10 giây
+                        cycle_time = 10.0
+                        cycle_pos = (t % cycle_time) / (cycle_time / 2) # Đi từ 0 -> 2
+                        progress = cycle_pos if cycle_pos <= 1.0 else 2.0 - cycle_pos
                         
+                        # Không gian trống để di chuyển: 900 - 720 = 180 (chiều ngang), 1600 - 1280 = 320 (chiều dọc)
                         if effect == 'pan_left':
-                            x1 = int((1.0 - progress) * (828 - 720))
-                            y1 = (1472 - 1280) // 2
+                            x1 = int((1.0 - progress) * 180)
+                            y1 = 160 # (1600 - 1280) // 2
                         elif effect == 'pan_right':
-                            x1 = int(progress * (828 - 720))
-                            y1 = (1472 - 1280) // 2
+                            x1 = int(progress * 180)
+                            y1 = 160
                         elif effect == 'pan_up':
-                            x1 = (828 - 720) // 2
-                            y1 = int((1.0 - progress) * (1472 - 1280))
+                            x1 = 90 # (900 - 720) // 2
+                            y1 = int((1.0 - progress) * 320)
                         else: # pan_down
-                            x1 = (828 - 720) // 2
-                            y1 = int(progress * (1472 - 1280))
+                            x1 = 90
+                            y1 = int(progress * 320)
                             
-                        # Cắt khung hình 720x1280 từ ảnh nền to
+                        # Cắt khung hình 720x1280 từ ảnh nền to 900x1600
                         cropped = frame[y1:y1+1280, x1:x1+720].copy()
                         
                         # Blend text overlay bằng numpy vào đúng tọa độ text_y
