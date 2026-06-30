@@ -57,9 +57,9 @@ def get_column_indices(worksheet):
             cols["link"] = idx
         elif c == "đã đăng video?":
             cols["status"] = idx
-        elif ("tiêu đề" in c or "title" in c) and "việt" in c:
+        elif "translatedtitle" in c or (("tiêu đề" in c or "title" in c) and "việt" in c):
             cols["title"] = idx
-        elif ("nội dung" in c or "content" in c or "bài" in c) and "việt" in c:
+        elif "translatedcontent" in c or (("nội dung" in c or "content" in c or "bài" in c) and "việt" in c):
             cols["content"] = idx
         elif c in ["ảnh nền", "image url", "image", "ảnh", "thumbnail"]:
             cols["image"] = idx
@@ -68,9 +68,9 @@ def get_column_indices(worksheet):
     missing = []
     if not cols["link"]: missing.append("Link video")
     if not cols["status"]: missing.append("Đã đăng video?")
-    if not cols["title"]: missing.append("Tiêu đề (Tiếng Việt)")
-    if not cols["content"]: missing.append("Nội dung (Tiếng Việt)")
-    if not cols["image"]: missing.append("Ảnh nền / Image")
+    if not cols["title"]: missing.append("TranslatedTitle / Tiêu đề (Tiếng Việt)")
+    if not cols["content"]: missing.append("TranslatedContent / Nội dung (Tiếng Việt)")
+    if not cols["image"]: missing.append("Image / Ảnh nền")
     
     if missing:
         headers_str = ", ".join([str(h) for h in header])
