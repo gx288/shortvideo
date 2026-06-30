@@ -335,26 +335,18 @@ for worksheet_name in WORKSHEET_LIST:
                     text_y = target_center_y - (text_overlay.height // 2)
                     text_y = max(0, text_y)
                     
+                    import math
                     def pan_and_overlay(get_frame, t):
                         frame = get_frame(t)
-                        # Chu kỳ 24s -> đi 1 chiều mất 12s, tốc độ mượt hơn rất nhiều
-                        cycle_time = 24.0
-                        cycle_pos = (t % cycle_time) / (cycle_time / 2) # Đi từ 0 -> 2
-                        progress = cycle_pos if cycle_pos <= 1.0 else 2.0 - cycle_pos
+                        # Sử dụng đường cong Lissajous (Sine waves với chu kỳ khác nhau) 
+                        # để tạo cảm giác camera trôi nổi tự do (đi khắp các hướng) mà không bao giờ lặp lại chính xác.
+                        # Tốc độ X: 1 vòng / 20 giây. Tốc độ Y: 1 vòng / 30 giây.
+                        progress_x = (math.sin(t * (2 * math.pi / 20.0)) + 1.0) / 2.0
+                        progress_y = (math.sin(t * (2 * math.pi / 30.0)) + 1.0) / 2.0
                         
-                        # Chuyển động chéo (Diagonal) cả X và Y để video sinh động hơn
-                        if effect == 'pan_left':
-                            x1 = int((1.0 - progress) * 180)
-                            y1 = int((1.0 - progress) * 320)
-                        elif effect == 'pan_right':
-                            x1 = int(progress * 180)
-                            y1 = int(progress * 320)
-                        elif effect == 'pan_up':
-                            x1 = int((1.0 - progress) * 180)
-                            y1 = int(progress * 320)
-                        else: # pan_down
-                            x1 = int(progress * 180)
-                            y1 = int((1.0 - progress) * 320)
+                        # Không gian trống: 180px chiều X, 320px chiều Y
+                        x1 = int(progress_x * 180)
+                        y1 = int(progress_y * 320)
                             
                         # Cắt khung hình 720x1280 từ ảnh nền to 900x1600
                         cropped = frame[y1:y1+1280, x1:x1+720].copy()
@@ -368,7 +360,7 @@ for worksheet_name in WORKSHEET_LIST:
                     clip = clip.fl(lambda gf, t: pan_and_overlay(gf, t))
                     
                     clips.append(clip)
-                    print(f"Image {i}: {duration:.1f}s - Effect: {effect} (Diagonal)")
+                    print(f"Image {i}: {duration:.1f}s - Effect: Wandering (Lissajous)")
                 except Exception as e:
                     print(f"Error processing image {img_path}: {e}")
                     continue
@@ -383,8 +375,8 @@ for worksheet_name in WORKSHEET_LIST:
                     output_path,
                     codec="libx265",
                     audio_codec="aac",
-                    fps=30,  # Tăng FPS lên 30 để khung hình mượt mà không bị giật
-                    bitrate="500k",
+                    fps=30,  # Giữ nguyên FPS 30 để video mượt
+                    bitrate="350k",  # Hạ bitrate xuống 350k để ép dung lượng xuống quanh mức 3MB
                     audio_bitrate="96k",
                     ffmpeg_params=["-preset", "medium"]
                 )
