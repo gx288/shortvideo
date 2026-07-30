@@ -1,30 +1,34 @@
 # 📋 DANH SÁCH VIỆC CẦN USER THỰC HIỆN (USER_ACTIONS.md)
 
-Tài liệu này tổng hợp các công việc cần bạn (User) thao tác thủ công khi cần thiết. 
-Mỗi khi có việc mới, Agent sẽ cập nhật vào file này.
+Tài liệu này tổng hợp các thao tác thủ công bạn (User) có thể thực hiện trên GitHub UI hoặc Make.com.
 
 ---
 
-## 🟢 CÁC VIỆC CẦN LÀM HIỆN TẠI (Tùy chọn nâng cao)
+## 🚀 1. KÍCH HOẠT TẠO VIDEO TRÊN GITHUB ACTIONS (Cloud Render)
 
-### 1. Thêm Secret `GEMINI_API_KEY` trên GitHub (Để dùng Gemini AI viết lại kịch bản)
-- **Mục đích**: Giúp Gemini AI tự động viết lại câu chuyện hay hơn, giữ chân người xem video Shorts.
-- **Thực hiện**:
-  1. Vào [GitHub Repo Settings → Secrets and variables → Actions](https://github.com/gx288/shortvideo/settings/secrets/actions)
-  2. Click **New repository secret**
-  3. **Name**: `GEMINI_API_KEY`
-  4. **Value**: Điền API key Gemini của bạn (lấy free tại [Google AI Studio](https://aistudio.google.com/))
-  5. Click **Add secret**
+Mọi quá trình render video nặng (FFmpeg, MoviePy, ghép TTS, cập nhật Google Sheets) được chạy 100% trên đám mây của **GitHub Actions** để không tốn RAM/CPU máy local.
 
----
-
-### 2. Tùy chỉnh Hashtag video nền (Nếu muốn đổi chủ đề video)
-- **Mục đích**: Đổi danh sách hashtag để thu thập video nền theo sở thích (thay vì mặc định `#diy`, `#funny`, `#lifehack`).
-- **Thực hiện**:
-  - Mở file [instagram/hashtags.txt](file:///d:/AT/github/shortvideo/instagram/hashtags.txt) và điền các hashtag bạn muốn (mỗi hashtag 1 dòng).
+### 📌 Các bước kích hoạt trên GitHub:
+1. Vào link: [GitHub Actions - Generate Video Workflow](https://github.com/gx288/shortvideo/actions/workflows/video-generation.yml)
+2. Click nút **Run workflow** ở góc phải.
+3. Tùy chọn (để trống nếu muốn chạy tự động):
+   * **run_count**: Số video muốn tạo (ví dụ `1`, `2`, `3`).
+   * **video_url**: (Tùy chọn) Nhập link video TikTok/Reels cụ thể nếu muốn chỉ định video nền.
+4. Click **Run workflow** màu xanh.
 
 ---
 
-## ✅ TRẠNG THÁI HỆ THỐNG HIỆN TẠI
-- Pipeline tự động 100% không cần bạn làm gì thêm nếu dùng cấu hình mặc định.
-- Mọi hẹn giờ tự động chạy ngắn **120 giây (2 phút)** cho từng task.
+## ⚡ 2. KÍCH HOẠT QUA MAKE.COM (Tự động hóa 100%)
+- Bạn có thể tạo 1 HTTP Webhook trên Make.com để gọi GitHub API Trigger workflow tự động mà không cần vào trang GitHub:
+  - **URL**: `https://api.github.com/repos/gx288/shortvideo/actions/workflows/video-generation.yml/dispatches`
+  - **Method**: `POST`
+  - **Header**: `Authorization: token <GH_TOKEN>`
+  - **Body**: `{"ref": "main"}`
+
+---
+
+## 🔑 3. CÁC SECRETS ĐÃ CÓ TRÊN GITHUB REPO
+- `GH_TOKEN` (Đã có)
+- `GOOGLE_TTS_KEY` (Đã có)
+- `GOOGLE_SHEETS_KEY` (Đã có)
+- `GEMINI_API_KEY` (Tùy chọn - Thêm nếu muốn dùng Gemini AI viết kịch bản)
