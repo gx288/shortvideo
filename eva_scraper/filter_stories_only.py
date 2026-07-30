@@ -35,16 +35,16 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 LINKS_FILE = os.path.join("eva_scraper", "links_master.json")
 
-# Danh sách duy nhất các đường dẫn Chuyên mục CHUẨN CÂU CHUYỆN
+# Danh sách duy nhất các đường dẫn Chuyên mục CHUẨN CÂU CHUYỆN CẦN GIỮ LẠI
 ALLOWED_CATEGORIES = [
-    '/tam-su/', '/tinh-yeu-gioi-tinh/', '/chuyen-tinh-yeu/',
-    '/nghe-thuat-lam-vo/', '/me-chong-nang-dau/', '/bi-mat-phong-the/', '/goc-tam-su/'
+    '/tam-su/', '/nghe-thuat-lam-vo/', '/me-chong-nang-dau/', '/bi-mat-phong-the/', '/goc-tam-su/'
 ]
 
-# Chuyên mục Tin tức / Showbiz / Mẹ & Bé cần LOẠI BỎ HOÀN TOÀN
+# Chuyên mục Tin tức / Showbiz / Mẹ & Bé / Tình yêu - Giới tính cần LOẠI BỎ HOÀN TOÀN
 EXCLUDED_CATEGORIES = [
     '/day-con/', '/gia-dinh/', '/tin-tuc/', '/dinh-duong/',
-    '/chuyen-eva/', '/nuoi-con/', '/lam-me/', '/day-con'
+    '/chuyen-eva/', '/nuoi-con/', '/lam-me/', '/day-con',
+    '/tinh-yeu-gioi-tinh/', '/chuyen-tinh-yeu/'
 ]
 
 # Các từ khóa bài rác / trắc nghiệm / bói toán cần LOẠI BỎ
@@ -58,19 +58,25 @@ EXCLUDE_KEYWORDS = [
 
 def is_pure_story(url: str, info: dict) -> bool:
     url_lower = url.lower()
-    title = info.get("title", "").lower()
-    summary = info.get("summary", "").lower()
+    title = info.get("title", "").strip()
+    summary = info.get("summary", "").strip()
 
-    # 1. Loại bỏ nếu thuộc Chuyên mục Tin tức / Showbiz
+    # 1. Yêu cầu BẮT BUỘC: Phải có cả Tiêu đề và Mô tả Sapo (không được trống / quá ngắn / trùng tiêu đề)
+    if not title or len(title) < 10:
+        return False
+    if not summary or len(summary) < 15 or summary == title:
+        return False
+
+    # 2. Loại bỏ nếu thuộc Chuyên mục Tin tức / Showbiz
     if any(ex in url_lower for ex in EXCLUDED_CATEGORIES):
         return False
 
-    # 2. Phải thuộc đúng Chuyên mục Câu chuyện
+    # 3. Phải thuộc đúng Chuyên mục Câu chuyện
     if not any(allow in url_lower for allow in ALLOWED_CATEGORIES):
         return False
 
-    # 3. Loại bỏ nếu chứa từ khóa trắc nghiệm / tin tức showbiz
-    item_str = title + " " + summary + " " + url_lower
+    # 4. Loại bỏ nếu chứa từ khóa trắc nghiệm / tin tức showbiz
+    item_str = (title + " " + summary + " " + url_lower).lower()
     for kw in EXCLUDE_KEYWORDS:
         if kw in item_str:
             return False

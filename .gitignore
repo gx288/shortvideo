@@ -4,6 +4,7 @@
 !eva_scraper/*.json
 !eva_scraper/data/*.json
 !eva_scraper/scripts/*.json
+!afamily_scraper/*.json
 !instagram/*.json
 *_key.json
 google_tts_key.json
@@ -15,11 +16,10 @@ onedrive_token.json
 *.wav
 *.zip
 
-# ==================== TEMP / SCRATCH FILES ====================
+# ==================== TEMP / SCRATCH FILES / LOCAL VIEWERS ====================
 scratch/
 test_git/
 *.html
-!eva_scraper/*.html
 *_files/
 temp_*/
 __pycache__/
