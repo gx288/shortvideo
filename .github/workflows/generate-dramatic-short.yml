@@ -42,12 +42,7 @@ jobs:
       - name: Run Dramatic Short Video Creation Pipeline
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          IG_COOKIES: ${{ secrets.IG_COOKIES }}
         run: |
-          if [ -n "$IG_COOKIES" ]; then
-            echo "🍪 Đã tìm thấy Cookies Instagram, đang nạp vào yt-dlp..."
-            echo "$IG_COOKIES" > cookies.txt
-          fi
           echo "========================================"
           echo "🚀 BẮT ĐẦU TẠO ${{ github.event.inputs.video_count }} VIDEO SHORT DRAMA"
           echo "========================================"
