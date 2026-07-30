@@ -1,11 +1,27 @@
-# Bỏ qua các định dạng file nặng không cần thiết
+# ==================== SECRETS - KHÔNG BAO GIỜ COMMIT ====================
+*.json
+!package.json
+*_key.json
+google_tts_key.json
+google_sheets_key.json
+onedrive_token.json
+
+# ==================== MEDIA FILES ====================
 *.mp3
+*.wav
 *.zip
 
-# Bỏ qua các file tạm sinh ra trong quá trình chạy
+# ==================== TEMP FILES ====================
 temp_*/
 __pycache__/
 *.tmp
 current_sheet.txt
 current_row.txt
 clean_title.txt
+
+# ==================== OUTPUT (chỉ commit qua Actions) ====================
+output/*.mp4
+
+# ==================== ENV ====================
+.env
+.env.local

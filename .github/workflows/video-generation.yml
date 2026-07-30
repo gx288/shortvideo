@@ -4,105 +4,160 @@ permissions:
   contents: write
 
 on:
+  # ─── Tự động chạy mỗi ngày lúc 5:00 sáng giờ VN (22:00 UTC hôm trước) ───
   schedule:
-    - cron: '0 22 * * *'      # Chạy lúc 5:00 sáng giờ Việt Nam
+    - cron: '0 22 * * *'
+
+  # ─── Cho phép trigger thủ công hoặc qua Make.com / API ───
   workflow_dispatch:
     inputs:
       run_count:
-        description: 'Số video muốn tạo (mặc định 6)'
+        description: 'Số video muốn tạo (mặc định 3)'
         required: true
-        default: '6'
+        default: '3'
         type: string
+      video_url:
+        description: '[Tuỳ chọn] Link TikTok/Instagram làm nền video'
+        required: false
+        default: ''
+        type: string
+      story_url:
+        description: '[Tuỳ chọn] Link trang web câu chuyện cần scrape'
+        required: false
+        default: ''
+        type: string
+      upload_onedrive:
+        description: 'Upload video lên OneDrive sau khi tạo?'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
 
 jobs:
   generate-video:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
 
     steps:
+      # ─── 1. Checkout ───────────────────────────────────────────────────────
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           persist-credentials: true
 
+      # ─── 2. Cache apt ──────────────────────────────────────────────────────
       - name: Cache apt packages
         uses: actions/cache@v4
         with:
           path: /var/cache/apt/archives
-          key: apt-${{ runner.os }}-${{ hashFiles('**/video-generation.yml') }}
+          key: apt-${{ runner.os }}-ffmpeg-fonts
 
+      # ─── 3. Python ─────────────────────────────────────────────────────────
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.11'
           cache: 'pip'
 
+      # ─── 4. System deps ────────────────────────────────────────────────────
       - name: Install system dependencies
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu-core
-
-      - name: Install Python dependencies
         run: |
-          pip install \
-            Pillow==10.4.0 \
-            moviepy==1.0.3 \
-            requests==2.32.3 \
-            numpy==1.26.4 \
-            icrawler==0.6.10 \
-            google-cloud-texttospeech \
-            gspread==5.12.0 \
-            packaging
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            ffmpeg \
+            fonts-dejavu-core \
+            fonts-noto \
+            libgl1
 
-      - name: Set up Google credentials
+      # ─── 5. Python deps ────────────────────────────────────────────────────
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      # ─── 6. Secrets → files ────────────────────────────────────────────────
+      - name: Set up credentials
         env:
           GOOGLE_TTS_KEY: ${{ secrets.GOOGLE_TTS_KEY }}
           GOOGLE_SHEETS_KEY: ${{ secrets.GOOGLE_SHEETS_KEY }}
         run: |
-          echo "$GOOGLE_TTS_KEY" > google_tts_key.json
+          echo "$GOOGLE_TTS_KEY"    > google_tts_key.json
           echo "$GOOGLE_SHEETS_KEY" > google_sheets_key.json
           echo "GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/google_tts_key.json" >> $GITHUB_ENV
 
+      # ─── 7. Determine run count ────────────────────────────────────────────
       - name: Determine run count
         run: |
           if [[ "${{ github.event_name }}" == "schedule" ]]; then
-            echo "RUN_COUNT=6" >> $GITHUB_ENV          # Mặc định 6 video mỗi ngày
+            echo "RUN_COUNT=3" >> $GITHUB_ENV
           else
-            COUNT=${{ github.event.inputs.run_count }}
-            [[ $COUNT =~ ^[0-9]+$ ]] || COUNT=6
-            [[ $COUNT -gt 15 ]] && COUNT=15
-            [[ $COUNT -lt 1 ]] && COUNT=1
-            echo "RUN_COUNT=$COUNT" >> $GITHUB_ENV
+            COUNT="${{ github.event.inputs.run_count }}"
+            [[ $COUNT =~ ^[0-9]+$ ]] || COUNT=3
+            [[ $COUNT -gt 10 ]]      && COUNT=10
+            [[ $COUNT -lt 1 ]]       && COUNT=1
+            echo "RUN_COUNT=$COUNT"  >> $GITHUB_ENV
           fi
 
-      - name: Generate multiple videos
+      # ─── 8. Generate videos ───────────────────────────────────────────────
+      - name: Generate videos
+        env:
+          VIDEO_URL:  ${{ github.event.inputs.video_url }}
+          STORY_URL:  ${{ github.event.inputs.story_url }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
         run: |
           echo "========================================"
           echo "🚀 BẮT ĐẦU TẠO $RUN_COUNT VIDEO"
           echo "========================================"
 
           for i in $(seq 1 $RUN_COUNT); do
-            echo "📹 Đang tạo video thứ $i/$RUN_COUNT..."
-            python main.py
-            echo "✅ Hoàn thành video thứ $i"
+            echo ""
+            echo "📹 Video $i / $RUN_COUNT ..."
+
+            # Nếu có truyền VIDEO_URL từ workflow_dispatch thì dùng
+            if [[ -n "$VIDEO_URL" ]]; then
+              export OVERRIDE_VIDEO_URL="$VIDEO_URL"
+            fi
+            if [[ -n "$STORY_URL" ]]; then
+              export OVERRIDE_STORY_URL="$STORY_URL"
+            fi
+
+            python main.py && echo "✅ Video $i hoàn thành" || echo "❌ Video $i thất bại"
             echo "----------------------------------------"
           done
 
-      - name: Commit & Push all videos
+      # ─── 9. Upload lên OneDrive (nếu được bật) ────────────────────────────
+      - name: Upload to OneDrive
+        if: github.event.inputs.upload_onedrive == 'true'
+        env:
+          ONEDRIVE_CLIENT_ID:     ${{ secrets.ONEDRIVE_CLIENT_ID }}
+          ONEDRIVE_CLIENT_SECRET: ${{ secrets.ONEDRIVE_CLIENT_SECRET }}
+          ONEDRIVE_TENANT_ID:     ${{ secrets.ONEDRIVE_TENANT_ID }}
+          ONEDRIVE_USER_EMAIL:    ${{ secrets.ONEDRIVE_USER_EMAIL }}
         run: |
-          git config --global user.name "github-actions[bot]"
+          echo "☁️ Uploading videos to OneDrive..."
+          for f in output/output_video_*.mp4; do
+            echo "Uploading: $f"
+            python onedrive_uploader.py "$f" || echo "⚠️ Upload lỗi: $f"
+          done
+
+      # ─── 10. Commit & Push videos ──────────────────────────────────────────
+      - name: Commit & Push videos
+        run: |
+          git config --global user.name  "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
+
           git add output/output_video_*.mp4 2>/dev/null || true
-          
+
           if git diff --cached --quiet; then
-            echo "Không có file mới để commit."
+            echo "Không có video mới để commit."
           else
-            git commit -m "Add $RUN_COUNT new auto-generated video(s) [$(date '+%Y-%m-%d')]"
+            git commit -m "Add $RUN_COUNT auto-generated video(s) [$(date '+%Y-%m-%d')]"
             git pull --rebase origin main
             git push origin main
-            echo "✅ Đã commit & push thành công $RUN_COUNT video."
+            echo "✅ Đã push thành công!"
           fi
 
-
-
+      # ─── 11. Cleanup đồng bộ ─────────────────────────────────────────────
       - name: Cleanup old videos
         if: always()
         run: python delete_used_videos.py || true

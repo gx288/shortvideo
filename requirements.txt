@@ -1,7 +1,31 @@
-gTTS==2.5.3
+# ==================== VIDEO PROCESSING ====================
 Pillow==10.4.0
 moviepy==1.0.3
-requests==2.32.3
 numpy==1.26.4
-icrawler==0.6.10
-pydub
+ffmpeg-python==0.2.0
+
+# ==================== AUDIO ====================
+pydub==0.25.1
+gTTS==2.5.3
+
+# ==================== GOOGLE CLOUD ====================
+google-cloud-texttospeech>=2.16.0
+gspread==5.12.0
+google-auth>=2.27.0
+google-auth-oauthlib>=1.0.0
+
+# ==================== WEB SCRAPING ====================
+requests==2.32.3
+beautifulsoup4==4.12.3
+lxml==5.2.2
+praw==7.7.1
+
+# ==================== VIDEO DOWNLOAD ====================
+yt-dlp>=2024.1.1
+
+# ==================== MICROSOFT ONEDRIVE ====================
+msal==1.28.0
+
+# ==================== UTILITIES ====================
+python-dotenv==1.0.1
+packaging
