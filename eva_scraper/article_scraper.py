@@ -14,6 +14,7 @@ Chạy:
 """
 
 import os
+import sys
 import re
 import json
 import time
@@ -23,6 +24,9 @@ import argparse
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
+
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
 
 OUTPUT_DIR  = os.path.join("eva_scraper", "data")
 LINKS_FILE  = os.path.join("eva_scraper", "links_master.json")
