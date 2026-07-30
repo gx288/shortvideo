@@ -24,6 +24,9 @@ import argparse
 import subprocess
 from datetime import datetime
 
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
+
 POOL_FILE   = os.path.join("instagram", "link_pool.json")
 STATS_FILE  = os.path.join("instagram", "pool_stats.json")
 
@@ -139,17 +142,77 @@ def crawl_tiktok_hashtag(hashtag: str, limit: int = 500) -> list[dict]:
             })
 
         print(f"[TikTok] ✅ Thu thập được {len(entries)} link hợp lệ từ #{tag}")
+        if not entries:
+            print(f"[TikTok] ⚠️ TikTok tag bị khoá/lỗi, chuyển sang YouTube Shorts cho #{tag}...")
+            return crawl_youtube_shorts(tag, limit)
         return entries
 
-    except subprocess.TimeoutExpired:
-        print(f"[TikTok] ⏱️ Timeout khi crawl #{tag}")
-        return []
-    except FileNotFoundError:
-        print("[TikTok] ❌ yt-dlp chưa được cài. Chạy: pip install yt-dlp")
-        return []
     except Exception as e:
-        print(f"[TikTok] ❌ Lỗi: {e}")
+        print(f"[TikTok] ❌ Lỗi: {e}, fallback YouTube Shorts...")
+        return crawl_youtube_shorts(tag, limit)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# YOUTUBE SHORTS CRAWLER (Fallback cực kỳ ổn định, không lo bị khoá)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def crawl_youtube_shorts(hashtag: str, limit: int = 500) -> list[dict]:
+    """
+    Dùng yt-dlp search `#shorts #{hashtag}` để lấy video dọc chất lượng cao.
+    """
+    tag = hashtag.lstrip("#")
+    search_query = f"ytsearch{limit}:#shorts #{tag}"
+    print(f"[YouTube Shorts] Crawling #{tag} (limit={limit})...")
+
+    cmd = [
+        "yt-dlp",
+        "--flat-playlist",
+        "--playlist-end", str(limit),
+        "--print", "%(id)s\t%(webpage_url)s\t%(title)s\t%(duration)s",
+        "--no-warnings",
+        "--quiet",
+        search_query,
+    ]
+
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
+        lines = [l.strip() for l in result.stdout.strip().splitlines() if "\t" in l]
+
+        entries = []
+        for line in lines:
+            parts = line.split("\t", 3)
+            if len(parts) < 2:
+                continue
+            vid_id   = parts[0].strip()
+            vid_url  = parts[1].strip()
+            title    = parts[2].strip() if len(parts) > 2 else ""
+            duration = parts[3].strip() if len(parts) > 3 else ""
+
+            try:
+                dur = float(duration)
+                if dur > 180:   # Giới hạn shorts
+                    continue
+            except (ValueError, TypeError):
+                pass
+
+            entries.append({
+                "id":       vid_id,
+                "url":      vid_url,
+                "platform": "youtube_shorts",
+                "hashtag":  f"#{tag}",
+                "title":    title[:100],
+                "added_at": datetime.now().strftime("%Y-%m-%d"),
+                "used":     False,
+                "failed":   False,
+            })
+
+        print(f"[YouTube Shorts] ✅ Thu thập được {len(entries)} link từ #{tag}")
+        return entries
+
+    except Exception as e:
+        print(f"[YouTube Shorts] ❌ Lỗi: {e}")
         return []
+
 
 
 # ─────────────────────────────────────────────────────────────────────────────
