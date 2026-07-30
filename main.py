@@ -393,12 +393,12 @@ for worksheet_name in WORKSHEET_LIST:
 
                 video.write_videofile(
                     output_path,
-                    codec="libx265",
+                    codec="libx264",
                     audio_codec="aac",
-                    fps=30,  # Giữ nguyên FPS 30 để video mượt
-                    bitrate="350k",  # Hạ bitrate xuống 350k để ép dung lượng xuống quanh mức 3MB
+                    fps=24,
+                    bitrate="800k",
                     audio_bitrate="96k",
-                    ffmpeg_params=["-preset", "medium"]
+                    ffmpeg_params=["-movflags", "+faststart", "-pix_fmt", "yuv420p", "-preset", "superfast"]
                 )
                 print(f"Saved video: {output_path}")
                 for f in glob.glob(os.path.join(output_dir, "temp_frame_*.png")):
