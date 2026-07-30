@@ -99,24 +99,46 @@ def crawl_with_auto_scroll(max_clicks: int = 200):
                     print(f"  [Click #{click_num}] ⚠️ Lỗi click nút Xem thêm: {e}")
                     time.sleep(1)
 
-                # Trích xuất toàn bộ link hiện có trong trang
-                hrefs = page.eval_on_selector_all(
-                    "a[href]",
-                    "elements => elements.map(e => ({ href: e.href, title: e.innerText.trim() }))"
-                )
+                # Trích xuất toàn bộ link, tiêu đề và mô tả ngắn (sapo) trực tiếp trên trang danh mục
+                articles = page.evaluate("""
+                    () => {
+                        const items = [];
+                        const cardElements = document.querySelectorAll('article, .kat-art-item, .news-item, .eva-cont-kat__item, div[class*="item"]');
+                        cardElements.forEach(card => {
+                            const a = card.querySelector('a[href*=".html"]');
+                            if (!a) return;
+                            const url = a.href;
+                            
+                            // Lấy tiêu đề
+                            const titleEl = card.querySelector('h2, h3, h4, .title, .kat-title, a.title') || a;
+                            const title = titleEl ? titleEl.innerText.trim() : '';
+
+                            // Lấy mô tả ngắn (Sapo) trên trang danh mục
+                            const sapoEl = card.querySelector('.sapo, .summary, .kat-sapo, p, .desc, .description');
+                            const summary = sapoEl ? sapoEl.innerText.trim() : '';
+
+                            if (url && title && title.length > 5) {
+                                items.push({ url: url, title: title, summary: summary });
+                            }
+                        });
+                        return items;
+                    }
+                """)
 
                 added_this_click = 0
-                for item in hrefs:
-                    href  = item.get("href", "")
-                    title = item.get("title", "")
+                for item in articles:
+                    href    = item.get("url", "")
+                    title   = item.get("title", "")
+                    summary = item.get("summary", "")
 
                     if not href.endswith(".html"):
                         continue
 
                     if any(cat in href for cat in STORY_CATEGORIES):
-                        if href not in existing:
+                        if href not in existing or not master.get(href, {}).get("summary"):
                             master[href] = {
-                                "title": title[:100],
+                                "title": title[:150],
+                                "summary": summary[:300],  # Mô tả ngắn trên trang danh mục
                                 "scraped": False,
                                 "file": "",
                                 "added_at": datetime.now().strftime("%Y-%m-%d"),
