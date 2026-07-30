@@ -30,17 +30,16 @@ POOL_FILE    = os.path.join("instagram", "link_pool.json")
 BG_MUSIC     = "nhacnen.mp3"
 
 # KHO VIDEO NỀN DỌC 9:16 HD TRỰC TIẾP (100% TẢI SIÊU TỐC TRONG 0.5 GIÂY TRÊN GITHUB ACTIONS)
+# Sử dụng Pexels thay vì Mixkit vì Mixkit chặn bot (trả về 403)
 DIRECT_916_STOCK_VIDEOS = [
-    "https://assets.mixkit.co/videos/preview/mixkit-hands-crafting-a-clay-pot-43405-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-person-drawing-on-a-tablet-41584-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-hands-knitting-with-pink-yarn-42861-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-baking-and-decorating-cookies-43513-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-close-up-of-hands-cutting-paper-43210-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-artist-painting-with-acrylics-on-canvas-42990-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-woman-making-handmade-soap-43112-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-hands-woodworking-and-sanding-wood-43301-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-person-arranging-fresh-flowers-43005-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-crafting-leather-wallet-by-hand-43250-large.mp4"
+    "https://videos.pexels.com/video-files/4114797/4114797-uhd_2160_3840_25fps.mp4",
+    "https://videos.pexels.com/video-files/4728504/4728504-uhd_2160_3840_30fps.mp4",
+    "https://videos.pexels.com/video-files/5896379/5896379-uhd_2160_3840_24fps.mp4",
+    "https://videos.pexels.com/video-files/5200388/5200388-uhd_2160_3840_25fps.mp4",
+    "https://videos.pexels.com/video-files/6100185/6100185-hd_1080_1920_25fps.mp4",
+    "https://videos.pexels.com/video-files/7034789/7034789-uhd_2160_3840_25fps.mp4",
+    "https://videos.pexels.com/video-files/3209828/3209828-uhd_2560_1440_25fps.mp4",
+    "https://videos.pexels.com/video-files/853889/853889-hd_1920_1080_25fps.mp4"
 ]
 
 def scrape_free_proxies(limit: int = 10) -> list:
@@ -111,7 +110,8 @@ def rewrite_story_with_ai(title: str, summary: str, full_body: str) -> str:
                 for m in genai.list_models():
                     if 'generateContent' in getattr(m, 'supported_generation_methods', []):
                         name = getattr(m, 'name', '').replace('models/', '')
-                        if 'flash' in name or 'pro' in name or 'gemma' in name:
+                        # CHỈ LẤY MODEL GEMINI THUẦN TEXT (LOẠI BỎ GEMMA VÀ CÁC MODEL ÂM THANH/HÌNH ẢNH)
+                        if name.startswith('gemini-') and 'image' not in name and 'audio' not in name and 'vision' not in name:
                             dynamic_models.append(name)
             except Exception as e_list:
                 print(f"⚠️ Lỗi khi gọi list_models(): {e_list}")
