@@ -152,25 +152,61 @@ Hãy trả về CHỈ NỘI DUNG KỊCH BẢN ĐÃ VIẾT LẠI (không kèm l�
 
 
 def download_fast_background_video(pool: dict) -> str:
-    """Tải video nền 9:16 HD siêu tốc trong 0.5s không bị kẹt proxy."""
+    """Tải video nền ưu tiên nguồn gốc (TikTok/Instagram) qua yt-dlp. Nếu bị block IP thì mới dùng HD Stock CDN dự phòng."""
     raw_bg = os.path.join("temp_fix", "raw_bg.mp4")
     user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
 
-    # Cách 1: Tải trực tiếp từ Kho Direct HD Stock CDN (Siêu nhanh 0.5s, 100% không kẹt)
-    print("🎨 [Fast HD Stock CDN] Tải video 9:16 DIY/Handmade siêu tốc...")
+    # Cách 1: Ưu tiên lấy Video Source Gốc (từ instagram pool/tiktok)
+    if pool:
+        pool_items = list(pool.values())
+        random.shuffle(pool_items)
+        print("🎬 [Ưu Tiên Source Gốc] Đang tải video nguồn gốc từ danh sách cào (pool)...")
+        
+        # Thử tối đa 3 video ngẫu nhiên từ pool (đề phòng link chết hoặc IP bị chặn)
+        for i, bg_item in enumerate(pool_items[:3]):
+            bg_url = bg_item.get("url")
+            print(f"   🎥 Lần thử {i+1}/3: Đang tải video source - {str(bg_item.get('title', ''))[:40]}...")
+            if os.path.exists(raw_bg):
+                try: os.remove(raw_bg)
+                except: pass
+                
+            # Dùng yt-dlp với args chống block IP, download gốc ko qua proxy để thử trực tiếp
+            cmd_dl = [
+                "yt-dlp",
+                "-f", "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=720]/best[height<=720]/best",
+                "-o", raw_bg,
+                "--no-playlist",
+                "--quiet",
+                "--extractor-args", "youtube:player_client=android,web",
+                "--user-agent", user_agent,
+                bg_url
+            ]
+            
+            try:
+                subprocess.run(cmd_dl, capture_output=True, timeout=30)
+                if os.path.exists(raw_bg) and os.path.getsize(raw_bg) > 100000:
+                    print("✅ [THÀNH CÔNG] Đã tải xong video Source Gốc!")
+                    return raw_bg
+                else:
+                    print("   ❌ Tải thất bại (có thể do IP Server GitHub bị chặn hoặc video bị xóa).")
+            except Exception as e:
+                print(f"   ❌ Lỗi khi gọi yt-dlp: {e}")
+
+    # Cách 2: Nếu tải Source Gốc thất bại toàn bộ, dùng Fast HD Stock CDN dự phòng (tránh kẹt lỗi IP)
+    print("🎨 [DỰ PHÒNG] Không tải được Source Gốc do bị chặn IP, dùng Video Nền Dự Phòng Siêu Tốc (Fast HD Stock)...")
     random.shuffle(DIRECT_916_STOCK_VIDEOS)
     for stock_url in DIRECT_916_STOCK_VIDEOS:
         try:
-            r = requests.get(stock_url, timeout=8, headers={"User-Agent": user_agent})
+            r = requests.get(stock_url, timeout=10, headers={"User-Agent": user_agent})
             if r.status_code == 200 and len(r.content) > 100000:
                 with open(raw_bg, "wb") as f:
                     f.write(r.content)
-                print("✅ Tải thành công video nền HD Stock 9:16 siêu tốc!")
+                print("✅ Tải thành công Video Nền Dự Phòng HD Stock!")
                 return raw_bg
         except Exception:
             continue
 
-    # Fallback: Color Gradient
+    # Fallback cuối cùng: Color Gradient
     cmd_fallback = [
         "ffmpeg", "-y", "-f", "lavfi", "-i", "color=c=navy:s=720x1280:d=10",
         "-c:v", "libx264", "-r", "24", raw_bg
