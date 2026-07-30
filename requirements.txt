@@ -8,8 +8,9 @@ ffmpeg-python==0.2.0
 pydub==0.25.1
 gTTS==2.5.3
 
-# ==================== GOOGLE CLOUD ====================
+# ==================== GOOGLE CLOUD & GEMINI AI ====================
 google-cloud-texttospeech>=2.16.0
+google-generativeai>=0.8.0
 gspread==5.12.0
 google-auth>=2.27.0
 google-auth-oauthlib>=1.0.0

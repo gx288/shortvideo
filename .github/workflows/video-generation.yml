@@ -103,6 +103,7 @@ jobs:
         env:
           VIDEO_URL:  ${{ github.event.inputs.video_url }}
           STORY_URL:  ${{ github.event.inputs.story_url }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}   # optional
         run: |
           echo "========================================"

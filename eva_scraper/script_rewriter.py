@@ -1,13 +1,18 @@
 """
 eva_scraper/script_rewriter.py
 ===============================
-Viết lại nội dung bài viết thành kịch bản kể chuyện video:
-- Thời lượng: 1.5 đến 3 phút (khoảng 250 - 450 từ tiếng Việt ở tốc độ TTS 1.25x)
+Sử dụng Gemini AI (hoặc rule-based fallback) để viết lại nội dung bài viết 
+thành kịch bản kể chuyện video YouTube Shorts / TikTok cuốn hút:
+
+Tiêu chuẩn kịch bản Gemini AI:
+- Thời lượng: 1.5 đến 3 phút (khoảng 250 - 400 từ tiếng Việt)
 - Cấu trúc: 
-    1. Câu Hook mở đầu gây tò mò trong 3 giây đầu
-    2. Hành văn tự nhiên, trau chuốt, giàu cảm xúc cho TTS đọc
-    3. Giữ trọn vẹn diễn biến & cốt truyện chính
-- Đọc file JSON từ eva_scraper/data/ và lưu kịch bản đã viết lại vào eva_scraper/scripts/
+    1. Câu Hook mở đầu gây tò mò trong 3 giây đầu (giữ chân người xem)
+    2. Hành văn tự nhiên, truyền cảm, giàu cảm xúc dành cho giọng đọc Google TTS
+    3. Trọng tâm là diễn biến kịch tính & cao trào của câu chuyện
+
+Environment variables:
+    GEMINI_API_KEY hoặc GOOGLE_API_KEY (hoặc secrets.GEMINI_API_KEY trên GitHub Actions)
 
 Cách dùng:
     python eva_scraper/script_rewriter.py --batch 20
@@ -17,6 +22,7 @@ import os
 import sys
 import re
 import json
+import time
 import random
 import argparse
 from datetime import datetime
@@ -29,48 +35,106 @@ SCRIPTS_DIR = os.path.join("eva_scraper", "scripts")
 MIN_TARGET_WORDS = 220   # ~1.5 phút
 MAX_TARGET_WORDS = 420   # ~3 phút
 
+# Khởi tạo Gemini AI nếu có thư viện & API key
+GEMINI_AVAILABLE = False
+try:
+    import google.generativeai as genai
+    api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+    if api_key:
+        genai.configure(api_key=api_key)
+        GEMINI_AVAILABLE = True
+except Exception:
+    GEMINI_AVAILABLE = False
+
 
 # ─────────────────────────────────────────────────────────────────────────────
-# SCRIPT REWRITER ENGINE
+# GEMINI AI REWRITER WITH FALLBACK
 # ─────────────────────────────────────────────────────────────────────────────
 
-def rewrite_story_text(title: str, content: str) -> str:
-    """
-    Viết lại hành văn câu chuyện ngắn gọn, lôi cuốn cho giọng đọc TTS.
-    """
-    # 1. Tạo câu Hook gây tò mò mở đầu
-    hook = _create_hook(title, content)
+GEMINI_MODELS = [
+    'gemini-2.5-flash',
+    'gemini-1.5-flash',
+    'gemini-flash-latest'
+]
 
-    # 2. Làm sạch và chia đoạn văn
-    paragraphs = [p.strip() for p in content.split("\n") if p.strip()]
-    if not paragraphs:
-        paragraphs = [content]
+PROMPT_TEMPLATE = """Bạn là một chuyên gia biên tập kịch bản video ngắn (YouTube Shorts, TikTok, Reels) chuyên nghiệp.
+Hãy viết lại bài viết tâm sự sau thành một KỊCH BẢN KỂ CHUYỆN HẤP DẪN để đọc thành video ngắn.
 
-    # 3. Biên tập lại văn phong thoại
-    rewritten_sentences = []
-    if hook:
-        rewritten_sentences.append(hook)
+YÊU CẦU BẮT BUỘC:
+1. MỞ ĐẦU (HOOK 3 GIÂY ĐẦU): Thêm 1-2 câu mở đầu cực kỳ kịch tính, gây tò mò hoặc bất ngờ để giữ chân người xem ngay lập tức.
+2. NỘI DUNG CHÍNH: Tóm tắt và viết lại cốt chuyện diễn biến mạch lạc, tập trung vào mâu thuẫn, cảm xúc và cái kết đáng suy ngẫm.
+3. HÀNH VĂN: Tự nhiên, văn thoại gần gũi, truyền cảm, tối ưu cho giọng đọc AI (Google TTS) phát âm mượt mà.
+4. ĐỘ DÀI: BẮT BUỘC trong khoảng 250 đến 380 từ tiếng Việt (thời lượng video đúng 2 phút đến 2.5 phút). Không quá ngắn và không vượt quá 400 từ.
+5. CHỈ TRẢ VỀ NỘI DUNG KỊCH BẢN ĐỌC. Không thêm lời chào, không thêm chú thích hay ký tự đặc biệt như (*), (#).
 
+Tiêu đề: {title}
+Nội dung bài viết:
+{content}
+"""
+
+
+def rewrite_with_gemini(title: str, content: str) -> str | None:
+    """Gọi Gemini AI API để chuyển bài viết thành kịch bản video."""
+    if not GEMINI_AVAILABLE:
+        return None
+
+    prompt = PROMPT_TEMPLATE.format(title=title, content=content[:3000])
+
+    for model_name in GEMINI_MODELS:
+        try:
+            model = genai.GenerativeModel(model_name)
+            response = model.generate_content(prompt)
+            if response and response.text:
+                script_text = _clean_ai_output(response.text)
+                print(f"      [Gemini AI - {model_name}] Thành công!")
+                return script_text
+        except Exception as e:
+            print(f"      [!] Gemini model {model_name} lỗi: {str(e)[:60]}...")
+            time.sleep(1)
+
+    return None
+
+
+def _clean_ai_output(text: str) -> str:
+    """Loại bỏ ký tự markdown, chú thích thừa của AI."""
+    text = re.sub(r'\*+', '', text)
+    text = re.sub(r'#{1,6}\s', '', text)
+    text = re.sub(r'\[.*?\]', '', text)
+    text = re.sub(r'^(Kịch bản|Lời dẫn|Host|MC):\s*', '', text, flags=re.I)
+    text = re.sub(r'\n+', ' ', text)
+    text = re.sub(r'\s{2,}', ' ', text)
+    return text.strip()
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# RULE-BASED FALLBACK REWRITER
+# ─────────────────────────────────────────────────────────────────────────────
+
+def rewrite_rule_based(title: str, content: str) -> str:
+    """Fallback viết lại kịch bản bằng thuật toán nếu không có Gemini API key."""
+    clean_title = re.sub(r'^\s*(Tâm sự|Chuyện cũ|Hot):\s*', '', title, flags=re.I).strip()
+    hooks = [
+        f"Có những câu chuyện khiến người ta không thể nào quên. {clean_title}.",
+        f"Đừng bao giờ vội đánh giá một người qua vẻ bề ngoài. {clean_title}.",
+        f"Câu chuyện ngày hôm nay có lẽ sẽ khiến nhiều người phải suy ngẫm. {clean_title}.",
+    ]
+    hook = random.choice(hooks)
+
+    paragraphs = [p.strip() for p in content.split("\n") if p.strip()] or [content]
     full_text = " ".join(paragraphs)
 
-    # Tách câu
     sentences = re.split(r'(?<=[.!?:])\s+', full_text)
-    
+    rewritten = [hook]
+
     for s in sentences:
         s = s.strip()
-        if not s or len(s) < 10:
-            continue
-        
-        # Tối ưu từ ngữ cho giọng đọc truyền cảm
-        s = _refine_sentence_style(s)
-        rewritten_sentences.append(s)
+        if len(s) > 10:
+            rewritten.append(s)
 
-    final_script = " ".join(rewritten_sentences)
-
-    # 4. Điều chỉnh độ dài chuẩn (220 - 420 từ = < 3 phút)
+    final_script = " ".join(rewritten)
     words = final_script.split()
+
     if len(words) > MAX_TARGET_WORDS:
-        # Cắt ngọt ở dấu câu gần nhất
         truncated = " ".join(words[:MAX_TARGET_WORDS])
         last_punct = max(truncated.rfind('.'), truncated.rfind('!'), truncated.rfind('?'))
         if last_punct > len(truncated) * 0.7:
@@ -81,30 +145,13 @@ def rewrite_story_text(title: str, content: str) -> str:
     return final_script
 
 
-def _create_hook(title: str, content: str) -> str:
-    """Tạo mở đầu giật gân/tò mò cho 3s đầu video."""
-    clean_title = re.sub(r'^\s*(Tâm sự|Chuyện cũ|Hot):\s*', '', title, flags=re.I).strip()
-    
-    hooks = [
-        f"Có những câu chuyện khiến người ta không thể nào quên. {clean_title}.",
-        f"Đừng bao giờ vội đánh giá một người qua vẻ bề ngoài. {clean_title}.",
-        f"Câu chuyện ngày hôm nay có lẽ sẽ khiến nhiều người phải suy ngẫm. {clean_title}.",
-    ]
-    return random.choice(hooks)
-
-
-def _refine_sentence_style(sentence: str) -> str:
-    """Thay đổi nhẹ hành văn mượt mà hơn khi đọc bằng TTS."""
-    replacements = {
-        r'\btôi nghĩ là\b': 'tôi thầm nghĩ',
-        r'\bngay lập tức\b': 'ngay lập tức',
-        r'\bkhông ngờ rằng\b': 'chẳng thể ngờ',
-        r'\brất là\b': 'rất',
-        r'\bbắt đầu\b': 'bắt đầu',
-    }
-    for pat, repl in replacements.items():
-        sentence = re.sub(pat, repl, sentence, flags=re.I)
-    return sentence
+def rewrite_story_text(title: str, content: str) -> str:
+    """Hàm chính: Ưu tiên Gemini AI, fallback sang Rule-based."""
+    if GEMINI_AVAILABLE:
+        script = rewrite_with_gemini(title, content)
+        if script:
+            return script
+    return rewrite_rule_based(title, content)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -119,12 +166,13 @@ def process_batch_rewrite(batch_size: int = 20) -> int:
         return 0
 
     json_files = [os.path.join(DATA_DIR, f) for f in os.listdir(DATA_DIR) if f.endswith(".json")]
-    
     if not json_files:
         print("[Rewriter] ❌ Không tìm thấy file bài viết JSON nào.")
         return 0
 
     processed = 0
+    engine_used = "Gemini AI" if GEMINI_AVAILABLE else "Rule-based Engine"
+    print(f"[Rewriter] 🚀 Bắt đầu tạo kịch bản (Engine: {engine_used})...")
 
     for filepath in json_files:
         if processed >= batch_size:
@@ -134,7 +182,6 @@ def process_batch_rewrite(batch_size: int = 20) -> int:
         script_filename = basename.replace(".json", "_script.json")
         script_filepath = os.path.join(SCRIPTS_DIR, script_filename)
 
-        # Bỏ qua nếu đã tạo kịch bản rồi
         if os.path.exists(script_filepath):
             continue
 
@@ -158,24 +205,28 @@ def process_batch_rewrite(batch_size: int = 20) -> int:
                 "script_text":  script_text,
                 "word_count":   word_count,
                 "est_seconds":  est_seconds,
+                "engine":       "Gemini AI" if GEMINI_AVAILABLE else "Rule-based",
                 "created_at":   datetime.now().strftime("%Y-%m-%d %H:%M"),
             }
 
             with open(script_filepath, "w", encoding="utf-8") as f:
                 json.dump(script_data, f, ensure_ascii=False, indent=2)
 
-            print(f"  ✅ [{processed+1}/{batch_size}] {title[:40]}... → {word_count} từ (~{est_seconds}s)")
+            print(f"  ✅ [{processed+1}/{batch_size}] {title[:35]}... → {word_count} từ (~{est_seconds}s)")
             processed += 1
+
+            if GEMINI_AVAILABLE:
+                time.sleep(1)
 
         except Exception as e:
             print(f"  ❌ Lỗi xử lý {basename}: {e}")
 
-    print(f"\n[Rewriter] ✅ Đã hoàn thành kịch bản cho {processed} bài viết (thời lượng < 3 phút).")
+    print(f"\n[Rewriter] ✅ Đã hoàn thành kịch bản cho {processed} bài viết.")
     return processed
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Script Rewriter for Story Videos")
+    parser = argparse.ArgumentParser(description="Script Rewriter for Story Videos with Gemini AI")
     parser.add_argument("--batch", type=int, default=20, help="Số bài viết cần viết lại kịch bản")
     args = parser.parse_args()
 
