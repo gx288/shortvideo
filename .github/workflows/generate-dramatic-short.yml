@@ -1,0 +1,59 @@
+name: Generate Dramatic Short Video
+
+permissions:
+  contents: write
+
+on:
+  workflow_dispatch:
+    inputs:
+      video_count:
+        description: 'Số lượng Video Short muốn tạo'
+        required: true
+        default: '1'
+        type: string
+
+jobs:
+  build-and-generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install System Dependencies (FFmpeg)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4 gTTS yt-dlp google-generativeai moviepy pillow
+
+      - name: Run Dramatic Short Video Creation Pipeline
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          echo "========================================"
+          echo "🚀 BẮT ĐẦU TẠO ${{ github.event.inputs.video_count }} VIDEO SHORT DRAMA"
+          echo "========================================"
+          COUNT="${{ github.event.inputs.video_count }}"
+          [[ $COUNT =~ ^[0-9]+$ ]] || COUNT=1
+          
+          for i in $(seq 1 $COUNT); do
+            echo ""
+            echo "📹 Đang tạo Video Short $i / $COUNT ..."
+            python create_full_dramatic_video.py
+            echo "----------------------------------------"
+          done
+
+      - name: Upload Output Video Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-dramatic-videos
+          path: output/*.mp4
+          retention-days: 7
