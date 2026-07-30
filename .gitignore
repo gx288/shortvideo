@@ -1,6 +1,9 @@
 # ==================== SECRETS - KHÔNG BAO GIỜ COMMIT ====================
 *.json
 !package.json
+!eva_scraper/*.json
+!eva_scraper/data/*.json
+!instagram/*.json
 *_key.json
 google_tts_key.json
 google_sheets_key.json
