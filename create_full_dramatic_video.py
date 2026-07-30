@@ -43,13 +43,21 @@ DIRECT_916_STOCK_VIDEOS = [
     "https://assets.mixkit.co/videos/preview/mixkit-crafting-leather-wallet-by-hand-43250-large.mp4"
 ]
 
-# DANH SÁCH MODEL GEMINI TEXT CHUẨN ĐƯỢC ĐIỀN TRỰC TIẾP
+# DANH SÁCH MỌI MODEL GEMINI TEXT MỚI NHẤT (GỒM GEMINI 3.1, 3.0, 2.5, 2.0 & 1.5)
 GEMINI_TEXT_MODELS = [
+    'gemini-3.1-flash',
+    'gemini-3.1-pro',
+    'gemini-3.0-flash',
+    'gemini-3.0-pro',
+    'gemini-2.5-flash',
+    'gemini-2.5-pro',
+    'gemini-2.0-flash-exp',
+    'gemini-2.0-flash',
+    'gemini-2.0-pro',
     'gemini-1.5-flash-latest',
     'gemini-1.5-flash',
     'gemini-1.5-pro-latest',
     'gemini-1.5-pro',
-    'gemini-2.0-flash-exp',
     'gemini-pro'
 ]
 
