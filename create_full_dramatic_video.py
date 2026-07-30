@@ -185,7 +185,7 @@ def download_fast_background_video(pool: dict) -> str:
     user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
 
     # Cào proxy trước
-    proxy_pool = scrape_free_proxies(limit=10)
+    proxy_pool = scrape_free_proxies(limit=15)
 
     # Cách 1: Ưu tiên lấy Video Source Gốc (từ instagram pool/tiktok)
     if pool:
@@ -193,41 +193,45 @@ def download_fast_background_video(pool: dict) -> str:
         random.shuffle(pool_items)
         print("🎬 [Ưu Tiên Source Gốc] Đang tải video nguồn gốc từ danh sách cào (pool)...")
         
-        # Thử tối đa 3 video ngẫu nhiên từ pool (đề phòng link chết hoặc IP bị chặn)
-        for i, bg_item in enumerate(pool_items[:3]):
+        # Thử 2 video ngẫu nhiên
+        for i, bg_item in enumerate(pool_items[:2]):
             bg_url = bg_item.get("url")
-            current_proxy = proxy_pool.pop(0) if proxy_pool else None
+            print(f"   🎥 Lần thử video {i+1}/2: {str(bg_item.get('title', ''))[:40]}...")
             
-            print(f"   🎥 Lần thử {i+1}/3: Đang tải video source - {str(bg_item.get('title', ''))[:40]}... (Proxy: {current_proxy or 'Direct'})")
-            if os.path.exists(raw_bg):
-                try: os.remove(raw_bg)
-                except: pass
+            # Thử kết nối Direct (None) trước, sau đó thử thêm tối đa 4 proxy nếu bị block
+            attempts = [None]
+            for _ in range(4):
+                if proxy_pool: attempts.append(proxy_pool.pop(0))
                 
-            # Dùng yt-dlp với args chống block IP, download qua proxy để vượt block
-            cmd_dl = [
-                "yt-dlp",
-                "-f", "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=720]/best[height<=720]/best",
-                "-o", raw_bg,
-                "--no-playlist",
-                "--quiet",
-                "--extractor-args", "youtube:player_client=android,web",
-                "--user-agent", user_agent,
-                "--socket-timeout", "10"
-            ]
-            
-            if current_proxy:
-                cmd_dl.extend(["--proxy", current_proxy])
-            cmd_dl.append(bg_url)
-            
-            try:
-                subprocess.run(cmd_dl, capture_output=True, timeout=25)
-                if os.path.exists(raw_bg) and os.path.getsize(raw_bg) > 100000:
-                    print("✅ [THÀNH CÔNG] Đã tải xong video Source Gốc!")
-                    return raw_bg
-                else:
-                    print("   ❌ Tải thất bại (có thể do Proxy chậm, IP Server GitHub bị chặn hoặc video bị xóa).")
-            except Exception as e:
-                print(f"   ❌ Lỗi khi gọi yt-dlp (Timeout Proxy): {e}")
+            for p_idx, current_proxy in enumerate(attempts):
+                print(f"      🔄 Kết nối {p_idx+1}/{len(attempts)}: {'Proxy ' + current_proxy if current_proxy else 'Trực tiếp (Direct)'}")
+                if os.path.exists(raw_bg):
+                    try: os.remove(raw_bg)
+                    except: pass
+                    
+                cmd_dl = [
+                    "yt-dlp",
+                    "-f", "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=720]/best[height<=720]/best",
+                    "-o", raw_bg,
+                    "--no-playlist",
+                    "--quiet",
+                    "--extractor-args", "youtube:player_client=android,web",
+                    "--user-agent", user_agent,
+                    "--socket-timeout", "8"
+                ]
+                
+                if current_proxy:
+                    cmd_dl.extend(["--proxy", current_proxy])
+                cmd_dl.append(bg_url)
+                
+                try:
+                    subprocess.run(cmd_dl, capture_output=True, timeout=15)
+                    if os.path.exists(raw_bg) and os.path.getsize(raw_bg) > 100000:
+                        print("✅ [THÀNH CÔNG] Đã tải xong video Source Gốc!")
+                        return raw_bg
+                except Exception:
+                    pass
+                print("      ❌ Thất bại, thử kết nối khác...")
 
     # Cách 2: Nếu tải Source Gốc thất bại toàn bộ, dùng Fast HD Stock CDN dự phòng (tránh kẹt lỗi IP)
     print("🎨 [DỰ PHÒNG] Không tải được Source Gốc do bị chặn IP, dùng Video Nền Dự Phòng Siêu Tốc (Fast HD Stock)...")
