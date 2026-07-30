@@ -19,6 +19,7 @@ onedrive_token.json
 scratch/
 test_git/
 *.html
+!eva_scraper/*.html
 *_files/
 temp_*/
 __pycache__/
