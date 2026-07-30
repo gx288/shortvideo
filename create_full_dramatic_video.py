@@ -1,10 +1,15 @@
 """
-test_guaranteed_playback.py
-============================
-Sửa dứt điểm 100% lỗi không mở được file trên Windows:
-Tạo video chuẩn MP4 H.264 YUV420P bằng quy trình 2 bước FFmpeg loại bỏ hoàn toàn lỗi timestamp:
-1. Tạo video nền temp_bg.mp4 được cắt vừa khít độ dài audio (scale 720x1280, 24fps, yuv420p)
-2. Ghép Audio (TTS 1.2x + nhacnen.mp3 7% volume) vào temp_bg.mp4 bằng -movflags +faststart
+create_full_dramatic_video.py
+=============================
+Tự động Biên tập lại (Rewrite) TOÀN BỘ CÂU CHUYỆN thành Kịch bản Kể chuyện Drama 3 Hồi chuẩn Short (< 3 phút):
+- Nguồn câu chuyện: Kho 3,078 bài báo Tâm sự gia đình Afamily.vn (afamily_scraper/afamily_links.json)
+- Nguồn video nền: Kho 15,427 video DIY/Handmade (instagram/link_pool.json)
+- Hồi 1: Câu Hook mở đầu 3s giật tít gây tò mò cực độ
+- Hồi 2: Diễn biến mâu thuẫn dồn dập, đẩy cao trào cảm xúc
+- Hồi 3: Vén màn bí mật & nút thắt cao trào bất ngờ
+- Tốc độ đọc 1.2x dồn dập
+- Nhạc nền nhacnen.mp3 (7% volume)
+- Bitrate 2Mbps (2000k) + H.264 Baseline + yuv420p + Faststart mượt 100% xem được trên mọi thiết bị
 """
 
 import os
@@ -30,24 +35,116 @@ POOL_FILE    = os.path.join("instagram", "link_pool.json")
 BG_MUSIC     = "nhacnen.mp3"
 
 
-def create_guaranteed_video():
-    print("🚀 [FIX DỨT ĐIỂM] Tạo video MP4 mượt mà 100% mở được trên Windows...")
+def fetch_afamily_full_content(url: str) -> str:
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
+    }
+    try:
+        res = requests.get(url, headers=headers, timeout=15)
+        res.encoding = 'utf-8'
+        soup = BeautifulSoup(res.text, 'html.parser')
 
-    # 1. Chọn bài drama
+        content_el = soup.find('div', class_=re.compile(r'detail-content|content|knswli-sapo|af_detail'))
+        if content_el:
+            paragraphs = [p.get_text().strip() for p in content_el.find_all('p') if len(p.get_text().strip()) > 20]
+            if paragraphs:
+                return "\n".join(paragraphs)
+
+        paragraphs = [p.get_text().strip() for p in soup.find_all('p') if len(p.get_text().strip()) > 25]
+        return "\n".join(paragraphs[:10])
+    except Exception as e:
+        print(f"⚠️ Lỗi fetch full content: {e}")
+        return ""
+
+
+def rewrite_story_with_ai(title: str, summary: str, full_body: str) -> str:
+    """Biên tập VIẾT LẠI HOÀN TOÀN bài báo thành Kịch bản Kể chuyện Drama 3 Hồi (< 3 phút)."""
+    api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+
+    if api_key:
+        try:
+            import google.generativeai as genai
+            genai.configure(api_key=api_key)
+            model = genai.GenerativeModel('gemini-1.5-flash')
+
+            prompt = f"""Bạn là một đạo diễn kịch bản video ngắn (TikTok, YouTube Shorts) hàng đầu.
+Hãy VIẾT LẠI HOÀN TOÀN câu chuyện dưới đây thành một KỊCH BẢN KỂ CHUYỆN KỊCH TÍNH, GIẬT TÍT (Độ dài từ 250 đến 350 từ tiếng Việt, dành cho giọng đọc 1.5 - 2.5 phút).
+
+CẤU TRÚC KỊCH BẢN YÊU CẦU:
+1. HOOK MỞ ĐẦU (3 giây đầu): Viết 1 câu mở đầu giật tít, tò mò, gây shock để giữ chân người xem lập tức.
+2. THÂN BÀI (Hồi 2): Kể lại diễn biến câu chuyện theo góc nhìn thứ nhất hoặc người kể chuyện truyền cảm, đẩy mạnh mâu thuẫn gia đình/tình cảm.
+3. KẾT BÀI (Hồi 3): Nút thắt cao trào, bài học hoặc kết thúc bất ngờ làm người xem suy ngẫm.
+
+Dữ liệu đầu vào:
+- Tiêu đề: {title}
+- Tóm tắt: {summary}
+- Nội dung thô:
+{full_body[:2000]}
+
+Hãy trả về CHỈ NỘI DUNG KỊCH BẢN ĐÃ VIẾT LẠI (không kèm lời chào hay ghi chú)."""
+
+            res = model.generate_content(prompt)
+            if res and res.text:
+                return res.text.strip()
+        except Exception as e:
+            print(f"⚠️ Gemini AI không khả dụng ({e}), dùng Narrative Rewriter...")
+
+    # Fallback Narrative Engine
+    hooks = [
+        f"Bạn có tin nổi không? {title}! Chuyện tưởng như đùa nhưng kết cục lại khiến tất cả bàng hoàng.",
+        f"Cảnh báo giật mình! {title}! Ngay khi sự thật được hé lộ, ai cũng phải suy ngẫm.",
+        f"Không ai có thể ngờ tới kịch bản này: {title}!",
+        f"Đúng là trên đời chuyện gì cũng có thể xảy ra: {title}!"
+    ]
+    hook_text = random.choice(hooks)
+
+    paragraphs = [p.strip() for p in full_body.split("\n") if len(p.strip()) > 30]
+    narrative_body = []
+    total_words = len(hook_text.split())
+
+    for p in paragraphs:
+        p_clean = re.sub(r'Theo báo.*|Nguồn:.*|Chia sẻ với.*', '', p).strip()
+        words = len(p_clean.split())
+        if total_words + words <= 320:
+            narrative_body.append(p_clean)
+            total_words += words
+        else:
+            break
+
+    if not narrative_body:
+        narrative_body = [summary]
+
+    return f"{hook_text}\n\n{summary}\n\n" + "\n\n".join(narrative_body)
+
+
+def create_guaranteed_video():
+    print("🚀 [DỰ ÁN SHORT VIDEO MỚI] Bắt đầu quy trình tạo Video Short Drama Hàng Đầu...")
+
+    # 1. Chọn bài drama ngẫu nhiên từ kho 3,078 bài Afamily
     with open(AFAMILY_FILE, "r", encoding="utf-8") as f:
         stories = json.load(f)
 
-    story_url, info = list(stories.items())[0]
+    dramatic_items = [
+        (u, v) for u, v in stories.items() 
+        if any(k in v.get("title", "").lower() for k in ['chồng', 'vợ', 'mẹ chồng', 'ly hôn', 'bí mật', 'ngoại tình', 'uất ức', 'phát hiện'])
+    ]
+
+    story_url, info = random.choice(dramatic_items) if dramatic_items else random.choice(list(stories.items()))
     title = info.get("title", "")
     summary = info.get("summary", "")
 
-    script_text = f"Cảnh báo giật mình! {title}! {summary}"
-    print(f"📖 Tiêu đề: {title[:80]}...")
+    print(f"📖 [Đã Chọn Bài Drama từ Afamily] {title}")
+    full_body = fetch_afamily_full_content(story_url)
+    script_text = rewrite_story_with_ai(title, summary, full_body)
+    word_count = len(script_text.split())
+
+    print(f"✍️ Kịch bản biên tập ({word_count} từ):\n{script_text[:250]}...\n")
 
     # 2. Tạo TTS Audio 1.2x
     tts_raw = os.path.join("temp_fix", "tts_raw.mp3")
     tts_fast = os.path.join("temp_fix", "tts_fast.mp3")
-    gTTS(text=script_text, lang='vi', slow=False).save(tts_raw)
+    clean_script = re.sub(r'[*#_]', '', script_text)
+    gTTS(text=clean_script, lang='vi', slow=False).save(tts_raw)
 
     subprocess.run(["ffmpeg", "-y", "-i", tts_raw, "-filter:a", "atempo=1.2", tts_fast], capture_output=True)
 
@@ -66,15 +163,16 @@ def create_guaranteed_video():
     else:
         mixed_audio = tts_fast
 
-    # Lấy thời lượng audio chính xác
     cmd_dur = ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", mixed_audio]
-    audio_dur = float(subprocess.run(cmd_dur, capture_output=True, text=True).stdout.strip() or 15.0)
-    print(f"⏱️ Thời lượng Audio: {audio_dur:.2f}s")
+    audio_dur = float(subprocess.run(cmd_dur, capture_output=True, text=True).stdout.strip() or 60.0)
+    print(f"⏱️ Thời lượng Audio 1.2x: {audio_dur:.1f}s (~{audio_dur/60:.1f} phút)")
 
-    # 4. Tải 1 video nền
+    # 4. Tải ngẫu nhiên 1 video nền từ kho 15,427 video DIY/Handmade
     with open(POOL_FILE, "r", encoding="utf-8") as f:
         pool = json.load(f)
-    bg_url = list(pool.values())[0]["url"]
+    bg_item = random.choice(list(pool.values()))
+    bg_url = bg_item.get("url")
+    print(f"🎨 [Video Nền 9:16] Hashtag: {bg_item.get('hashtag')} | Title: {bg_item.get('title')[:50]}")
 
     raw_bg = os.path.join("temp_fix", "raw_bg.mp4")
     cmd_dl = [
@@ -87,7 +185,7 @@ def create_guaranteed_video():
     ]
     subprocess.run(cmd_dl, capture_output=True)
 
-    # 5. SỬA LỖI 100%: BƯỚC A - TẠO VIDEO NỀN CHUẨN (720x1280, 24fps, yuv420p, đúng thời lượng)
+    # 5. BƯỚC A - TẠO VIDEO NỀN CHUẨN (720x1280, 24fps, yuv420p, 2Mbps, đúng thời lượng)
     temp_bg = os.path.join("temp_fix", "temp_bg.mp4")
     cmd_step_a = [
         "ffmpeg", "-y",
@@ -106,8 +204,8 @@ def create_guaranteed_video():
     ]
     subprocess.run(cmd_step_a, capture_output=True)
 
-    # BƯỚC B - GHÉP AUDIO VỚI VIDEO CHUẨN + FASTSTART (100% PLAYABLE ON WINDOWS)
-    output_mp4 = os.path.join("output", "full_dramatic_video.mp4")
+    # BƯỚC B - GHÉP AUDIO VỚI VIDEO CHUẨN + FASTSTART (100% PLAYABLE ON WINDOWS & MOBILE)
+    output_mp4 = os.path.join("output", f"full_dramatic_video_{int(time.time())}.mp4")
     cmd_step_b = [
         "ffmpeg", "-y",
         "-i", temp_bg,
@@ -123,9 +221,9 @@ def create_guaranteed_video():
     t1 = time.time()
 
     size_mb = os.path.getsize(output_mp4) / (1024 * 1024)
-    print(f"\n🎉 [THÀNH CÔNG RỰC RỠ] Đã xuất video MP4 chuẩn mượt 100% trong {t1 - t0:.2f}s!")
+    print(f"\n🎉 [THÀNH CÔNG RỰC RỠ] Đã xuất video MP4 chuẩn mượt 100% (Bitrate 2Mbps) trong {t1 - t0:.2f}s!")
     print(f"📹 File Video: {os.path.abspath(output_mp4)}")
-    print(f"📊 Dung lượng: {size_mb:.2f} MB | Thời lượng: {audio_dur:.1f}s")
+    print(f"📊 Dung lượng: {size_mb:.2f} MB | Thời lượng: {audio_dur:.1f}s (~{audio_dur/60:.1f} phút)")
 
 
 if __name__ == "__main__":
