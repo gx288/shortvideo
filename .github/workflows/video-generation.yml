@@ -98,6 +98,15 @@ jobs:
             echo "RUN_COUNT=$COUNT"  >> $GITHUB_ENV
           fi
 
+      # ─── 7.5 Auto-scrape & Rewrite Stories ──────────────────────────────────
+      - name: Auto-scrape & Rewrite Stories
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          echo "📖 Đang tự động cào chi tiết bài viết & viết lại kịch bản Gemini..."
+          python eva_scraper/article_scraper.py --batch 10 || true
+          python eva_scraper/script_rewriter.py --batch 10 || true
+
       # ─── 8. Generate videos ───────────────────────────────────────────────
       - name: Generate videos
         env:
