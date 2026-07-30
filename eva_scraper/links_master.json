@@ -211,123 +211,143 @@
   },
   "https://eva.vn/eva-tam/troi-sinh-4-con-giap-co-hau-van-cuc-vuong-c66a678488.html": {
     "title": "Trời sinh 4 con giáp có hậu vận cực vượng",
-    "scraped": false,
-    "file": "",
-    "added_at": "2026-07-30"
+    "scraped": true,
+    "file": "eva_scraper\\data\\5e88f0a2_trời_sinh_4_con_giáp_có_hậu_vận_cực_vượn.json",
+    "added_at": "2026-07-30",
+    "words": 799
   },
   "https://eva.vn/tam-su/tu-choi-len-giuong-cung-nu-dong-nghiep-tre-dep-ve-nha-toi-toat-mo-hoi-hot-truoc-mon-qua-bo-vo-cho-c391a676712.html": {
     "title": "Từ chối “lên giường” cùng nữ đồng nghiệp trẻ đẹp, về nhà tôi toát mồ hôi hột trước món quà bố vợ cho",
-    "scraped": false,
-    "file": "",
-    "added_at": "2026-07-30"
+    "scraped": true,
+    "file": "eva_scraper\\data\\93d73fdd_từ_chối__lên_giường__cùng_nữ_đồng_nghiệp.json",
+    "added_at": "2026-07-30",
+    "words": 780
   },
   "https://eva.vn/chuyen-tinh-yeu/trac-nghiem-chon-mot-buc-tranh-ban-se-biet-dieu-gi-dang-ngan-minh-cham-toi-hanh-phuc-trong-tinh-yeu-c4a678389.html": {
     "title": "Trắc nghiệm: Chọn một bức tranh, bạn sẽ biết điều gì đang ngăn mình chạm tới hạnh phúc trong tình yêu",
-    "scraped": false,
-    "file": "",
-    "added_at": "2026-07-30"
+    "scraped": true,
+    "file": "eva_scraper\\data\\abcce4eb_trắc_nghiệm__chọn_một_bức_tranh__bạn_sẽ.json",
+    "added_at": "2026-07-30",
+    "words": 758
   },
   "https://eva.vn/day-con/con-gai-quoc-tich-my-cua-jennifer-pham-tuoi-day-thi-mat-phuc-hau-giong-bo-tuong-lai-dep-hon-me-ngay-cang-gan-c14a677621.html": {
     "title": "Con gái quốc tịch Mỹ của Jennifer Phạm tuổi dậy thì: Mặt phúc hậu giống bố, tương lai đẹp hơn mẹ ngày càng gần",
-    "scraped": false,
-    "file": "",
-    "added_at": "2026-07-30"
+    "scraped": true,
+    "file": "eva_scraper\\data\\01d73a15_con_gái_quốc_tịch_mỹ_của_jennifer_phạm_t.json",
+    "added_at": "2026-07-30",
+    "words": 271
   },
   "https://eva.vn/cham/vi-chung-ta-la-me-c405a632540.html": {
     "title": "Vì chúng ta là mẹ",
-    "scraped": false,
-    "file": "",
-    "added_at": "2026-07-30"
+    "scraped": true,
+    "file": "eva_scraper\\data\\cf9c26aa_vì_chúng_ta_là_mẹ.json",
+    "added_at": "2026-07-30",
+    "words": 624
   },
   "https://eva.vn/cham/caramel-c405a638740.html": {
     "title": "Caramel mùa hè",
-    "scraped": false,
-    "file": "",
-    "added_at": "2026-07-30"
+    "scraped": true,
+    "file": "eva_scraper\\data\\06b44fcc_caramel_mùa_hè.json",
+    "added_at": "2026-07-30",
+    "words": 667
   },
   "https://eva.vn/dinh-duong-lanh-tot-tri-nao-p5000c131.html?kjsf": {
-    "title": "",
-    "scraped": false,
-    "file": "",
-    "added_at": "2026-07-30"
+    "title": "Dưỡng chất lành, tốt trí não",
+    "scraped": true,
+    "file": "eva_scraper\\data\\dabe93e2_dưỡng_chất_lành__tốt_trí_não.json",
+    "added_at": "2026-07-30",
+    "words": 728
   },
   "https://eva.vn/thu-tinh-nhan-tao-p1364c131.html?fbclid=IwY2xjawRL7bZleHRuA2FlbQIxMABicmlkETFOc1J4RXlWTVdoVmQ3OUx6c3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHvKYmZ_OFzKufKOMl931ORf6sW2hzPTSOszaInJ_uejgtACV4mySCyjydkSS_aem_OGHrOFa75SqBpvk7TBfGlQ": {
-    "title": "",
-    "scraped": false,
-    "file": "",
-    "added_at": "2026-07-30"
+    "title": "IVF - Thụ tinh trong ống nghiệm",
+    "scraped": true,
+    "file": "eva_scraper\\data\\8a92cee8_ivf___thụ_tinh_trong_ống_nghiệm.json",
+    "added_at": "2026-07-30",
+    "words": 751
   },
   "https://eva.vn/tin-tuc/28-tinh-va-6-thanh-pho-cua-viet-nam-tra-cuu-chi-tiet-3321-phuong-xa-dac-khu-tu-dien-tich-dan-so-den-bien-so-xe-c73a645714.html": {
     "title": "",
-    "scraped": false,
-    "file": "",
-    "added_at": "2026-07-30"
+    "scraped": true,
+    "file": "eva_scraper\\data\\ac866116_.json",
+    "added_at": "2026-07-30",
+    "words": 715
   },
   "https://eva.vn/nuoi-con/nghi-huu-toi-song-cung-con-dau-toi-moi-tham-du-con-trai-hieu-thao-den-may-cung-khong-nen-song-chung-khi-ve-gia-c13a678380.html": {
-    "title": "",
-    "scraped": false,
-    "file": "",
-    "added_at": "2026-07-30"
+    "title": "Nghỉ hưu tới sống cùng con dâu tôi mới thấm: Dù con trai hiếu thảo đến mấy cũng không nên sống chung khi về già",
+    "scraped": true,
+    "file": "eva_scraper\\data\\3a0104d7_nghỉ_hưu_tới_sống_cùng_con_dâu_tôi_mới_t.json",
+    "added_at": "2026-07-30",
+    "words": 793
   },
   "https://eva.vn/nuoi-con/day-som-2-gio-sang-de-di-lam-con-2-con-ngu-o-nha-bo-me-kiem-tra-camera-phat-hien-canh-tuong-xot-xa-c13a678495.html": {
-    "title": "",
-    "scraped": false,
-    "file": "",
-    "added_at": "2026-07-30"
+    "title": "Dậy sớm 2 giờ sáng để đi làm còn 2 con ngủ ở nhà, bố mẹ kiểm tra camera phát hiện cảnh tượng xót xa",
+    "scraped": true,
+    "file": "eva_scraper\\data\\b7440cc4_dậy_sớm_2_giờ_sáng_để_đi_làm_còn_2_con_n.json",
+    "added_at": "2026-07-30",
+    "words": 784
   },
   "https://eva.vn/nuoi-con/ong-noi-di-khai-sinh-dat-ten-cho-chau-la-le-thi-oe-bo-me-dua-tre-quyet-doi-thanh-cai-ten-khac-rat-dep-c13a678461.html": {
-    "title": "",
-    "scraped": false,
-    "file": "",
-    "added_at": "2026-07-30"
+    "title": "Ông nội đi khai sinh đặt tên cho cháu là Lê Thị Ọe, bố mẹ đứa trẻ quyết đổi thành cái tên khác rất đẹp",
+    "scraped": true,
+    "file": "eva_scraper\\data\\da107884_ông_nội_đi_khai_sinh_đặt_tên_cho_cháu_là.json",
+    "added_at": "2026-07-30",
+    "words": 792
   },
   "https://eva.vn/nuoi-con/chong-phat-hien-vo-ngoai-tinh-nhung-khong-danh-ghen-chi-deu-dan-mua-sua-thit-bo-hai-san-moi-ngay-c13a678419.html": {
-    "title": "",
-    "scraped": false,
-    "file": "",
-    "added_at": "2026-07-30"
+    "title": "Chồng phát hiện vợ ngoại tình nhưng không đánh ghen, chỉ đều đặn mua sữa, thịt bò, hải sản mỗi ngày",
+    "scraped": true,
+    "file": "eva_scraper\\data\\360caf9f_chồng_phát_hiện_vợ_ngoại_tình_nhưng_khôn.json",
+    "added_at": "2026-07-30",
+    "words": 779
   },
   "https://eva.vn/day-con/chao-doi-duoc-du-doan-hoa-hau-tuong-lai-con-gai-viet-anh-day-thi-dep-ngoai-mong-doi-hoc-truong-quoc-te-100-trieu-nam-c14a678418.html": {
-    "title": "",
-    "scraped": false,
-    "file": "",
-    "added_at": "2026-07-30"
+    "title": "Chào đời được dự đoán Hoa hậu tương lai, \"con gái Việt Anh\" dậy thì đẹp ngoài mong đợi, học trường quốc tế 100 triệu/năm",
+    "scraped": true,
+    "file": "eva_scraper\\data\\9562c955_chào_đời_được_dự_đoán_hoa_hậu_tương_lai.json",
+    "added_at": "2026-07-30",
+    "words": 254
   },
   "https://eva.vn/lam-me/ve-gia-moi-hieu-khong-phai-tien-bac-day-moi-la-nguyen-nhan-khien-nhieu-nguoi-cang-song-lau-cang-met-moi-c10a677529.html": {
-    "title": "",
-    "scraped": false,
-    "file": "",
-    "added_at": "2026-07-30"
+    "title": "Về già mới hiểu: Không phải tiền bạc, đây mới là nguyên nhân khiến nhiều người càng sống lâu càng mệt mỏi",
+    "scraped": true,
+    "file": "eva_scraper\\data\\601cde78_về_già_mới_hiểu__không_phải_tiền_bạc__đâ.json",
+    "added_at": "2026-07-30",
+    "words": 792
   },
   "https://eva.vn/tam-su/x-c391a678448.html": {
     "title": "",
     "scraped": false,
     "file": "",
-    "added_at": "2026-07-30"
+    "added_at": "2026-07-30",
+    "failed": true
   },
   "https://eva.vn/tam-su/x-c391a678444.html": {
     "title": "",
     "scraped": false,
     "file": "",
-    "added_at": "2026-07-30"
+    "added_at": "2026-07-30",
+    "failed": true
   },
   "https://eva.vn/tam-su/x-c391a678437.html": {
     "title": "",
     "scraped": false,
     "file": "",
-    "added_at": "2026-07-30"
+    "added_at": "2026-07-30",
+    "failed": true
   },
   "https://eva.vn/tinh-yeu-gioi-tinh/nguoi-dan-ong-u40-o-nghe-an-duoc-ban-gai-18-tuoi-be-di-dang-ky-ket-hon-c3a678425.html": {
     "title": "Người đàn ông U40 ở Nghệ An được bạn gái 18 tuổi bế đi đăng ký kết hôn",
-    "scraped": false,
-    "file": "",
-    "added_at": "2026-07-30"
+    "scraped": true,
+    "file": "eva_scraper\\data\\ee936c75_người_đàn_ông_u40_ở_nghệ_an_được_bạn_gái.json",
+    "added_at": "2026-07-30",
+    "words": 795
   },
   "https://eva.vn/tam-su/x-c391a678421.html": {
     "title": "",
     "scraped": false,
     "file": "",
-    "added_at": "2026-07-30"
+    "added_at": "2026-07-30",
+    "failed": true
   },
   "https://eva.vn/tam-su/x-c391a678323.html": {
     "title": "",

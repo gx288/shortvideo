@@ -67,7 +67,7 @@ def scrape_article(url: str) -> dict | None:
     Trả về dict hoặc None nếu thất bại / quá ngắn.
     """
     try:
-        r = requests.get(url, headers=HEADERS, timeout=15)
+        r = requests.get(url, headers=HEADERS, allow_redirects=True, timeout=15)
         r.raise_for_status()
         r.encoding = "utf-8"
     except Exception as e:
