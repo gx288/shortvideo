@@ -232,10 +232,10 @@
   },
   "https://eva.vn/day-con/con-gai-quoc-tich-my-cua-jennifer-pham-tuoi-day-thi-mat-phuc-hau-giong-bo-tuong-lai-dep-hon-me-ngay-cang-gan-c14a677621.html": {
     "title": "Con gái quốc tịch Mỹ của Jennifer Phạm tuổi dậy thì: Mặt phúc hậu giống bố, tương lai đẹp hơn mẹ ngày càng gần",
-    "scraped": true,
-    "file": "eva_scraper\\data\\01d73a15_con_gái_quốc_tịch_mỹ_của_jennifer_phạm_t.json",
-    "added_at": "2026-07-30",
-    "words": 271
+    "summary": "Con gái quốc tịch Mỹ của Jennifer Phạm tuổi dậy thì: Mặt phúc hậu giống bố, tương lai đẹp hơn mẹ ngày càng gần",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
   },
   "https://eva.vn/cham/vi-chung-ta-la-me-c405a632540.html": {
     "title": "Vì chúng ta là mẹ",
@@ -302,10 +302,10 @@
   },
   "https://eva.vn/day-con/chao-doi-duoc-du-doan-hoa-hau-tuong-lai-con-gai-viet-anh-day-thi-dep-ngoai-mong-doi-hoc-truong-quoc-te-100-trieu-nam-c14a678418.html": {
     "title": "Chào đời được dự đoán Hoa hậu tương lai, \"con gái Việt Anh\" dậy thì đẹp ngoài mong đợi, học trường quốc tế 100 triệu/năm",
-    "scraped": true,
-    "file": "eva_scraper\\data\\9562c955_chào_đời_được_dự_đoán_hoa_hậu_tương_lai.json",
-    "added_at": "2026-07-30",
-    "words": 254
+    "summary": "Chào đời được dự đoán Hoa hậu tương lai, \"con gái Việt Anh\" dậy thì đẹp ngoài mong đợi, học trường quốc tế 100 triệu/năm",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
   },
   "https://eva.vn/lam-me/ve-gia-moi-hieu-khong-phai-tien-bac-day-moi-la-nguyen-nhan-khien-nhieu-nguoi-cang-song-lau-cang-met-moi-c10a677529.html": {
     "title": "Về già mới hiểu: Không phải tiền bạc, đây mới là nguyên nhân khiến nhiều người càng sống lâu càng mệt mỏi",
@@ -1327,43 +1327,50 @@
     "added_at": "2026-07-30"
   },
   "https://eva.vn/tinh-yeu-gioi-tinh/co-dau-ca-mau-dung-300kg-rau-cu-trang-tri-dam-cuoi-khach-an-xong-co-qua-mang-ve-c3a667627.html": {
-    "title": "",
+    "title": "Cô dâu Cà Mau dùng 300kg rau củ trang trí đám cưới, khách ăn xong có quà mang về",
+    "summary": "Cô dâu Cà Mau dùng 300kg rau củ trang trí đám cưới, khách ăn xong có quà mang về",
     "scraped": false,
     "file": "",
     "added_at": "2026-07-30"
   },
   "https://eva.vn/tinh-yeu-gioi-tinh/ba-sui-u50-dep-quy-phai-hut-23-trieu-luot-xem-trong-dam-cuoi-o-ha-noi-c3a667457.html": {
-    "title": "",
+    "title": "'Bà sui' U50 đẹp quý phái, hút 2,3 triệu lượt xem trong đám cưới ở Hà Nội",
+    "summary": "'Bà sui' U50 đẹp quý phái, hút 2,3 triệu lượt xem trong đám cưới ở Hà Nội",
     "scraped": false,
     "file": "",
     "added_at": "2026-07-30"
   },
   "https://eva.vn/tinh-yeu-gioi-tinh/co-dau-tay-ninh-nhan-qua-cuoi-35-ty-cam-hoa-cuoi-200-trieu-c3a660878.html": {
-    "title": "",
+    "title": "Cô dâu Tây Ninh nhận quà cưới 35 tỷ, cầm hoa cưới 200 triệu",
+    "summary": "Cô dâu Tây Ninh nhận quà cưới 35 tỷ, cầm hoa cưới 200 triệu",
     "scraped": false,
     "file": "",
     "added_at": "2026-07-30"
   },
   "https://eva.vn/tinh-yeu-gioi-tinh/co-dau-dong-thap-doi-vuong-mien-vang-nhan-gan-30-cay-vang-trong-dam-cuoi-c3a659477.html": {
-    "title": "",
+    "title": "Cô dâu Đồng Tháp đội vương miện vàng, nhận gần 30 cây vàng trong đám cưới",
+    "summary": "Cô dâu Đồng Tháp đội vương miện vàng, nhận gần 30 cây vàng trong đám cưới",
     "scraped": false,
     "file": "",
     "added_at": "2026-07-30"
   },
   "https://eva.vn/tinh-yeu-gioi-tinh/4-khoanh-khac-xuc-dong-lay-nuoc-mat-nguoi-xem-trong-mua-cuoi-2025-c3a658222.html": {
-    "title": "",
+    "title": "4 khoảnh khắc xúc động lấy nước mắt người xem trong mùa cưới 2025",
+    "summary": "4 khoảnh khắc xúc động lấy nước mắt người xem trong mùa cưới 2025",
     "scraped": false,
     "file": "",
     "added_at": "2026-07-30"
   },
   "https://eva.vn/tinh-yeu-gioi-tinh/co-dau-o-tphcm-xinh-nhu-bup-be-dau-doi-vuong-mien-lam-tu-10-cay-vang-c3a637977.html": {
-    "title": "",
+    "title": "Cô dâu ở TPHCM xinh như búp bê, đầu đội vương miện làm từ 10 cây vàng",
+    "summary": "Cô dâu ở TPHCM xinh như búp bê, đầu đội vương miện làm từ 10 cây vàng",
     "scraped": false,
     "file": "",
     "added_at": "2026-07-30"
   },
   "https://eva.vn/tinh-yeu-gioi-tinh/bo-anh-cuoi-thap-nien-90-cua-co-giao-day-van-duoc-dan-mang-khen-nuc-no-c3a624203.html": {
-    "title": "",
+    "title": "Bộ ảnh cưới thập niên 90 của cô giáo dạy văn được dân mạng khen nức nở",
+    "summary": "Bộ ảnh cưới thập niên 90 của cô giáo dạy văn được dân mạng khen nức nở",
     "scraped": false,
     "file": "",
     "added_at": "2026-07-30"
@@ -9169,6 +9176,2225 @@
   "https://eva.vn/chuyen-tinh-yeu/trac-nghiem-truoc-va-sau-khi-yeu-ban-khac-nhau-the-nao-chon-mon-ban-se-mang-theo-khi-di-cam-trai-la-biet-c4a648851.html": {
     "title": "Trắc nghiệm: Trước và sau khi yêu bạn khác nhau thế nào? Chọn món bạn sẽ mang theo khi đi cắm trại là biết",
     "summary": "Trắc nghiệm: Trước và sau khi yêu bạn khác nhau thế nào? Chọn món bạn sẽ mang theo khi đi cắm trại là biết",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-khong-chiu-hoc-bi-me-cho-di-lam-nhan-vien-phuc-vu-sau-vai-ngay-lien-bat-khoc-noi-mot-cau-c14a677896.html": {
+    "title": "Con không chịu học bị mẹ cho đi làm nhân viên phục vụ, sau vài ngày liền bật khóc nói một câu",
+    "summary": "Con không chịu học bị mẹ cho đi làm nhân viên phục vụ, sau vài ngày liền bật khóc nói một câu",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/tai-hon-6-thang-nua-dem-vo-cu-cua-chong-bong-nhan-tin-doi-anh-thuc-hien-loi-hua-anh-lien-chuyen-khoan-100-trieu-c14a677766.html": {
+    "title": "Tái hôn 6 tháng, nửa đêm vợ cũ của chồng bỗng nhắn tin đòi anh thực hiện lời hứa, anh liền chuyển khoản 100 triệu",
+    "summary": "Tái hôn 6 tháng, nửa đêm vợ cũ của chồng bỗng nhắn tin đòi anh thực hiện lời hứa, anh liền chuyển khoản 100 triệu",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/hai-cha-con-cung-vao-quan-an-bun-bo-cuoc-doi-thoai-sau-do-khien-chu-quan-lo-lang-cho-tuong-lai-dua-tre-c14a677615.html": {
+    "title": "Hai cha con cùng vào quán ăn bún bò, cuộc đối thoại sau đó khiến chủ quán lo lắng cho tương lai đứa trẻ",
+    "summary": "Hai cha con cùng vào quán ăn bún bò, cuộc đối thoại sau đó khiến chủ quán lo lắng cho tương lai đứa trẻ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/nam-phuong-con-gai-hoa-hau-ngoc-diem-gay-chu-y-mxh-vi-dien-mao-xinh-dep-giong-lo-lem-chan-dai-1m7-o-tuoi-15-c14a677454.html": {
+    "title": "Nam Phương con gái Hoa hậu Ngọc Diễm gây chú ý MXH vì diện mạo xinh đẹp giống Lọ Lem, 1m7 ở tuổi 15",
+    "summary": "Nam Phương con gái Hoa hậu Ngọc Diễm gây chú ý MXH vì diện mạo xinh đẹp giống Lọ Lem, 1m7 ở tuổi 15",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-tphcm-tuyen-nguoi-don-be-2-tuoi-di-hoc-ve-nha-luong-100-nghin-tieng-yeu-cau-sinh-vien-dai-hoc-ngoai-thuong-ielts-70-c14a677268.html": {
+    "title": "Mẹ TP.HCM tuyển người đón bé 2 tuổi đi học về nhà, lương 100 nghìn/tiếng yêu cầu sinh viên Đại học Ngoại thương, IELTS...",
+    "summary": "Mẹ TP.HCM tuyển người đón bé 2 tuổi đi học về nhà, lương 100 nghìn/tiếng yêu cầu sinh viên Đại học Ngoại thương, IELTS...",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bi-co-giao-tra-ve-vi-hoc-kem-bo-me-lieu-vay-33-ty-cho-con-gai-sang-my-du-hoc-va-cai-ket-doi-doi-c14a677246.html": {
+    "title": "Bị cô giáo trả về vì học kém, bố mẹ liều vay 3,3 tỷ cho con gái sang Mỹ du học và cái kết đổi đời",
+    "summary": "Bị cô giáo trả về vì học kém, bố mẹ liều vay 3,3 tỷ cho con gái sang Mỹ du học và cái kết đổi đời",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/dong-phong-voi-trai-tan-kem-20-tuoi-toi-lo-lang-khi-hom-sau-xem-lai-camera-ngoai-phong-khach-c14a677202.html": {
+    "title": "Mải vui sau đám cưới với trai tân kém 20 tuổi, tôi lo lắng khi hôm sau xem lại camera ngoài phòng khách",
+    "summary": "Mải vui sau đám cưới với trai tân kém 20 tuổi, tôi lo lắng khi hôm sau xem lại camera ngoài phòng khách",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/hoa-hau-viet-cho-con-trai-11-tuoidi-don-rac-khuan-vac-do-ban-tra-da-via-he-o-canada-c14a677080.html": {
+    "title": "Hoa hậu Việt cho con trai 11 tuổi đi dọn rác, khuân vác đồ, bán trà đá vỉa hè ở Canada",
+    "summary": "Hoa hậu Việt cho con trai 11 tuổi đi dọn rác, khuân vác đồ, bán trà đá vỉa hè ở Canada",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/nha-nghi-ngut-khoi-nhung-con-gai-van-ngoi-sofa-bam-dien-thoai-phan-ung-cua-nguoi-bo-khien-tat-ca-dau-long-c14a676992.html": {
+    "title": "Nhà nghi ngút khói nhưng con gái vẫn ngồi sofa bấm điện thoại, phản ứng của người bố khiến tất cả đau lòng",
+    "summary": "Nhà nghi ngút khói nhưng con gái vẫn ngồi sofa bấm điện thoại, phản ứng của người bố khiến tất cả đau lòng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/cap-song-sinh-gianh-do-choi-phuong-oanh-lap-tuc-vao-vai-phan-dien-chi-3-giay-ma-ai-cung-tam-tac-c14a676983.html": {
+    "title": "Cặp song sinh giành đồ chơi, Phương Oanh lập tức vào vai phản diện, chỉ 3 giây mà ai cũng tấm tắc",
+    "summary": "Cặp song sinh giành đồ chơi, Phương Oanh lập tức vào vai phản diện, chỉ 3 giây mà ai cũng tấm tắc",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bi-bo-roi-be-trai-7-tuoi-van-ngay-tho-dung-ngoai-troi-doi-bo-tu-chieu-den-dem-muon-suot-10-tieng-c14a676783.html": {
+    "title": "Bị bỏ rơi, bé trai 7 tuổi vẫn ngây thơ đứng ngoài trời đợi bố từ chiều đến đêm muộn suốt 10 tiếng",
+    "summary": "Bị bỏ rơi, bé trai 7 tuổi vẫn ngây thơ đứng ngoài trời đợi bố từ chiều đến đêm muộn suốt 10 tiếng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/thue-giup-viec-9-trieu-con-dau-moi-thang-con-len-bo-them-500-nghin-vi-tri-duoc-bo-me-chong-c14a676678.html": {
+    "title": "Thuê giúp việc 9 triệu, con dâu mỗi tháng còn lén bo thêm 500 nghìn vì \"trị\" được bố mẹ chồng",
+    "summary": "Thuê giúp việc 9 triệu, con dâu mỗi tháng còn lén bo thêm 500 nghìn vì \"trị\" được bố mẹ chồng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/tai-hon-sau-20-nam-le-bong-lam-me-don-than-toi-run-ray-quy-ngay-dem-tan-hon-c14a676677.html": {
+    "title": "Tái hôn sau 20 năm lẻ bóng làm mẹ đơn thân, tôi run rẩy quỳ ngay đêm tân hôn",
+    "summary": "Tái hôn sau 20 năm lẻ bóng làm mẹ đơn thân, tôi run rẩy quỳ ngay đêm tân hôn",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/ba-ngoai-di-lam-giay-khai-sinh-dat-ten-chau-gai-la-coi-cuc-nhan-vien-sua-lai-thanh-ten-khac-vua-hay-vua-y-nghia-c14a676116.html": {
+    "title": "Bà ngoại đi làm giấy khai sinh đặt tên cháu gái là Côi Cúc, nhân viên sửa lại thành tên khác vừa hay vừa ý nghĩa",
+    "summary": "Bà ngoại đi làm giấy khai sinh đặt tên cháu gái là Côi Cúc, nhân viên sửa lại thành tên khác vừa hay vừa ý nghĩa",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bi-con-danh-vo-dai-gia-cua-quang-hai-nghiem-khac-day-do-thai-do-cua-nguoi-phu-nu-ben-canh-gay-chu-y-c14a676060.html": {
+    "title": "Bị con đánh, vợ đại gia của Quang Hải nghiêm khắc dạy dỗ, thái độ của người phụ nữ bên cạnh gây chú ý",
+    "summary": "Bị con đánh, vợ đại gia của Quang Hải nghiêm khắc dạy dỗ, thái độ của người phụ nữ bên cạnh gây chú ý",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/tu-choi-du-hoc-anh-con-gai-quyen-linh-o-viet-nam-lai-xe-sang-xach-tui-tram-trieu-vuong-tin-don-yeu-thieu-gia-tay-ninh-c14a675987.html": {
+    "title": "Từ chối du học Anh, con gái Quyền Linh ở Việt Nam lái xe sang, xách túi trăm triệu, vướng tin đồn yêu thiếu gia Tây Ninh",
+    "summary": "Từ chối du học Anh, con gái Quyền Linh ở Việt Nam lái xe sang, xách túi trăm triệu, vướng tin đồn yêu thiếu gia Tây Ninh",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-gai-thu-khoa-o-tphcm-xinh-dep-cao-1m75-tu-ung-cu-vai-hoang-hau-nam-phuong-coi-mang-dong-tinh-c14a675889.html": {
+    "title": "Bé gái Thủ khoa ở TP.HCM xinh đẹp, cao 1m75, tự ứng cử vai Hoàng hậu Nam Phương, cõi mạng rần rần ủng hộ",
+    "summary": "Bé gái Thủ khoa ở TP.HCM xinh đẹp, cao 1m75, tự ứng cử vai Hoàng hậu Nam Phương, cõi mạng rần rần ủng hộ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bo-dinh-dat-ten-con-la-pham-sai-lam-may-man-dua-tre-sau-do-duoc-gia-dinh-sua-thanh-ten-khac-rat-giau-co-c14a675876.html": {
+    "title": "Bố định đặt tên con là Phạm Sai Lầm, may mắn đứa trẻ sau đó được gia đình sửa thành tên khác rất giàu có",
+    "summary": "Bố định đặt tên con là Phạm Sai Lầm, may mắn đứa trẻ sau đó được gia đình sửa thành tên khác rất giàu có",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/phai-long-chang-trai-duc-co-gai-dong-nai-de-duoc-con-gai-lai-xinh-nhu-hoa-he-lo-dai-ngo-lam-me-o-duc-qua-tot-c14a675774.html": {
+    "title": "Phải lòng chàng trai Đức, cô gái Đồng Nai đẻ được con gái lai xinh như hoa, hé lộ \"đãi ngộ\" làm mẹ ở Đức quá tốt",
+    "summary": "Phải lòng chàng trai Đức, cô gái Đồng Nai đẻ được con gái lai xinh như hoa, hé lộ \"đãi ngộ\" làm mẹ ở Đức quá tốt",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/di-dau-cung-duoc-khen-giong-bo-be-gai-vua-khoc-vua-noi-giong-bo-thi-xau-lam-lam-dan-tinh-cuoi-bo-c14a675595.html": {
+    "title": "Đi đâu cũng được khen giống bố, bé gái vừa khóc vừa nói \"giống bố thì xấu lắm\" làm dân tình cười bò",
+    "summary": "Đi đâu cũng được khen giống bố, bé gái vừa khóc vừa nói \"giống bố thì xấu lắm\" làm dân tình cười bò",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-dat-ten-cho-con-gai-la-nguyen-thi-nhi-dua-tre-lon-len-khac-han-ten-goi-xinh-dep-cao-1m72-nang-80kg-c14a675586.html": {
+    "title": "Mẹ đặt tên cho con gái là Nguyễn Thị Nhí, đứa trẻ lớn lên khác hẳn tên gọi, xinh đẹp cao 1m72, nặng 80kg",
+    "summary": "Mẹ đặt tên cho con gái là Nguyễn Thị Nhí, đứa trẻ lớn lên khác hẳn tên gọi, xinh đẹp cao 1m72, nặng 80kg",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/cho-con-so-sinh-ngu-cung-con-lon-khi-gio-chan-ra-nguoi-me-goi-chong-den-ngay-lap-tuc-c14a675307.html": {
+    "title": "Cho con sơ sinh ngủ cùng con lớn, khi giở chăn ra người mẹ gọi chồng đến ngay lập tức",
+    "summary": "Cho con sơ sinh ngủ cùng con lớn, khi giở chăn ra người mẹ gọi chồng đến ngay lập tức",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/vo-nghe-an-trach-chong-mai-world-cup-bo-mac-con-truot-lop-10-ai-ngo-duoc-me-chong-chuyen-20-trieu-kem-loi-nhan-c14a675264.html": {
+    "title": "Vợ Nghệ An trách chồng mải World Cup bỏ mặc con trượt lớp 10, ai ngờ được mẹ chồng chuyển 20 triệu kèm lời nhắn",
+    "summary": "Vợ Nghệ An trách chồng mải World Cup bỏ mặc con trượt lớp 10, ai ngờ được mẹ chồng chuyển 20 triệu kèm lời nhắn",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/de-con-gai-thu-4-bo-me-dat-ten-la-nguyen-ngung-nhan-vien-sua-thanh-ten-khac-vua-hay-vua-y-nghia-c14a675206.html": {
+    "title": "Đẻ con gái thứ 4 bố mẹ đặt tên là Nguyễn Ngưng, nhân viên sửa thành tên khác vừa hay vừa ý nghĩa",
+    "summary": "Đẻ con gái thứ 4 bố mẹ đặt tên là Nguyễn Ngưng, nhân viên sửa thành tên khác vừa hay vừa ý nghĩa",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/3-quan-diem-nuoi-day-con-qua-hay-cua-cap-sao-viet-nhieu-nam-lien-la-gia-dinh-hanh-phuc-tieu-bieu-tphcm-c14a675045.html": {
+    "title": "3 quan điểm nuôi dạy con quá hay của cặp sao Việt nhiều năm liền là \"Gia đình hạnh phúc tiêu biểu TP.HCM\"",
+    "summary": "3 quan điểm nuôi dạy con quá hay của cặp sao Việt nhiều năm liền là \"Gia đình hạnh phúc tiêu biểu TP.HCM\"",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/khoi-nghi-he-den-don-canh-sat-khien-ai-cung-cang-thang-ca-can-phong-vo-oa-khi-hai-dua-tre-len-tieng-c14a675131.html": {
+    "title": "“Khối nghỉ hè” đến đồn cảnh sát khiến ai cũng căng thẳng, cả căn phòng vỡ òa khi hai đứa trẻ lên tiếng",
+    "summary": "“Khối nghỉ hè” đến đồn cảnh sát khiến ai cũng căng thẳng, cả căn phòng vỡ òa khi hai đứa trẻ lên tiếng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bo-don-than-nuoi-con-12-nam-doc-tin-nhan-cua-dua-tre-khi-doi-mua-dien-thoai-moi-khien-ai-cung-sung-so-c14a675033.html": {
+    "title": "Bố đơn thân nuôi con 12 năm, đọc tin nhắn của đứa trẻ khi đòi mua điện thoại mới ai nấy sững sờ",
+    "summary": "Bố đơn thân nuôi con 12 năm, đọc tin nhắn của đứa trẻ khi đòi mua điện thoại mới ai nấy sững sờ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-moi-nam-nhat-dai-hoc-da-thu-thai-hai-vach-biet-su-that-viet-trong-cuon-nhat-ky-con-toi-ly-hon-c14a675005.html": {
+    "title": "Con gái mới năm nhất Đại học đã thử thai hai vạch, biết sự thật viết trong cuốn nhật ký con, tôi ly hôn",
+    "summary": "Con gái mới năm nhất Đại học đã thử thai hai vạch, biết sự thật viết trong cuốn nhật ký con, tôi ly hôn",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-do-my-linh-nay-lon-xinh-het-me-3-tuoi-biet-hat-biet-mua-me-hoa-hau-day-con-vao-truong-harvard-c14a674788.html": {
+    "title": "Con gái Đỗ Mỹ Linh lớn vừa xinh vừa hài, 3 tuổi được mẹ \"Hoa hậu phố cổ\" cho học đủ môn toán, văn, múa, hát",
+    "summary": "Con gái Đỗ Mỹ Linh lớn vừa xinh vừa hài, 3 tuổi được mẹ \"Hoa hậu phố cổ\" cho học đủ môn toán, văn, múa, hát",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/thay-me-nam-bat-dong-goi-mai-khong-day-be-trai-tieu-hoc-lam-mot-viec-khien-nguoi-lon-phai-hoc-theo-c14a674755.html": {
+    "title": "Thấy mẹ nằm bất động gọi mãi không dậy, bé trai tiểu học làm một việc khiến người lớn phải học theo",
+    "summary": "Thấy mẹ nằm bất động gọi mãi không dậy, bé trai tiểu học làm một việc khiến người lớn phải học theo",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/messi-moi-nam-chi-35-ty-dong-hoc-phi-cho-con-kheo-day-con-2-dieu-khac-han-ronaldo-c14a674696.html": {
+    "title": "Messi mỗi năm chi 3,5 tỷ đồng học phí cho con, dạy con 2 điều khác hẳn Ronaldo",
+    "summary": "Messi mỗi năm chi 3,5 tỷ đồng học phí cho con, dạy con 2 điều khác hẳn Ronaldo",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/tot-nghiep-bang-xuat-sac-o-dh-danh-gia-nhat-ca-nuoc-nguoi-dan-ong-chua-cai-sua-van-o-voi-me-va-cai-ket-c14a674315.html": {
+    "title": "Tốt nghiệp bằng xuất sắc ở ĐH danh giá nhất cả nước, \"người đàn ông chưa cai sữa\" vẫn ở với mẹ và cái kết",
+    "summary": "Tốt nghiệp bằng xuất sắc ở ĐH danh giá nhất cả nước, \"người đàn ông chưa cai sữa\" vẫn ở với mẹ và cái kết",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/3-nu-sinh-khoe-bung-to-khang-dinh-cung-mang-bau-dan-tinh-khi-biet-su-that-lien-doi-moi-phu-huynh-c14a674340.html": {
+    "title": "3 nữ sinh khoe bụng to khẳng định “cùng mang bầu”, dân tình khi biết sự thật liền đòi mời phụ huynh",
+    "summary": "3 nữ sinh khoe bụng to khẳng định “cùng mang bầu”, dân tình khi biết sự thật liền đòi mời phụ huynh",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-viet-u40-lien-tuc-duoc-bao-han-trung-nhat-khen-tre-dep-nhin-anh-dung-canh-con-gai-12-tuoi-nhieu-nguoi-soc-hon-c14a674486.html": {
+    "title": "Mẹ Việt U40 liên tục được báo Hàn, Trung, Nhật khen trẻ đẹp, nhìn ảnh đứng cạnh con gái 12 tuổi nhiều người sốc hơn",
+    "summary": "Mẹ Việt U40 liên tục được báo Hàn, Trung, Nhật khen trẻ đẹp, nhìn ảnh đứng cạnh con gái 12 tuổi nhiều người sốc hơn",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-dat-ten-con-gai-la-nguyen-ha-chan-ai-nghe-lan-dau-cung-khen-hay-nhung-y-nghia-that-su-moi-dau-long-c14a674450.html": {
+    "title": "Mẹ đặt tên con gái là Nguyễn Hạ Chân, ai nghe lần đầu cũng khen hay nhưng ý nghĩa thật sự mới đau lòng",
+    "summary": "Mẹ đặt tên con gái là Nguyễn Hạ Chân, ai nghe lần đầu cũng khen hay nhưng ý nghĩa thật sự mới đau lòng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/di-an-hang-cung-bo-be-gai-goi-4-mon-chu-nha-hang-doc-xong-am-tham-bao-canh-sat-c14a674108.html": {
+    "title": "Đi ăn hàng cùng bố, bé gái gọi 4 món, chủ nhà hàng đọc xong âm thầm báo cảnh sát",
+    "summary": "Đi ăn hàng cùng bố, bé gái gọi 4 món, chủ nhà hàng đọc xong âm thầm báo cảnh sát",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bo-viet-lap-bang-noi-quy-gia-dinh-dai-ngoang-yeu-cau-con-khi-chao-bo-me-phai-dung-lai-5-giay-khien-coi-mang-tranh-cai-c14a674284.html": {
+    "title": "Bố Việt lập bảng nội quy gia đình dài ngoằng, yêu cầu con \"khi chào bố mẹ phải dừng lại 5 giây\" khiến cõi mạng tranh cãi",
+    "summary": "Bố Việt lập bảng nội quy gia đình dài ngoằng, yêu cầu con \"khi chào bố mẹ phải dừng lại 5 giây\" khiến cõi mạng tranh cãi",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-ra-ngoai-de-con-trai-2-tuoi-va-em-so-sinh-trong-phong-ngu-hanh-dong-cua-anh-lon-khien-gia-dinh-lang-nguoi-c14a673984.html": {
+    "title": "Mẹ ra ngoài để con trai 2 tuổi và em sơ sinh trong phòng ngủ, hành động của anh lớn khiến gia đình lặng người",
+    "summary": "Mẹ ra ngoài để con trai 2 tuổi và em sơ sinh trong phòng ngủ, hành động của anh lớn khiến gia đình lặng người",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/camera-phong-khach-ghi-lai-canh-gan-gui-cua-cap-vo-chong-tre-cau-con-trai-tieu-hoc-chung-kien-tan-mat-c14a673867.html": {
+    "title": "Camera phòng khách ghi lại cảnh gần gũi của cặp vợ chồng trẻ, cậu con trai tiểu học chứng kiến tận mắt",
+    "summary": "Camera phòng khách ghi lại cảnh gần gũi của cặp vợ chồng trẻ, cậu con trai tiểu học chứng kiến tận mắt",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/ca-si-thu-phuong-tung-lam-me-don-than-kho-khan-sau-ly-hon-thanh-trung-gio-tu-hao-co-con-gai-xinh-gioi-thi-ielts-70-c14a673813.html": {
+    "title": "Ca sĩ Thu Phượng từng làm mẹ đơn thân khó khăn sau ly hôn Thành Trung, giờ tự hào có con gái xinh giỏi, thi IELTS 7.0",
+    "summary": "Ca sĩ Thu Phượng từng làm mẹ đơn thân khó khăn sau ly hôn Thành Trung, giờ tự hào có con gái xinh giỏi, thi IELTS 7.0",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/nu-tiep-vien-hang-khong-goc-lam-dong-roi-cabin-may-bay-sinh-con-cau-be-2-tuoi-noi-duoc-3-thu-tieng-c14a673710.html": {
+    "title": "Nữ tiếp viên hàng không gốc Lâm Đồng rời cabin máy bay sinh con, cậu bé 2 tuổi nói được 3 thứ tiếng",
+    "summary": "Nữ tiếp viên hàng không gốc Lâm Đồng rời cabin máy bay sinh con, cậu bé 2 tuổi nói được 3 thứ tiếng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/da-muon-nhung-me-chua-den-don-camera-giam-sat-ghi-lai-canh-be-trai-ngoi-mot-minh-o-goc-lop-hanh-dong-ai-cung-xot-c14a673603.html": {
+    "title": "Đã muộn nhưng mẹ chưa đến đón, camera giám sát ghi lại cảnh bé trai ngồi một mình ở góc lớp, hành động ai cũng xót",
+    "summary": "Đã muộn nhưng mẹ chưa đến đón, camera giám sát ghi lại cảnh bé trai ngồi một mình ở góc lớp, hành động ai cũng xót",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/cuc-truong-xuan-bac-soan-thoi-khoa-bieu-nghi-he-cho-con-trai-lop-3-ai-cung-tam-tac-khen-qua-hay-qua-tinh-cam-c14a673502.html": {
+    "title": "Cục trưởng Xuân Bắc soạn thời khoá biểu nghỉ hè cho con trai lớp 3, ai cũng tấm tắc khen quá hay quá tình cảm",
+    "summary": "Cục trưởng Xuân Bắc soạn thời khoá biểu nghỉ hè cho con trai lớp 3, ai cũng tấm tắc khen quá hay quá tình cảm",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/tieu-thu-du-hoc-phap-bi-nem-da-vi-16-tuoi-van-de-me-cat-mong-chan-bon-tung-thia-com-moi-ngay-tieu-135-trieu-c14a673499.html": {
+    "title": "Tiểu thư du học Pháp bị \"ném đá\" vì 16 tuổi vẫn để mẹ cắt móng chân, bón từng thìa cơm, mỗi ngày tiêu 135 triệu",
+    "summary": "Tiểu thư du học Pháp bị \"ném đá\" vì 16 tuổi vẫn để mẹ cắt móng chân, bón từng thìa cơm, mỗi ngày tiêu 135 triệu",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/ong-bo-u40-ha-noi-noi-bay-bi-con-phat-hien-qua-camera-dua-tre-sau-do-dua-ra-hinh-phat-khien-bo-nho-doi-c14a673372.html": {
+    "title": "Ông bố U40 Hà Nội “nói bậy” bị con phát hiện qua camera, đứa trẻ sau đó đưa ra hình phạt khiến bố “nhớ đời”",
+    "summary": "Ông bố U40 Hà Nội “nói bậy” bị con phát hiện qua camera, đứa trẻ sau đó đưa ra hình phạt khiến bố “nhớ đời”",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-viet-khoe-day-con-gai-16-tuoi-lay-chong-giau-ly-hon-van-song-sung-suong-duoc-chu-cap-50-trieu-thang-gay-tranh-cai-c14a673299.html": {
+    "title": "Mẹ Việt khoe \"chiến tích\" lấy chồng giàu, ly hôn vẫn sống sung sướng, được chu cấp 50 triệu/tháng, dạy con gái 16 tuổi...",
+    "summary": "Mẹ Việt khoe \"chiến tích\" lấy chồng giàu, ly hôn vẫn sống sung sướng, được chu cấp 50 triệu/tháng, dạy con gái 16 tuổi...",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/troi-nong-nu-sinh-mac-ho-di-tau-dien-bi-cu-ba-nhac-nho-co-gai-lien-rut-ra-mot-thu-khien-ba-lap-tuc-im-lang-c14a673016.html": {
+    "title": "Trời nóng, nữ sinh mặc hở đi tàu điện bị cụ bà nhắc nhở, cô gái liền rút ra một thứ khiến bà lập tức im lặng",
+    "summary": "Trời nóng, nữ sinh mặc hở đi tàu điện bị cụ bà nhắc nhở, cô gái liền rút ra một thứ khiến bà lập tức im lặng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/luong-50-trieu-dien-mao-ua-nhin-toi-tu-tin-cau-hon-co-hang-xom-e-chong-roi-toat-mo-hoi-nghe-cau-tra-loi-c14a672967.html": {
+    "title": "Lương 50 triệu, diện mạo ưa nhìn, tôi tự tin cầu hôn cô hàng xóm ế chồng rồi toát mồ hôi nghe câu trả lời",
+    "summary": "Lương 50 triệu, diện mạo ưa nhìn, tôi tự tin cầu hôn cô hàng xóm ế chồng rồi toát mồ hôi nghe câu trả lời",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/tac-hai-khong-ngo-khi-nguoi-lon-thuong-xuyen-thay-do-truoc-mat-tre-c14a672826.html": {
+    "title": "Tác hại không ngờ khi người lớn thường xuyên thay đồ trước mặt trẻ",
+    "summary": "Tác hại không ngờ khi người lớn thường xuyên thay đồ trước mặt trẻ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/hoc-mam-non-3-thang-hoc-phi-57-trieu-con-trai-quang-hai-va-vo-chu-thanh-huyen-21-thang-tuoi-noi-tieng-anh-rat-tot-c14a672969.html": {
+    "title": "Học mầm non 3 tháng học phí 57 triệu, con trai Quang Hải và vợ Chu Thanh Huyền 21 tháng tuổi nói tiếng Anh rất tốt",
+    "summary": "Học mầm non 3 tháng học phí 57 triệu, con trai Quang Hải và vợ Chu Thanh Huyền 21 tháng tuổi nói tiếng Anh rất tốt",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/nguoi-me-tinh-giac-vi-tieng-con-khoc-giua-dem-vua-bat-den-thay-con-gai-co-hanh-dong-kho-tin-voi-em-so-sinh-c14a672968.html": {
+    "title": "Người mẹ tỉnh giấc vì tiếng con khóc giữa đêm, vừa bật đèn thấy con gái có hành động khó tin với em sơ sinh",
+    "summary": "Người mẹ tỉnh giấc vì tiếng con khóc giữa đêm, vừa bật đèn thấy con gái có hành động khó tin với em sơ sinh",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/doan-clip-luc-nua-dem-trong-mot-gia-dinh-4-nguoi-khien-coi-mang-viet-xon-xao-ai-cung-thay-thuong-nguoi-me-c14a672918.html": {
+    "title": "Đoạn clip lúc nửa đêm trong một gia đình 4 người khiến cõi mạng Việt xôn xao, ai cũng thấy thương người mẹ",
+    "summary": "Đoạn clip lúc nửa đêm trong một gia đình 4 người khiến cõi mạng Việt xôn xao, ai cũng thấy thương người mẹ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/nhat-ky-dau-he-ong-ba-khoc-thet-doi-tra-ve-noi-san-xuat-khi-bo-me-gui-con-nho-trong-ho-c14a672887.html": {
+    "title": "Nhật ký đầu hè: Ông bà khóc thét, đòi \"trả về nơi sản xuất\" khi bố mẹ gửi con nhờ trông hộ",
+    "summary": "Nhật ký đầu hè: Ông bà khóc thét, đòi \"trả về nơi sản xuất\" khi bố mẹ gửi con nhờ trông hộ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bat-cuoi-voi-tiet-lo-cua-be-gai-4-tuoi-bo-luon-bat-nat-me-vao-ban-dem-va-me-het-len-vi-dau-don-c14a672821.html": {
+    "title": "Bật cười với tiết lộ của bé gái 4 tuổi: \"Bố luôn bắt nạt mẹ vào ban đêm\"",
+    "summary": "Bật cười với tiết lộ của bé gái 4 tuổi: \"Bố luôn bắt nạt mẹ vào ban đêm\"",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-mc-vtv-diep-chi-bat-den-on-thi-giua-rung-khien-me-rung-rung-nuoc-mat-voi-bang-diem-hoc-tap-tuyet-doi-c14a672817.html": {
+    "title": "Con gái MC VTV Diệp Chi bật đèn ôn thi giữa rừng, khiến mẹ rưng rưng nước mắt với bảng điểm học tập tuyệt đối",
+    "summary": "Con gái MC VTV Diệp Chi bật đèn ôn thi giữa rừng, khiến mẹ rưng rưng nước mắt với bảng điểm học tập tuyệt đối",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/nu-sinh-ha-noi-xuat-hien-tren-dai-thvn-xinh-nhu-hoa-hau-bo-ruot-hoa-ra-la-soai-ca-ca-nuoc-biet-mat-c14a672731.html": {
+    "title": "Nữ sinh Hà Nội xuất hiện trên Đài THVN xinh như Hoa hậu, bố ruột hoá ra là \"Soái ca\" cả nước biết mặt",
+    "summary": "Nữ sinh Hà Nội xuất hiện trên Đài THVN xinh như Hoa hậu, bố ruột hoá ra là \"Soái ca\" cả nước biết mặt",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/pham-quynh-anh-lam-tro-ly-dua-con-gai-di-dien-show-ung-ho-ai-nu-theo-nghe-ca-si-cua-me-c14a672537.html": {
+    "title": "Phạm Quỳnh Anh làm trợ lý đưa con gái đi diễn show, ủng hộ ái nữ theo nghề ca sĩ của mẹ",
+    "summary": "Phạm Quỳnh Anh làm trợ lý đưa con gái đi diễn show, ủng hộ ái nữ theo nghề ca sĩ của mẹ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-lam-giay-khai-sinh-dat-ten-cho-con-gai-la-hoang-thi-vet-cai-ten-duoc-nhan-vien-sua-lai-vua-dep-vua-sang-c14a672466.html": {
+    "title": "Mẹ làm giấy khai sinh đặt tên cho con gái là Hoàng Thị Vét, cái tên được nhân viên sửa lại vừa đẹp vừa sang",
+    "summary": "Mẹ làm giấy khai sinh đặt tên cho con gái là Hoàng Thị Vét, cái tên được nhân viên sửa lại vừa đẹp vừa sang",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-trai-co-hanh-dong-la-voi-ban-gai-nu-dien-vien-len-tieng-giai-thich-khien-mang-xa-hoi-bung-no-tranh-luan-c14a672468.html": {
+    "title": "Con trai có hành động lạ với bạn gái, nữ diễn viên lên tiếng giải thích khiến mạng xã hội bùng nổ tranh luận",
+    "summary": "Con trai có hành động lạ với bạn gái, nữ diễn viên lên tiếng giải thích khiến mạng xã hội bùng nổ tranh luận",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/den-truong-con-me-viet-tre-gay-chu-y-vi-dep-nhat-le-tot-nghiep-danh-tinh-khong-phai-binh-thuong-c14a672252.html": {
+    "title": "Đến trường con, mẹ Việt trẻ gây chú ý vì đẹp nhất lễ bế giảng, danh tính không phải bình thường",
+    "summary": "Đến trường con, mẹ Việt trẻ gây chú ý vì đẹp nhất lễ bế giảng, danh tính không phải bình thường",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/ban-sao-harper-beckham-bi-me-ruot-ep-dong-phim-tu-nam-4-tuoi-an-kieng-ngu-it-mac-do-qua-tuoi-va-cai-ket-khi-truong-thanh-c14a671959.html": {
+    "title": "\"Bản sao\" Harper Beckham bị mẹ ruột ép đóng phim từ năm 4 tuổi, ăn kiêng, ngủ ít, mặc đồ quá tuổi và cái kết khi trưởng...",
+    "summary": "\"Bản sao\" Harper Beckham bị mẹ ruột ép đóng phim từ năm 4 tuổi, ăn kiêng, ngủ ít, mặc đồ quá tuổi và cái kết khi trưởng...",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/buc-anh-viral-mxh-chup-lai-tu-the-ngoi-cua-4-ong-bo-khi-hop-phu-huynh-cho-con-du-doan-tuong-lai-4-dua-tre-c14a671721.html": {
+    "title": "Bức ảnh viral MXH chụp lại tư thế ngồi của 4 ông bố khi họp phụ huynh cho con, dự đoán tương lai 4 đứa trẻ",
+    "summary": "Bức ảnh viral MXH chụp lại tư thế ngồi của 4 ông bố khi họp phụ huynh cho con, dự đoán tương lai 4 đứa trẻ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bo-dat-ten-con-gai-3-chu-nguyen-thi-phon-nhan-vien-sua-thanh-ten-khac-4-chu-qua-dinh-dua-tre-biet-on-c14a671720.html": {
+    "title": "Bố đặt tên con gái 3 chữ Nguyễn Thị Phởn, nhân viên sửa thành tên khác 4 chữ quá đỉnh, đứa trẻ biết ơn",
+    "summary": "Bố đặt tên con gái 3 chữ Nguyễn Thị Phởn, nhân viên sửa thành tên khác 4 chữ quá đỉnh, đứa trẻ biết ơn",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-vui-mung-khi-thay-con-trai-lop-1-ve-chan-dung-ong-noi-khoe-len-mang-ai-cung-khen-nhung-co-giao-lac-dau-c14a671565.html": {
+    "title": "Mẹ vui mừng khi thấy con trai lớp 1 vẽ chân dung ông nội, khoe lên mạng ai cũng khen nhưng cô giáo lắc đầu",
+    "summary": "Mẹ vui mừng khi thấy con trai lớp 1 vẽ chân dung ông nội, khoe lên mạng ai cũng khen nhưng cô giáo lắc đầu",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/cuoi-xiu-voi-7749-kieu-on-thi-cuoi-ky-cua-cac-si-tu-nhi-nhin-la-biet-tuong-lai-bo-me-hop-phu-huynh-cuoi-hay-meu-c14a671517.html": {
+    "title": "Cười xỉu với 7749 kiểu ôn thi cuối kỳ của các \"sĩ tử nhí\", nhìn là biết tương lai bố mẹ họp phụ huynh cười hay mếu",
+    "summary": "Cười xỉu với 7749 kiểu ôn thi cuối kỳ của các \"sĩ tử nhí\", nhìn là biết tương lai bố mẹ họp phụ huynh cười hay mếu",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/nu-gia-su-duoc-thue-day-them-he-cho-hoc-sinh-muc-phi-90-nghin-90-phut-nhung-tu-choi-phu-huynh-nhan-tin-phe-binh-c14a671301.html": {
+    "title": "Nữ gia sư được thuê dạy thêm hè cho học sinh mức phí 90 nghìn/90 phút nhưng từ chối, phụ huynh nhắn tin phê bình",
+    "summary": "Nữ gia sư được thuê dạy thêm hè cho học sinh mức phí 90 nghìn/90 phút nhưng từ chối, phụ huynh nhắn tin phê bình",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-trai-3-tuoi-mat-day-vet-thuong-tuc-truc-cham-me-nam-giuong-benh-cau-chuyen-phia-sau-ai-nghe-cung-nghen-long-c14a671181.html": {
+    "title": "Bé trai 3 tuổi mặt đầy vết thương túc trực chăm mẹ nằm giường bệnh, câu chuyện phía sau ai nghe cũng nghẹn lòng",
+    "summary": "Bé trai 3 tuổi mặt đầy vết thương túc trực chăm mẹ nằm giường bệnh, câu chuyện phía sau ai nghe cũng nghẹn lòng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/xem-camera-thay-con-mau-giao-khoc-ngat-o-lop-biet-ly-do-tu-buc-tranh-co-giao-ve-me-lien-dang-len-mang-c14a671140.html": {
+    "title": "Xem camera thấy con mẫu giáo khóc ngất ở lớp, biết lý do từ bức tranh cô giáo vẽ, mẹ liền đăng lên mạng",
+    "summary": "Xem camera thấy con mẫu giáo khóc ngất ở lớp, biết lý do từ bức tranh cô giáo vẽ, mẹ liền đăng lên mạng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/hotgirl-tra-sua-lay-ty-phu-thue-4-nguoi-cham-con-bi-mang-khap-mxh-hom-sau-tat-ca-dong-loat-xin-loi-c14a671138.html": {
+    "title": "“Hotgirl trà sữa” lấy tỷ phú, thuê 4 người chăm con bị mắng khắp MXH, hôm sau tất cả đồng loạt xin lỗi",
+    "summary": "“Hotgirl trà sữa” lấy tỷ phú, thuê 4 người chăm con bị mắng khắp MXH, hôm sau tất cả đồng loạt xin lỗi",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-tieu-hoc-di-thi-me-viet-lay-bang-y-te-dan-day-tay-be-co-giao-phat-hien-dong-chu-xuc-dong-nhan-nhom-lop-c14a671078.html": {
+    "title": "Con tiểu học đi thi, mẹ Việt lấy băng y tế dán đầy tay bé, cô giáo phát hiện dòng chữ xúc động nhắn nhóm lớp",
+    "summary": "Con tiểu học đi thi, mẹ Việt lấy băng y tế dán đầy tay bé, cô giáo phát hiện dòng chữ xúc động nhắn nhóm lớp",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/oc-thanh-van-tu-hao-khi-con-trai-ut-gianh-giai-nhat-cuoc-thi-tieng-anh-o-truong-quoc-te-hoc-phi-gan-700-trieu-nam-c14a670992.html": {
+    "title": "Ốc Thanh Vân tự hào khi con trai út giành giải Nhất cuộc thi tiếng Anh ở trường quốc tế học phí gần 700 triệu/năm",
+    "summary": "Ốc Thanh Vân tự hào khi con trai út giành giải Nhất cuộc thi tiếng Anh ở trường quốc tế học phí gần 700 triệu/năm",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-lop-3-di-hoc-ve-khoe-buc-tranh-moi-ve-nguoi-me-hoang-mang-khi-nhin-thay-noi-dung-c14a670871.html": {
+    "title": "Con gái lớp 3 đi học về khoe bức tranh mới vẽ, người mẹ hoang mang khi nhìn thấy nội dung",
+    "summary": "Con gái lớp 3 đi học về khoe bức tranh mới vẽ, người mẹ hoang mang khi nhìn thấy nội dung",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bai-tap-tieng-viet-cua-be-tieu-hoc-khien-phu-huynh-khoc-thet-cac-ban-nam-dua-don-em-moi-ngay-me-em-keu-ra-ra-c14a670847.html": {
+    "title": "Bài tập tiếng Việt của bé tiểu học khiến phụ huynh “khóc thét”: Các bạn nam đưa đón em mỗi ngày, mẹ em kêu ra rả",
+    "summary": "Bài tập tiếng Việt của bé tiểu học khiến phụ huynh “khóc thét”: Các bạn nam đưa đón em mỗi ngày, mẹ em kêu ra rả",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-oi-con-sinh-ra-tu-dau-nu-dien-vien-tra-loi-qua-thong-minh-ai-cung-tam-tac-khen-c14a669888.html": {
+    "title": "\"Mẹ ơi con sinh ra từ đâu?\", nữ diễn viên trả lời quá thông minh ai cũng tấm tắc khen",
+    "summary": "\"Mẹ ơi con sinh ra từ đâu?\", nữ diễn viên trả lời quá thông minh ai cũng tấm tắc khen",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-trai-4-tuoi-len-me-goi-shipper-nho-giao-hang-soi-day-chuyen-dat-tien-tang-ban-cung-lop-mau-giao-c14a670604.html": {
+    "title": "Bé trai 4 tuổi lén mẹ gọi shipper, nhờ giao hàng sợi dây chuyền đắt tiền tặng bạn cùng lớp mẫu giáo",
+    "summary": "Bé trai 4 tuổi lén mẹ gọi shipper, nhờ giao hàng sợi dây chuyền đắt tiền tặng bạn cùng lớp mẫu giáo",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-ha-noi-tuyen-gia-su-he-cho-2-con-tieu-hoc-luong-10-trieu-thang-yeu-cau-trua-nau-com-chieu-ve-sinh-phong-c14a670601.html": {
+    "title": "Mẹ Hà Nội tuyển gia sư hè cho 2 con tiểu học, lương 10 triệu/tháng yêu cầu trưa nấu cơm, chiều vệ sinh phòng",
+    "summary": "Mẹ Hà Nội tuyển gia sư hè cho 2 con tiểu học, lương 10 triệu/tháng yêu cầu trưa nấu cơm, chiều vệ sinh phòng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-trai-sang-my-duoc-10-thang-dien-ve-nha-bao-mot-tin-khien-vo-chong-ung-hoang-phuc-thay-thuong-mua-ve-cho-ve-nuoc-c14a670558.html": {
+    "title": "Con trai sang Mỹ được 10 tháng, điện về nhà báo một tin khiến vợ chồng Ưng Hoàng Phúc thấy thương, mua vé cho về nước",
+    "summary": "Con trai sang Mỹ được 10 tháng, điện về nhà báo một tin khiến vợ chồng Ưng Hoàng Phúc thấy thương, mua vé cho về nước",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/hoc-sinh-lam-van-ke-canh-gap-lai-co-giao-20-nam-sau-doc-xong-giao-vien-cho-diem-0-c14a670101.html": {
+    "title": "Học sinh làm văn kể cảnh \"gặp lại cô giáo 20 năm sau\", đọc xong giáo viên cho điểm 0",
+    "summary": "Học sinh làm văn kể cảnh \"gặp lại cô giáo 20 năm sau\", đọc xong giáo viên cho điểm 0",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/dem-doan-tu-dau-tien-sau-2-nam-chong-di-xuat-khau-toi-khoc-lang-khi-anh-nhat-quyet-khong-ngu-cung-vo-c14a670383.html": {
+    "title": "Đêm đoàn tụ sau 2 năm chồng đi xuất khẩu, tôi khóc lặng khi anh nhất quyết không ngủ cùng vợ",
+    "summary": "Đêm đoàn tụ sau 2 năm chồng đi xuất khẩu, tôi khóc lặng khi anh nhất quyết không ngủ cùng vợ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/dua-con-len-tivi-bi-chi-trich-nu-dien-vien-phai-giau-mat-con-8-nam-gio-dua-tre-khien-nhieu-nguoi-sung-sot-c14a670382.html": {
+    "title": "Đưa con lên tivi bị chỉ trích, nữ diễn viên phải giấu mặt con 8 năm, giờ đứa trẻ khiến nhiều người sửng sốt",
+    "summary": "Đưa con lên tivi bị chỉ trích, nữ diễn viên phải giấu mặt con 8 năm, giờ đứa trẻ khiến nhiều người sửng sốt",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/ba-me-gay-tranh-cai-voi-buc-anh-tri-con-trai-luoi-tam-khien-dua-tre-so-den-muc-tam-10-lan-ngay-c14a670237.html": {
+    "title": "Bà mẹ gây tranh cãi với bức ảnh “trị” con trai lười tắm, khiến đứa trẻ sợ đến mức tắm 10 lần/ngày",
+    "summary": "Bà mẹ gây tranh cãi với bức ảnh “trị” con trai lười tắm, khiến đứa trẻ sợ đến mức tắm 10 lần/ngày",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/vo-moi-mat-duoc-nua-nam-ban-than-xinh-dep-cua-em-den-nha-qua-dem-sang-hom-sau-toi-quy-goi-xin-cuoi-c14a670106.html": {
+    "title": "Vợ mới mất được nửa năm, bạn thân xinh đẹp của em đến nhà qua đêm, sáng hôm sau tôi quỳ gối xin cưới",
+    "summary": "Vợ mới mất được nửa năm, bạn thân xinh đẹp của em đến nhà qua đêm, sáng hôm sau tôi quỳ gối xin cưới",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/hoc-sinh-lam-bai-tap-dien-thanh-ngu-con-hon-cha-la-nha-dap-an-be-dua-ra-ngoai-suc-tuong-tuong-cua-co-giao-c14a670022.html": {
+    "title": "Học sinh làm bài tập điền thành ngữ \"Con hơn cha là nhà…\", đáp án bé đưa ra ngoài sức tưởng tượng của cô giáo",
+    "summary": "Học sinh làm bài tập điền thành ngữ \"Con hơn cha là nhà…\", đáp án bé đưa ra ngoài sức tưởng tượng của cô giáo",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/vo-chong-truong-giang-nha-phuong-vui-choi-cung-2-con-trong-biet-thu-70-ty-o-dong-nai-khien-nhieu-nguoi-thac-mac-c14a669963.html": {
+    "title": "Vợ chồng Trường Giang Nhã Phương vui chơi cùng 2 con trong biệt thự 70 tỷ ở Đồng Nai khiến nhiều người thắc mắc",
+    "summary": "Vợ chồng Trường Giang Nhã Phương vui chơi cùng 2 con trong biệt thự 70 tỷ ở Đồng Nai khiến nhiều người thắc mắc",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-phat-hien-con-trai-di-tam-mai-van-chua-ra-vao-kiem-tra-thi-hoang-hot-thay-mat-con-trang-bech-c14a669929.html": {
+    "title": "Mẹ phát hiện con trai đi tắm mãi vẫn chưa ra, vào kiểm tra thì hoảng hốt thấy mặt con trắng bệch",
+    "summary": "Mẹ phát hiện con trai đi tắm mãi vẫn chưa ra, vào kiểm tra thì hoảng hốt thấy mặt con trắng bệch",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-ve-con-meo-nhu-con-ran-bi-co-cham-khong-dat-bo-me-cung-cap-hinh-anh-that-khien-co-giat-minh-c14a669800.html": {
+    "title": "Bé vẽ con mèo như con rắn bị cô chấm không đạt, bố mẹ cung cấp hình ảnh thật khiến cô giật mình",
+    "summary": "Bé vẽ con mèo như con rắn bị cô chấm không đạt, bố mẹ cung cấp hình ảnh thật khiến cô giật mình",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-gai-cung-bo-di-tau-ve-nha-bo-ngu-say-khong-hay-biet-gi-dua-tre-ngoi-canh-lam-viec-khien-hanh-khach-ne-phuc-c14a669765.html": {
+    "title": "Bé gái cùng bố đi tàu về nhà, bố ngủ say không hay biết gì, đứa trẻ ngồi cạnh làm việc khiến hành khách nể phục",
+    "summary": "Bé gái cùng bố đi tàu về nhà, bố ngủ say không hay biết gì, đứa trẻ ngồi cạnh làm việc khiến hành khách nể phục",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/cu-8-gio-toi-la-con-len-giuong-di-ngu-me-nghi-ngo-ve-nha-kiem-tra-nguoi-giup-viec-moi-sang-to-c14a669714.html": {
+    "title": "Cứ 8 giờ tối là con lên giường đi ngủ, mẹ nghi ngờ về nhà kiểm tra người giúp việc mới sáng tỏ",
+    "summary": "Cứ 8 giờ tối là con lên giường đi ngủ, mẹ nghi ngờ về nhà kiểm tra người giúp việc mới sáng tỏ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-tuan-hung-khoc-khi-anh-trai-va-em-trai-quyet-mo-cua-cho-nguoi-la-vao-nha-luc-khong-co-bo-me-c14a669674.html": {
+    "title": "Con gái Tuấn Hưng khóc khi anh trai và em trai quyết mở cửa cho người lạ vào nhà lúc không có bố mẹ",
+    "summary": "Con gái Tuấn Hưng khóc khi anh trai và em trai quyết mở cửa cho người lạ vào nhà lúc không có bố mẹ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/trong-buc-hinh-nguoi-me-dua-2-con-ve-que-nghi-le-du-ngu-quen-nhung-co-mot-hanh-dong-rat-thong-minh-ai-tinh-mat-moi-thay-c14a669448.html": {
+    "title": "Trong bức hình, người mẹ đưa 2 con về quê nghỉ lễ, dù ngủ quên nhưng có một hành động rất thông minh, ai tinh mắt mới...",
+    "summary": "Trong bức hình, người mẹ đưa 2 con về quê nghỉ lễ, dù ngủ quên nhưng có một hành động rất thông minh, ai tinh mắt mới...",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-hoc-kem-dung-cuoi-lop-co-giao-cung-chan-gia-dinh-vay-38-ty-dong-cho-sang-my-du-hoc-nhan-trai-ngot-c14a669492.html": {
+    "title": "Con gái học kém đứng cuối lớp cô giáo cũng chán, gia đình vay 3,8 tỷ đồng cho sang Mỹ du học nhận \"trái ngọt\"",
+    "summary": "Con gái học kém đứng cuối lớp cô giáo cũng chán, gia đình vay 3,8 tỷ đồng cho sang Mỹ du học nhận \"trái ngọt\"",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/anh-re-dua-100-trieu-bao-cam-lay-di-du-lich-le-30-4-kem-yeu-cau-lam-nu-bao-mau-toi-tu-choi-ngay-c14a669290.html": {
+    "title": "Anh rể đưa 100 triệu bảo cầm lấy đi du lịch dịp Lễ kèm yêu cầu làm nữ bảo mẫu, tôi từ chối ngay",
+    "summary": "Anh rể đưa 100 triệu bảo cầm lấy đi du lịch dịp Lễ kèm yêu cầu làm nữ bảo mẫu, tôi từ chối ngay",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/suong-nhu-hoa-hau-dang-thu-thao-co-chong-dai-gia-cham-con-cho-vo-choi-le-ai-nu-ngay-cang-ra-dang-tieu-thu-hao-mon-c14a669202.html": {
+    "title": "Sướng như Hoa hậu Đặng Thu Thảo, có chồng đại gia chăm con cho vợ chơi Lễ, ái nữ ngày càng ra dáng tiểu thư hào môn",
+    "summary": "Sướng như Hoa hậu Đặng Thu Thảo, có chồng đại gia chăm con cho vợ chơi Lễ, ái nữ ngày càng ra dáng tiểu thư hào môn",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/vo-tinh-kiem-tra-camera-truoc-cong-nha-cau-ruot-het-hon-khi-thay-chau-trai-cap-1-mang-cap-bo-di-luc-1-gio-sang-c14a669095.html": {
+    "title": "Vô tình kiểm tra camera trước cổng nhà, cậu ruột hết hồn khi thấy cháu trai cấp 1 mang cặp bỏ đi lúc 1 giờ sáng",
+    "summary": "Vô tình kiểm tra camera trước cổng nhà, cậu ruột hết hồn khi thấy cháu trai cấp 1 mang cặp bỏ đi lúc 1 giờ sáng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/dem-tan-hon-voi-chong-xong-lan-ra-ngu-toi-dieng-nguoi-khi-sang-hom-sau-thay-nguoi-nam-canh-lai-la-con-gai-c14a669024.html": {
+    "title": "Đêm tân hôn với chồng xong lăn ra ngủ, tôi điếng người khi sáng hôm sau thấy người nằm cạnh lại là con gái",
+    "summary": "Đêm tân hôn với chồng xong lăn ra ngủ, tôi điếng người khi sáng hôm sau thấy người nằm cạnh lại là con gái",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bo-dat-ten-con-gai-la-nguyen-thi-trang-nhan-vien-sua-thanh-ten-khac-rat-dep-rat-tho-c14a668955.html": {
+    "title": "Bố đặt tên con gái là Nguyễn Thị Tráng, nhân viên sửa thành tên khác rất đẹp, rất thơ",
+    "summary": "Bố đặt tên con gái là Nguyễn Thị Tráng, nhân viên sửa thành tên khác rất đẹp, rất thơ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/hoa-minzy-khoe-loat-anh-dua-be-bo-di-du-lich-cung-dai-uy-van-cuong-buc-hinh-cuoi-khien-dan-mang-lien-tuc-binh-luan-c14a668845.html": {
+    "title": "Hoà Minzy khoe loạt ảnh đưa bé Bo đi du lịch cùng Đại uý Văn Cương, bức hình cuối khiến dân mạng liên tục bình luận",
+    "summary": "Hoà Minzy khoe loạt ảnh đưa bé Bo đi du lịch cùng Đại uý Văn Cương, bức hình cuối khiến dân mạng liên tục bình luận",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-quoc-tich-my-cua-nsnd-trinh-kim-chi-day-thi-thanh-cong-cao-1m72-dep-nhu-hoa-hau-tot-nghiep-loai-gioi-nganh-hang-khong-c14a668628.html": {
+    "title": "Con gái quốc tịch Mỹ của NSND Trịnh Kim Chi: Dậy thì thành công cao 1m72, đẹp như Hoa hậu, tốt nghiệp loại Giỏi ngành...",
+    "summary": "Con gái quốc tịch Mỹ của NSND Trịnh Kim Chi: Dậy thì thành công cao 1m72, đẹp như Hoa hậu, tốt nghiệp loại Giỏi ngành...",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/sau-2-nam-chong-mat-hoa-hau-binh-phuong-nghen-ngao-khi-con-gai-luon-hoi-sao-ba-tien-khong-tro-lai-c14a668647.html": {
+    "title": "Sau 2 năm chồng mất, Hoa hậu Bình Phương nghẹn ngào khi con gái luôn hỏi \"Sao ba Tiến không trở lại?\"",
+    "summary": "Sau 2 năm chồng mất, Hoa hậu Bình Phương nghẹn ngào khi con gái luôn hỏi \"Sao ba Tiến không trở lại?\"",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-trai-tieu-hoc-co-tinh-giau-vo-bai-tap-vao-tu-lanh-o-tttm-de-tieu-huy-khien-dan-tinh-cuoi-ra-nuoc-mat-c14a668501.html": {
+    "title": "Bé trai tiểu học cố tình giấu vở bài tập vào tủ lạnh ở TTTM để \"tiêu huỷ\" khiến dân tình \"cười ra nước mắt\"",
+    "summary": "Bé trai tiểu học cố tình giấu vở bài tập vào tủ lạnh ở TTTM để \"tiêu huỷ\" khiến dân tình \"cười ra nước mắt\"",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/1-gio-sang-con-gai-6-tuoi-trum-khan-len-lut-o-phong-khach-bo-me-xem-camera-vo-cung-tu-trach-c14a668470.html": {
+    "title": "1 giờ sáng con gái 6 tuổi trùm khăn lén lút ở phòng khách, bố mẹ xem camera vô cùng tự trách",
+    "summary": "1 giờ sáng con gái 6 tuổi trùm khăn lén lút ở phòng khách, bố mẹ xem camera vô cùng tự trách",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-tieu-hoc-viet-van-ta-con-vat-yeu-thich-co-giao-doc-xong-lien-moi-phu-huynh-den-truong-c14a668313.html": {
+    "title": "Bé tiểu học viết văn tả con vật yêu thích, cô giáo đọc xong liền mời phụ huynh đến trường",
+    "summary": "Bé tiểu học viết văn tả con vật yêu thích, cô giáo đọc xong liền mời phụ huynh đến trường",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-trai-rang-thua-bo-oi-minh-di-dau-the-tung-chiem-song-vtv-gio-day-thi-dep-nhu-tai-tu-nhan-khong-ra-c14a668412.html": {
+    "title": "Bé trai răng thưa “Bố ơi mình đi đâu thế” từng chiếm sóng VTV, giờ dậy thì đẹp như tài tử nhận không ra",
+    "summary": "Bé trai răng thưa “Bố ơi mình đi đâu thế” từng chiếm sóng VTV, giờ dậy thì đẹp như tài tử nhận không ra",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-khoe-hinh-ve-nguoi-la-tang-tren-tay-phu-huynh-xem-xong-am-tham-goi-canh-sat-c14a668269.html": {
+    "title": "Con gái khoe hình vẽ người lạ tặng trên tay, phụ huynh xem xong âm thầm gọi cảnh sát",
+    "summary": "Con gái khoe hình vẽ người lạ tặng trên tay, phụ huynh xem xong âm thầm gọi cảnh sát",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/di-hoc-ve-bi-ke-la-bam-duoi-den-tan-nha-cau-be-tieu-hoc-co-pha-xu-ly-khien-nhieu-nguoi-vo-tay-khen-ngoi-c14a668172.html": {
+    "title": "Đi học về bị kẻ lạ bám đuôi đến tận nhà, cậu bé tiểu học có pha xử lý khiến nhiều người vỗ tay khen ngợi",
+    "summary": "Đi học về bị kẻ lạ bám đuôi đến tận nhà, cậu bé tiểu học có pha xử lý khiến nhiều người vỗ tay khen ngợi",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-don-than-ha-noi-noi-tieng-la-co-giao-bup-be-gio-de-con-gai-cung-dep-nhu-bup-be-song-nhin-la-muon-om-ve-nuoi-c14a668202.html": {
+    "title": "Mẹ đơn thân Hà Nội nổi tiếng là \"cô giáo búp bê\", giờ đẻ con gái cũng đẹp như búp bê sống, nhìn là muốn ôm về nuôi",
+    "summary": "Mẹ đơn thân Hà Nội nổi tiếng là \"cô giáo búp bê\", giờ đẻ con gái cũng đẹp như búp bê sống, nhìn là muốn ôm về nuôi",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/moi-7-tuoi-con-gai-quoc-tich-my-cua-thanh-thao-da-khien-me-can-loi-khi-chia-se-chuyen-co-bo-muon-me-song-tiet-kiem-c14a668059.html": {
+    "title": "Mới 7 tuổi, con gái quốc tịch Mỹ của Thanh Thảo đã khiến mẹ “cạn lời” khi chia sẻ chuyện có bồ, muốn mẹ sống tiết kiệm",
+    "summary": "Mới 7 tuổi, con gái quốc tịch Mỹ của Thanh Thảo đã khiến mẹ “cạn lời” khi chia sẻ chuyện có bồ, muốn mẹ sống tiết kiệm",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/sao-viet-phan-ung-khi-con-yeu-tuoi-hoc-tro-ho-ngoc-ha-ra-tan-noi-don-ban-gai-subeo-le-quyen-thoai-mai-khoe-ban-gai-tay-cua-quy-tu-c14a667818.html": {
+    "title": "Sao Việt phản ứng khi con yêu tuổi học trò: Hồ Ngọc Hà ra tận nơi đón bạn gái Subeo, Lệ Quyên thoải mái khoe bạn gái Tây...",
+    "summary": "Sao Việt phản ứng khi con yêu tuổi học trò: Hồ Ngọc Hà ra tận nơi đón bạn gái Subeo, Lệ Quyên thoải mái khoe bạn gái Tây...",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-trai-tu-choi-mang-com-cho-me-vi-ban-nguoi-phu-nu-khoc-nuc-no-khi-ve-nha-thay-dua-tre-chi-dang-nam-xem-tivi-c14a667493.html": {
+    "title": "Con trai từ chối mang cơm cho mẹ vì \"bận\", người phụ nữ khóc nức nở khi về nhà thấy đứa trẻ chỉ đang nằm xem tivi",
+    "summary": "Con trai từ chối mang cơm cho mẹ vì \"bận\", người phụ nữ khóc nức nở khi về nhà thấy đứa trẻ chỉ đang nằm xem tivi",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-hoc-sinh-viet-van-ke-ve-nguoi-me-nhieu-tien-roi-tiet-lo-luon-moi-chuyen-trong-nha-doan-ket-khien-cdm-cuoi-xiu-c14a667665.html": {
+    "title": "Bé học sinh viết văn kể về người mẹ nhiều tiền rồi tiết lộ luôn mọi chuyện trong nhà, đoạn kết khiến CĐM cười xỉu",
+    "summary": "Bé học sinh viết văn kể về người mẹ nhiều tiền rồi tiết lộ luôn mọi chuyện trong nhà, đoạn kết khiến CĐM cười xỉu",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bo-lam-shipper-ngu-gat-be-trai-gio-to-giay-xin-moi-nguoi-noi-nho-tren-tau-dien-dan-mang-day-moi-la-ong-bo-giau-co-c14a667581.html": {
+    "title": "Bố làm shipper ngủ gật, bé trai giơ tờ giấy \"Xin mọi người nói nhỏ\" trên tàu điện, dân mạng: Đây mới là ông bố \"giàu có\"",
+    "summary": "Bố làm shipper ngủ gật, bé trai giơ tờ giấy \"Xin mọi người nói nhỏ\" trên tàu điện, dân mạng: Đây mới là ông bố \"giàu có\"",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/hoc-truong-quoc-te-600-trieu-nam-con-gai-dong-nhi-5-tuoi-tu-quay-clip-noi-tieng-anh-chat-giong-nhu-chim-hot-c14a667580.html": {
+    "title": "Học trường quốc tế 600 triệu/năm, con gái Đông Nhi 5 tuổi tự quay clip nói tiếng Anh, chất giọng như chim hót",
+    "summary": "Học trường quốc tế 600 triệu/năm, con gái Đông Nhi 5 tuổi tự quay clip nói tiếng Anh, chất giọng như chim hót",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/kiem-tra-camera-phat-hien-hanh-dong-len-lut-cua-2-nhoc-ti-luc-nua-dem-nguoi-me-vua-bat-cuoi-vua-lo-lang-c14a667512.html": {
+    "title": "Kiểm tra camera phát hiện hành động \"lén lút\" của 2 nhóc tì lúc nửa đêm, người mẹ vừa bật cười vừa lo lắng",
+    "summary": "Kiểm tra camera phát hiện hành động \"lén lút\" của 2 nhóc tì lúc nửa đêm, người mẹ vừa bật cười vừa lo lắng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-sinh-ra-tu-dau-dung-tra-loi-nhat-o-ben-ve-duong-cach-nay-moi-la-chuan-c14a667396.html": {
+    "title": "\"Con sinh ra từ đâu?\", đừng trả lời \"Nhặt ở bên vệ đường\", cách này mới là chuẩn",
+    "summary": "\"Con sinh ra từ đâu?\", đừng trả lời \"Nhặt ở bên vệ đường\", cách này mới là chuẩn",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-day-thi-thuong-xuyen-mac-ao-dai-tay-du-rat-nong-nguoi-me-suy-sup-khi-phat-hien-hinh-ve-khung-khiep-duoi-tay-ao-c14a667075.html": {
+    "title": "Con gái dậy thì thường xuyên mặc áo dài tay dù rất nóng, người mẹ suy sụp khi phát hiện hình vẽ dưới tay áo",
+    "summary": "Con gái dậy thì thường xuyên mặc áo dài tay dù rất nóng, người mẹ suy sụp khi phát hiện hình vẽ dưới tay áo",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-di-thang-may-roi-mat-tich-gia-dinh-ta-hoa-phat-hien-doi-chan-tho-ra-tu-tran-nha-lap-tuc-bao-canh-sat-c14a667071.html": {
+    "title": "Con gái đi thang máy rồi mất tích, gia đình tá hỏa phát hiện đôi chân thò ra từ trần nhà, lập tức báo cảnh sát",
+    "summary": "Con gái đi thang máy rồi mất tích, gia đình tá hỏa phát hiện đôi chân thò ra từ trần nhà, lập tức báo cảnh sát",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bo-la-nsnd-nhung-be-gai-ha-noi-luon-bao-bo-di-tu-gio-lon-hieu-thao-muon-thanh-nguoi-nhu-bo-c14a667030.html": {
+    "title": "Bé gái Hà Nội từng hiểu lầm về bố là NSND, giờ lớn hiếu thảo, muốn thành người như bố",
+    "summary": "Bé gái Hà Nội từng hiểu lầm về bố là NSND, giờ lớn hiếu thảo, muốn thành người như bố",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-21-tuoi-thuong-xuyen-ve-nhung-buc-tranh-ky-di-me-len-mang-cau-cuu-su-that-dang-sau-moi-dau-long-c14a666799.html": {
+    "title": "Con gái 21 tuổi thường xuyên vẽ những bức tranh kỳ dị, mẹ lên mạng cầu cứu, sự thật đằng sau mới đau lòng",
+    "summary": "Con gái 21 tuổi thường xuyên vẽ những bức tranh kỳ dị, mẹ lên mạng cầu cứu, sự thật đằng sau mới đau lòng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/nu-dien-vien-bi-con-trai-13-tuoi-trach-moc-vi-dong-canh-nong-loi-dap-sau-cay-cua-me-thay-doi-cuoc-doi-con-c14a666575.html": {
+    "title": "Nữ diễn viên Hồng Kông bị con trai 13 tuổi trách vì đóng cảnh nóng, lời đáp sâu cay của mẹ thay đổi cuộc đời con",
+    "summary": "Nữ diễn viên Hồng Kông bị con trai 13 tuổi trách vì đóng cảnh nóng, lời đáp sâu cay của mẹ thay đổi cuộc đời con",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/ra-ngoai-10-phut-tro-ve-vua-mo-cua-nha-thay-con-gai-nguoi-dinh-day-mau-nguoi-me-suyt-ngat-c14a666352.html": {
+    "title": "Ra ngoài 10 phút trở về, vừa mở cửa thấy con gái người dính đầy thứ màu đỏ, người mẹ hoảng hốt",
+    "summary": "Ra ngoài 10 phút trở về, vừa mở cửa thấy con gái người dính đầy thứ màu đỏ, người mẹ hoảng hốt",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-o-nha-xinh-xan-mac-do-lv-hoc-quoc-te-400-trieu-nu-dai-gia-tphcm-ngo-ngang-nhan-khong-ra-ai-nu-khi-qua-nhat-c14a666351.html": {
+    "title": "Con gái ở nhà xinh xắn, mặc đồ LV, học quốc tế 400 triệu, nữ đại gia TP.HCM ngỡ ngàng nhận không ra ái nữ khi qua Nhật",
+    "summary": "Con gái ở nhà xinh xắn, mặc đồ LV, học quốc tế 400 triệu, nữ đại gia TP.HCM ngỡ ngàng nhận không ra ái nữ khi qua Nhật",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/co-giao-giao-bai-tap-dien-cau-thanh-ngu-mot-tup-leu-tranh-hai-trai-tim-dap-an-gon-1-tu-cua-hoc-sinh-hiem-ai-nghi-ra-c14a666255.html": {
+    "title": "Cô giáo giao bài tập điền câu: \"Một túp lều tranh, hai trái tim...\", đáp án của học sinh hiếm ai nghĩ ra",
+    "summary": "Cô giáo giao bài tập điền câu: \"Một túp lều tranh, hai trái tim...\", đáp án của học sinh hiếm ai nghĩ ra",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-lam-vo-do-trong-sieu-thi-bo-phai-boi-thuong-100-trieu-ngay-sau-chu-cua-hang-xin-loi-voi-tra-lai-tien-c14a666170.html": {
+    "title": "Con làm vỡ đồ trong siêu thị bố phải bồi thường 100 triệu, ngày sau chủ cửa hàng xin lỗi, vội trả lại tiền",
+    "summary": "Con làm vỡ đồ trong siêu thị bố phải bồi thường 100 triệu, ngày sau chủ cửa hàng xin lỗi, vội trả lại tiền",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-bi-che-xau-le-duong-bao-lam-day-con-cach-dap-tra-tham-thuy-ba-xa-noi-se-cho-con-pttm-khi-lon-c14a666056.html": {
+    "title": "Con gái bị chê, sao nam Việt dạy cách đáp trả thâm thúy, vợ nói sẽ cho con PTTM khi lớn",
+    "summary": "Con gái bị chê, sao nam Việt dạy cách đáp trả thâm thúy, vợ nói sẽ cho con PTTM khi lớn",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-viet-nhan-gach-da-vi-tu-hao-khoe-con-cap-1-ngoi-hoc-den-khuya-cu-sai-la-tu-tat-vao-mat-c14a666036.html": {
+    "title": "Mẹ Việt nhận \"gạch đá\" vì tự hào khoe con cấp 1 ngồi học đến khuya, cứ sai là tự tát vào mặt",
+    "summary": "Mẹ Việt nhận \"gạch đá\" vì tự hào khoe con cấp 1 ngồi học đến khuya, cứ sai là tự tát vào mặt",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-40-tuoi-lai-sieu-xe-den-truong-don-con-thay-me-dua-tre-tho-dai-me-dung-an-mac-ky-la-nhu-vay-duoc-khong-c14a666045.html": {
+    "title": "Mẹ 40 tuổi lái siêu xe đến trường đón con, thấy mẹ đứa trẻ thở dài: Mẹ đừng ăn mặc kỳ lạ như vậy được không?",
+    "summary": "Mẹ 40 tuổi lái siêu xe đến trường đón con, thấy mẹ đứa trẻ thở dài: Mẹ đừng ăn mặc kỳ lạ như vậy được không?",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/so-con-gai-bi-quay-roi-vi-qua-xinh-dep-bo-nghi-viec-o-nha-lam-ve-si-cho-con-va-cai-ket-sau-16-nam-c14a665894.html": {
+    "title": "Sợ con gái bị quấy rối vì quá xinh đẹp, bố nghỉ việc ở nhà làm vệ sĩ cho con và cái kết sau 16 năm",
+    "summary": "Sợ con gái bị quấy rối vì quá xinh đẹp, bố nghỉ việc ở nhà làm vệ sĩ cho con và cái kết sau 16 năm",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/em-gai-khoe-anh-chup-trong-nha-ve-sinh-hinh-anh-nhay-cam-cua-chi-gai-hot-girl-phia-sau-khien-nhieu-nguoi-do-mat-c14a665854.html": {
+    "title": "Em gái khoe ảnh chụp trong nhà vệ sinh, hình ảnh nhạy cảm của chị gái hot girl phía sau khiến nhiều người \"đỏ mặt\"",
+    "summary": "Em gái khoe ảnh chụp trong nhà vệ sinh, hình ảnh nhạy cảm của chị gái hot girl phía sau khiến nhiều người \"đỏ mặt\"",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-hoc-sinh-dat-diem-9-bai-tap-tieng-viet-noi-ve-gia-dinh-loi-phe-cua-co-giao-khien-me-do-mat-c14a665802.html": {
+    "title": "Bé học sinh đạt điểm 9 bài tập tiếng Việt nói về gia đình, lời phê của cô giáo khiến mẹ “đỏ mặt”",
+    "summary": "Bé học sinh đạt điểm 9 bài tập tiếng Việt nói về gia đình, lời phê của cô giáo khiến mẹ “đỏ mặt”",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-gai-10-tuoi-om-bung-noi-co-em-be-nguoi-me-hoi-han-bat-khoc-khi-nghe-bac-si-noi-phau-thuat-gap-c14a665668.html": {
+    "title": "Bé gái 10 tuổi ôm bụng nói có \"em bé\", người mẹ hối hận bật khóc khi nghe bác sĩ nói phẫu thuật gấp",
+    "summary": "Bé gái 10 tuổi ôm bụng nói có \"em bé\", người mẹ hối hận bật khóc khi nghe bác sĩ nói phẫu thuật gấp",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/co-4-con-gai-voi-2-doi-vo-nam-dien-vien-dinh-dam-len-tieng-nhan-loi-vi-khien-con-gai-7-tuoi-mac-tram-cam-c14a665671.html": {
+    "title": "Có 4 con gái với 2 đời vợ, nam diễn viên đình đám lên tiếng nhận lỗi vì khiến con gái 7 tuổi mắc trầm cảm",
+    "summary": "Có 4 con gái với 2 đời vợ, nam diễn viên đình đám lên tiếng nhận lỗi vì khiến con gái 7 tuổi mắc trầm cảm",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-khoc-nuc-no-vi-tinh-3-x8-24-bi-gach-sai-me-di-doi-cong-bang-co-giao-giai-thich-ma-nga-ngua-c14a665380.html": {
+    "title": "Con khóc nức nở vì tính 3 x 8 = 24 bị gạch sai, mẹ đi đòi công bằng, cô giáo giải thích mà ngã ngửa",
+    "summary": "Con khóc nức nở vì tính 3 x 8 = 24 bị gạch sai, mẹ đi đòi công bằng, cô giáo giải thích mà ngã ngửa",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/1001-tu-the-ngoi-lam-bai-tap-ve-nha-cua-khoi-tieu-hoc-bo-me-trong-thay-lien-niem-than-chu-c14a665531.html": {
+    "title": "1001 tư thế ngồi làm bài tập về nhà của khối tiểu học, bố mẹ trông thấy chỉ biết bó tay",
+    "summary": "1001 tư thế ngồi làm bài tập về nhà của khối tiểu học, bố mẹ trông thấy chỉ biết bó tay",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/nhan-khong-ra-con-gai-trang-tran-sau-2-nam-qua-my-dinh-cu-day-thi-xinh-nhu-gai-tay-c14a665503.html": {
+    "title": "Nhận không ra con gái Trang Trần sau 2 năm qua Mỹ định cư, dậy thì xinh như gái Tây",
+    "summary": "Nhận không ra con gái Trang Trần sau 2 năm qua Mỹ định cư, dậy thì xinh như gái Tây",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-doi-boi-thuong-1-ty-vi-con-gai-16-tuoi-co-bau-sau-vai-lan-di-boi-quan-ly-be-boi-noi-1-cau-khien-ba-tam-phuc-c14a665378.html": {
+    "title": "Thực hư chuyện nữ sinh 16 tuổi mang thai sau khi đi bơi tại bể bơi công cộng",
+    "summary": "Thực hư chuyện nữ sinh 16 tuổi mang thai sau khi đi bơi tại bể bơi công cộng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/buc-ve-nguech-ngoac-cua-be-gai-3-tuoi-gay-sot-coi-mang-phu-huynh-dui-mat-may-lan-khi-thay-noi-dung-kho-tin-c14a665283.html": {
+    "title": "Bức vẽ nguệch ngoạc của bé gái 3 tuổi gây sốt cõi mạng, phụ huynh dụi mắt mấy lần khi thấy nội dung khó tin",
+    "summary": "Bức vẽ nguệch ngoạc của bé gái 3 tuổi gây sốt cõi mạng, phụ huynh dụi mắt mấy lần khi thấy nội dung khó tin",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-di-hoc-ve-keu-dau-vi-bi-co-phat-go-dau-doan-tin-nhan-cua-me-viet-khien-dan-mang-tranh-cai-c14a665186.html": {
+    "title": "Con đi học về kêu đau vì bị cô phạt gõ đầu, đoạn tin nhắn của mẹ Việt khiến dân mạng tranh cãi",
+    "summary": "Con đi học về kêu đau vì bị cô phạt gõ đầu, đoạn tin nhắn của mẹ Việt khiến dân mạng tranh cãi",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/moi-ngay-di-hoc-nu-sinh-cap-2-deu-bi-mat-mang-quan-ao-ra-con-hem-vang-gan-nha-su-that-khien-me-soc-nang-c14a665112.html": {
+    "title": "Mỗi ngày đi học, nữ sinh cấp 2 đều bí mật mang quần áo ra con hẻm vắng gần nhà, sự thật khiến mẹ sốc nặng",
+    "summary": "Mỗi ngày đi học, nữ sinh cấp 2 đều bí mật mang quần áo ra con hẻm vắng gần nhà, sự thật khiến mẹ sốc nặng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-lai-tay-hoc-truong-quoc-te-900-trieu-nam-doan-trang-tu-hao-khoe-loat-thanh-tich-ai-nu-khien-ai-cung-ne-c14a665111.html": {
+    "title": "Con gái lai Tây học trường quốc tế 900 triệu/năm, Đoan Trang tự hào khoe loạt thành tích ái nữ khiến ai cũng nể",
+    "summary": "Con gái lai Tây học trường quốc tế 900 triệu/năm, Đoan Trang tự hào khoe loạt thành tích ái nữ khiến ai cũng nể",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/moi-lan-bo-di-cong-tac-ve-con-gai-lai-than-dau-bung-sau-khi-kham-bac-si-lac-dau-vo-chong-nen-ly-hon-di-c14a665088.html": {
+    "title": "Mỗi lần bố đi công tác về, con gái lại than đau bụng, sau khi khám bác sĩ lắc đầu: \"Vợ chồng nên ly hôn đi\"",
+    "summary": "Mỗi lần bố đi công tác về, con gái lại than đau bụng, sau khi khám bác sĩ lắc đầu: \"Vợ chồng nên ly hôn đi\"",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/16-thang-tuoi-noi-tieng-anh-vanh-vach-con-gai-mc-noi-tieng-vtv-gio-3-tuoi-chuan-tieu-thu-gioi-giang-c14a665047.html": {
+    "title": "16 tháng tuổi nói tiếng Anh vanh vách, con gái MC nổi tiếng VTV giờ 3 tuổi chuẩn tiểu thư giỏi giang",
+    "summary": "16 tháng tuổi nói tiếng Anh vanh vách, con gái MC nổi tiếng VTV giờ 3 tuổi chuẩn tiểu thư giỏi giang",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-lam-tam-nhu-day-thi-qua-xinh-suot-ngay-doi-gap-ban-trai-hon-tuoi-ly-do-khien-me-bat-cuoi-c14a664978.html": {
+    "title": "Con gái Lâm Tâm Như dậy thì quá xinh, suốt ngày đòi gặp bạn trai hơn tuổi, lý do khiến mẹ bật cười",
+    "summary": "Con gái Lâm Tâm Như dậy thì quá xinh, suốt ngày đòi gặp bạn trai hơn tuổi, lý do khiến mẹ bật cười",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/ba-me-tphcm-tuyen-gia-su-thu-8-cho-con-ngo-ngang-voi-ly-do-7-nguoi-cu-gom-ca-giao-vien-tham-nien-10-nam-nghi-viec-c14a664918.html": {
+    "title": "Bà mẹ TP.HCM tuyển gia sư thứ 8 cho con, ngỡ ngàng với lý do 7 người cũ, gồm cả giáo viên thâm niên 10 năm nghỉ việc",
+    "summary": "Bà mẹ TP.HCM tuyển gia sư thứ 8 cho con, ngỡ ngàng với lý do 7 người cũ, gồm cả giáo viên thâm niên 10 năm nghỉ việc",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/combat-voi-con-trai-ngay-trong-biet-thu-tien-ty-phu-ba-noi-tieng-ha-thanh-nhan-nhieu-tranh-cai-c14a664943.html": {
+    "title": "“Combat” với con trai ngay trong biệt thự tiền tỷ, phú bà nổi tiếng Hà thành nhận nhiều tranh cãi",
+    "summary": "“Combat” với con trai ngay trong biệt thự tiền tỷ, phú bà nổi tiếng Hà thành nhận nhiều tranh cãi",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-trai-5-tuoi-ngu-day-khoc-thet-vi-mat-bong-bam-tim-nguyen-nhan-tu-thoi-quen-tai-hai-moi-ngay-c14a664847.html": {
+    "title": "Bé trai 5 tuổi ngủ dậy khóc thét vì mặt bỗng bầm tím, nguyên nhân từ thói quen tai hại mỗi ngày",
+    "summary": "Bé trai 5 tuổi ngủ dậy khóc thét vì mặt bỗng bầm tím, nguyên nhân từ thói quen tai hại mỗi ngày",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/dv-hoang-yen-18-tuoi-sinh-con-roi-lam-me-don-than-gio-51-tuoi-tre-dep-nhu-chi-em-voi-con-gai-hot-girl-c14a664620.html": {
+    "title": "Diễn viên phim VTV 18 tuổi sinh con rồi làm mẹ đơn thân, giờ 51 tuổi trẻ đẹp như chị em với con gái hot girl",
+    "summary": "Diễn viên phim VTV 18 tuổi sinh con rồi làm mẹ đơn thân, giờ 51 tuổi trẻ đẹp như chị em với con gái hot girl",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/ba-noi-dat-ten-chau-gai-la-nguyen-thu-tien-nhan-vien-tu-phap-sua-thanh-ten-vua-hay-vua-y-nghia-dua-tre-biet-on-vo-cung-c14a664519.html": {
+    "title": "Bà nội đặt tên cháu gái là Nguyễn Thu Tiền, được sửa thành tên vừa hay vừa ý nghĩa, đứa trẻ biết ơn vô cùng",
+    "summary": "Bà nội đặt tên cháu gái là Nguyễn Thu Tiền, được sửa thành tên vừa hay vừa ý nghĩa, đứa trẻ biết ơn vô cùng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/co-giao-cap-2-gay-sot-vi-qua-xinh-phu-huynh-chup-hinh-co-dang-len-mang-nhieu-nguoi-bay-to-lo-lang-c14a664465.html": {
+    "title": "Cô giáo cấp 2 “gây sốt” vì quá xinh, phụ huynh chụp hình cô đăng lên mạng, nhiều người bày tỏ lo lắng",
+    "summary": "Cô giáo cấp 2 “gây sốt” vì quá xinh, phụ huynh chụp hình cô đăng lên mạng, nhiều người bày tỏ lo lắng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/co-con-voi-dai-gia-hon-25-tuoi-my-nhan-ca-mau-duoc-huong-tai-san-tram-ty-chong-tu-cham-con-den-dai-hoc-c14a664401.html": {
+    "title": "Có con với đại gia hơn 25 tuổi, mỹ nhân Cà Mau được hưởng tài sản trăm tỷ, chồng tự chăm con đến Đại học",
+    "summary": "Có con với đại gia hơn 25 tuổi, mỹ nhân Cà Mau được hưởng tài sản trăm tỷ, chồng tự chăm con đến Đại học",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-di-hoc-mau-giao-ve-tang-me-mon-qua-nguoi-me-ta-hoa-khi-thay-2-thoi-vang-con-lay-ra-tu-cap-c14a664399.html": {
+    "title": "Con gái đi mẫu giáo về tặng mẹ món quà, người mẹ tá hoả khi thấy 2 cây vàng sáng lóa bé lấy ra từ cặp",
+    "summary": "Con gái đi mẫu giáo về tặng mẹ món quà, người mẹ tá hoả khi thấy 2 cây vàng sáng lóa bé lấy ra từ cặp",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/lay-chong-tay-sinh-duoc-be-gai-dep-nhu-nu-than-phuong-vy-idol-con-toi-biet-minh-noi-tieng-duoc-moi-nguoi-yeu-quy-c14a664318.html": {
+    "title": "Lấy chồng Tây sinh được bé gái đẹp như \"nữ thần\", Phương Vy Idol: Con tôi biết mình nổi tiếng, được mọi người yêu quý",
+    "summary": "Lấy chồng Tây sinh được bé gái đẹp như \"nữ thần\", Phương Vy Idol: Con tôi biết mình nổi tiếng, được mọi người yêu quý",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/dv-viet-anh-mung-sinh-nhat-9-tuoi-cua-con-trai-vo-cu-hot-girl-cung-dang-dong-trang-thai-gay-chu-y-c14a664273.html": {
+    "title": "DV Việt Anh mừng sinh nhật 9 tuổi của con trai, vợ cũ hot girl cũng đăng dòng trạng thái gây chú ý",
+    "summary": "DV Việt Anh mừng sinh nhật 9 tuổi của con trai, vợ cũ hot girl cũng đăng dòng trạng thái gây chú ý",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-di-nha-tre-ve-ca-tuan-khong-di-ve-sinh-me-len-truong-chat-van-thi-xau-ho-khi-nghe-loi-co-giao-noi-c14a664182.html": {
+    "title": "Con đi nhà trẻ về cả tuần không đi vệ sinh, mẹ lên trường chất vấn thì xấu hổ khi nghe lời cô giáo nói",
+    "summary": "Con đi nhà trẻ về cả tuần không đi vệ sinh, mẹ lên trường chất vấn thì xấu hổ khi nghe lời cô giáo nói",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-trai-lop-4-dat-diem-10-tuyet-doi-voi-bai-van-viet-ve-bo-co-giao-bat-khoc-khi-thay-khuon-mat-o-cuoi-bai-c14a664152.html": {
+    "title": "Bé trai lớp 4 đạt điểm 10 tuyệt đối với bài văn viết về bố, cô giáo bật khóc khi thấy khuôn mặt ở cuối bài",
+    "summary": "Bé trai lớp 4 đạt điểm 10 tuyệt đối với bài văn viết về bố, cô giáo bật khóc khi thấy khuôn mặt ở cuối bài",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/em-trai-15-tuoi-ra-di-mai-mai-anh-trai-phat-hien-tap-tranh-ve-ky-la-cau-de-lai-su-that-ngo-ngang-lo-dien-c14a664004.html": {
+    "title": "Em trai 15 tuổi ra đi mãi mãi, anh trai phát hiện tập tranh vẽ kỳ lạ cậu để lại, sự thật ngỡ ngàng lộ diện",
+    "summary": "Em trai 15 tuổi ra đi mãi mãi, anh trai phát hiện tập tranh vẽ kỳ lạ cậu để lại, sự thật ngỡ ngàng lộ diện",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-trai-dang-choi-game-tren-dien-thoai-bong-hoang-hot-cau-cuu-vi-buc-anh-khoa-than-me-lap-tuc-bao-canh-sat-c14a663868.html": {
+    "title": "Con trai đang chơi game trên điện thoại bỗng hoảng hốt cầu cứu vì bức ảnh khỏa thân, mẹ lập tức báo cảnh sát",
+    "summary": "Con trai đang chơi game trên điện thoại bỗng hoảng hốt cầu cứu vì bức ảnh khỏa thân, mẹ lập tức báo cảnh sát",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/tham-gia-bieu-dien-van-nghe-o-que-be-gai-lop-6-noi-tieng-sau-1-dem-vi-qua-xinh-duoc-ngo-loi-ky-hop-dong-2-ty-c14a663870.html": {
+    "title": "Tham gia biểu diễn văn nghệ ở quê, bé gái lớp 6 nổi tiếng sau 1 đêm vì quá xinh, được ngỏ lời ký hợp đồng 2 tỷ",
+    "summary": "Tham gia biểu diễn văn nghệ ở quê, bé gái lớp 6 nổi tiếng sau 1 đêm vì quá xinh, được ngỏ lời ký hợp đồng 2 tỷ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-oi-nha-minh-giau-hay-ngheo-cau-tra-loi-chuan-van-mau-giup-dua-tre-thanh-cong-trong-tuong-lai-c14a663460.html": {
+    "title": "\"Mẹ ơi, nhà mình giàu hay nghèo?\", câu trả lời chuẩn văn mẫu giúp đứa trẻ thành công trong tương lai",
+    "summary": "\"Mẹ ơi, nhà mình giàu hay nghèo?\", câu trả lời chuẩn văn mẫu giúp đứa trẻ thành công trong tương lai",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/mot-nam-mot-nu-hoc-sinh-co-hanh-dong-phan-cam-ngay-tram-xe-buyt-nguoi-di-duong-noi-mot-cau-ca-hai-lien-xanh-mat-c14a663583.html": {
+    "title": "Một nam một nữ học sinh có hành động phản cảm ngay trạm xe buýt, người đi đường nói một câu cả hai liền xanh mặt",
+    "summary": "Một nam một nữ học sinh có hành động phản cảm ngay trạm xe buýt, người đi đường nói một câu cả hai liền xanh mặt",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-cindy-lu-viet-bai-van-von-ven-6-dong-ta-bo-duong-dat-g-doc-xong-lien-xuc-dong-ba-no-tui-con-c14a663581.html": {
+    "title": "Con gái Cindy Lư viết bài văn vỏn vẹn 6 dòng tả bố dượng, Đạt G đọc xong liền xúc động: “Ba nợ tụi con”",
+    "summary": "Con gái Cindy Lư viết bài văn vỏn vẹn 6 dòng tả bố dượng, Đạt G đọc xong liền xúc động: “Ba nợ tụi con”",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-5-tuoi-ve-tranh-tang-bo-nhung-ai-cung-phat-hien-dieu-bi-an-o-goc-phai-nhin-ky-thi-rung-minh-c14a663577.html": {
+    "title": "Bé 5 tuổi vẽ tranh tặng bố nhưng ai cũng phát hiện điều bí ẩn ở góc phải, nhìn kỹ thì rùng mình",
+    "summary": "Bé 5 tuổi vẽ tranh tặng bố nhưng ai cũng phát hiện điều bí ẩn ở góc phải, nhìn kỹ thì rùng mình",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/nhan-khong-ra-con-gai-co-kha-nang-dac-biet-cua-oc-thanh-van-day-thi-xinh-het-me-hoc-truong-quoc-te-800-trieu-nam-c14a663459.html": {
+    "title": "Nhận không ra con gái có khả năng đặc biệt của Ốc Thanh Vân: Dậy thì xinh hệt mẹ, học trường quốc tế 800 triệu/năm",
+    "summary": "Nhận không ra con gái có khả năng đặc biệt của Ốc Thanh Vân: Dậy thì xinh hệt mẹ, học trường quốc tế 800 triệu/năm",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/nu-nsut-mang-ham-thuong-ta-lay-chong-pakistan-sinh-doi-1-trai-1-gai-de-xong-dep-non-na-khien-chong-yeu-say-dam-c14a663390.html": {
+    "title": "Nữ NSƯT mang hàm Thượng tá, lấy chồng Pakistan sinh đôi 1 trai 1 gái, đẻ xong đẹp nõn nà khiến chồng yêu say đắm",
+    "summary": "Nữ NSƯT mang hàm Thượng tá, lấy chồng Pakistan sinh đôi 1 trai 1 gái, đẻ xong đẹp nõn nà khiến chồng yêu say đắm",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-viet-khoc-meu-khi-con-12-tuoi-gui-tien-li-xi-mua-vang-chi-gan-6-trieu-nhung-bat-me-phai-ky-ten-c14a663227.html": {
+    "title": "Mẹ Việt khóc mếu khi con 12 tuổi gửi tiền lì xì mua vàng, chỉ gần 6 triệu nhưng bắt mẹ phải ký tên",
+    "summary": "Mẹ Việt khóc mếu khi con 12 tuổi gửi tiền lì xì mua vàng, chỉ gần 6 triệu nhưng bắt mẹ phải ký tên",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/em-gai-chay-vao-phong-anh-trai-hon-13-tuoi-sau-khi-bi-mang-me-tan-gian-ngay-khi-chung-kien-canh-tuong-am-ap-c14a663139.html": {
+    "title": "Em gái chạy vào phòng anh trai hơn 13 tuổi sau khi bị mắng, mẹ tan giận ngay khi chứng kiến cảnh tượng ấm áp",
+    "summary": "Em gái chạy vào phòng anh trai hơn 13 tuổi sau khi bị mắng, mẹ tan giận ngay khi chứng kiến cảnh tượng ấm áp",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-tre-dua-con-di-sieu-thi-ma-ai-cung-nhin-roi-lac-dau-dan-ong-nuom-nuop-xin-so-lam-quen-c14a663085.html": {
+    "title": "Mẹ trẻ đưa con đi siêu thị mà ai cũng nhìn rồi lắc đầu, đàn ông nườm nượp xin số làm quen",
+    "summary": "Mẹ trẻ đưa con đi siêu thị mà ai cũng nhìn rồi lắc đầu, đàn ông nườm nượp xin số làm quen",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/het-tet-van-khong-thay-con-dau-dua-cac-chau-ra-khoi-nha-bo-chong-trach-khong-biet-dieu-va-cai-ket-kho-xu-c14a663084.html": {
+    "title": "Hết Tết vẫn không thấy con dâu đưa các cháu ra khỏi nhà, bố chồng trách không biết điều và cái kết khó xử",
+    "summary": "Hết Tết vẫn không thấy con dâu đưa các cháu ra khỏi nhà, bố chồng trách không biết điều và cái kết khó xử",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/dua-tre-bi-tich-thu-tien-li-xi-va-dua-tre-duoc-tu-giu-20-nam-sau-cuoc-song-cua-chung-khac-biet-qua-ro-ret-c14a662144.html": {
+    "title": "Đứa trẻ bị tịch thu tiền lì xì và đứa trẻ được tự giữ, 20 năm sau, cuộc sống của chúng khác biệt quá rõ rệt",
+    "summary": "Đứa trẻ bị tịch thu tiền lì xì và đứa trẻ được tự giữ, 20 năm sau, cuộc sống của chúng khác biệt quá rõ rệt",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/my-nhan-tuoi-ngo-sinh-con-cho-gia-toc-giau-co-kin-tieng-tphcm-dat-ten-dua-tre-vua-hay-vua-quyen-luc-c14a662620.html": {
+    "title": "Mỹ nhân tuổi ngọ sinh con cho gia tộc giàu có kín tiếng TP.HCM, đặt tên đứa trẻ vừa hay vừa quyền lực",
+    "summary": "Mỹ nhân tuổi ngọ sinh con cho gia tộc giàu có kín tiếng TP.HCM, đặt tên đứa trẻ vừa hay vừa quyền lực",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-day-thi-khien-ca-nuoc-xuyt-xoa-vi-qua-xinh-nu-mc-dang-anh-mat-moc-cua-be-khien-ai-nay-vo-mong-c14a662055.html": {
+    "title": "Con gái dậy thì khiến cả nước xuýt xoa vì quá xinh, nữ MC đăng ảnh mặt mộc của bé khiến ai nấy vỡ mộng",
+    "summary": "Con gái dậy thì khiến cả nước xuýt xoa vì quá xinh, nữ MC đăng ảnh mặt mộc của bé khiến ai nấy vỡ mộng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-trai-bi-me-ruot-bo-roi-tai-benh-vien-1-thang-troi-luc-den-don-con-ung-dung-noi-1-cau-khien-nhieu-nguoi-ngan-ngam-c14a662622.html": {
+    "title": "Bé trai bị mẹ ruột “bỏ rơi” tại bệnh viện 1 tháng trời, lúc đến đón con ung dung nói 1 câu khiến nhiều người ngán ngẩm",
+    "summary": "Bé trai bị mẹ ruột “bỏ rơi” tại bệnh viện 1 tháng trời, lúc đến đón con ung dung nói 1 câu khiến nhiều người ngán ngẩm",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/khach-bat-con-phai-chao-moi-duoc-nhan-li-xi-phan-ung-day-thong-minh-cua-nguoi-me-duoc-ca-nha-khen-ngoi-c14a662092.html": {
+    "title": "Khách bắt con phải \"Chào\" mới được nhận lì xì, phản ứng đầy thông minh của người mẹ được cả nhà khen ngợi",
+    "summary": "Khách bắt con phải \"Chào\" mới được nhận lì xì, phản ứng đầy thông minh của người mẹ được cả nhà khen ngợi",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/nu-mc-duy-nhat-dan-20-mua-tao-quan-u60-lam-me-don-than-co-con-trai-day-thi-chuan-soai-ca-cao-1m8-c14a662605.html": {
+    "title": "Nữ MC duy nhất dẫn 20 mùa Táo quân: U60 làm mẹ đơn thân có con trai dậy thì chuẩn soái ca",
+    "summary": "Nữ MC duy nhất dẫn 20 mùa Táo quân: U60 làm mẹ đơn thân có con trai dậy thì chuẩn soái ca",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/dua-tre-duoc-nuoi-day-tu-bo-me-giau-co-va-ngheo-kho-su-khac-biet-qua-ro-ret-khi-truong-thanh-c14a662070.html": {
+    "title": "Đứa trẻ được nuôi dạy từ bố mẹ giàu có và nghèo khó, sự khác biệt quá rõ rệt khi trưởng thành",
+    "summary": "Đứa trẻ được nuôi dạy từ bố mẹ giàu có và nghèo khó, sự khác biệt quá rõ rệt khi trưởng thành",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-trai-15-tuoi-cua-oc-thanh-van-nguong-ngung-tu-choi-khi-me-muon-khoac-tay-chup-hinh-chon-dong-nguoi-c14a662671.html": {
+    "title": "Con trai 15 tuổi của Ốc Thanh Vân ngượng ngùng từ chối khi mẹ muốn khoác tay chụp hình chốn đông người,",
+    "summary": "Con trai 15 tuổi của Ốc Thanh Vân ngượng ngùng từ chối khi mẹ muốn khoác tay chụp hình chốn đông người,",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/cuoc-song-cua-2-hot-girl-nhi-bo-oi-minh-di-dau-the-nguoi-lien-tuc-vuong-thi-phi-nguoi-15-tuoi-da-co-roll-royce-c14a662350.html": {
+    "title": "Cuộc sống của 2 hot girl nhí \"Bố ơi! Mình đi đâu thế?\": Người liên tục vướng thị phi, người 15 tuổi đã có Rolls Royce",
+    "summary": "Cuộc sống của 2 hot girl nhí \"Bố ơi! Mình đi đâu thế?\": Người liên tục vướng thị phi, người 15 tuổi đã có Rolls Royce",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/nu-thieu-ta-dung-sau-thanh-cong-cua-giam-doc-nha-hat-cheo-tu-long-ngay-tet-anh-long-nau-mon-vo-thich-gianh-choi-voi-con-c14a662545.html": {
+    "title": "Nữ Thiếu tá đứng sau thành công của Giám đốc Nhà hát chèo Tự Long: \"Ngày Tết, anh Long nấu món vợ thích, giành chơi với...",
+    "summary": "Nữ Thiếu tá đứng sau thành công của Giám đốc Nhà hát chèo Tự Long: \"Ngày Tết, anh Long nấu món vợ thích, giành chơi với...",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/giao-vien-lop-1-ra-bai-tap-tieng-viet-ve-mut-dua-ngay-tet-phu-huynh-hoang-mang-khi-nhin-dap-an-c14a662446.html": {
+    "title": "Giáo viên lớp 1 ra bài tập Tiếng Việt về mứt dừa ngày Tết, phụ huynh hoang mang khi nhìn đáp án",
+    "summary": "Giáo viên lớp 1 ra bài tập Tiếng Việt về mứt dừa ngày Tết, phụ huynh hoang mang khi nhìn đáp án",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-trai-ngay-cang-than-thiet-giup-viec-tre-dep-bo-me-ta-hoa-khi-biet-nguyen-nhan-c14a662158.html": {
+    "title": "Con trai ngày càng thân thiết giúp việc trẻ đẹp, bố mẹ tá hỏa khi biết nguyên nhân",
+    "summary": "Con trai ngày càng thân thiết giúp việc trẻ đẹp, bố mẹ tá hỏa khi biết nguyên nhân",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/xon-xao-doan-camera-ghi-lai-canh-dat-g-doi-xu-voi-con-rieng-cua-cindy-lu-truoc-cua-nha-vo-cu-hoai-lam-len-tieng-benh-vuc-c14a662354.html": {
+    "title": "Xôn xao đoạn camera ghi lại cảnh Đạt G đối xử với con riêng của Cindy Lư trước cửa nhà",
+    "summary": "Xôn xao đoạn camera ghi lại cảnh Đạt G đối xử với con riêng của Cindy Lư trước cửa nhà",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/ba-me-u50-khien-nhieu-nguoi-khong-tin-la-me-cua-con-gai-24-tuoi-chong-xuat-hien-khien-ai-cung-vo-oa-c14a662081.html": {
+    "title": "Bà mẹ U50 khiến nhiều người không tin là mẹ của con gái 24 tuổi, chồng xuất hiện khiến ai cũng vỡ òa",
+    "summary": "Bà mẹ U50 khiến nhiều người không tin là mẹ của con gái 24 tuổi, chồng xuất hiện khiến ai cũng vỡ òa",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/cuoi-te-ghe-voi-loat-canh-cac-mam-non-nhi-nhiet-tinh-giup-bo-me-don-nha-don-tet-c14a662312.html": {
+    "title": "Cười té ghế với loạt cảnh các mầm non nhí nhiệt tình giúp bố mẹ dọn nhà đón Tết",
+    "summary": "Cười té ghế với loạt cảnh các mầm non nhí nhiệt tình giúp bố mẹ dọn nhà đón Tết",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/kiem-tra-bai-tap-lam-van-cua-con-bo-rung-minh-khi-dua-tre-viet-bo-em-da-mat-ly-do-qua-dang-yeu-c14a661767.html": {
+    "title": "Kiểm tra bài tập làm văn của con, bố rùng mình khi đứa trẻ viết: \"Bố em đã mất!\", lý do quá đáng yêu",
+    "summary": "Kiểm tra bài tập làm văn của con, bố rùng mình khi đứa trẻ viết: \"Bố em đã mất!\", lý do quá đáng yêu",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/hao-huc-den-truong-xem-con-bieu-dien-van-nghe-tet-bo-me-ta-hoa-khong-nhan-ra-dua-tre-cua-minh-tren-san-khau-c14a662105.html": {
+    "title": "Háo hức đến trường xem con biểu diễn văn nghệ Tết, bố mẹ tá hoả không nhận ra đứa trẻ của mình trên sân khấu",
+    "summary": "Háo hức đến trường xem con biểu diễn văn nghệ Tết, bố mẹ tá hoả không nhận ra đứa trẻ của mình trên sân khấu",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/xon-xao-canh-be-gai-6-tuoi-xinh-xan-ngoi-om-dua-be-so-sinh-o-hanh-lang-benh-vien-dau-long-chuyen-phia-sau-c14a661930.html": {
+    "title": "Xôn xao cảnh bé gái 6 tuổi xinh xắn ngồi ôm đứa bé sơ sinh ở hành lang bệnh viện, đau lòng chuyện phía sau",
+    "summary": "Xôn xao cảnh bé gái 6 tuổi xinh xắn ngồi ôm đứa bé sơ sinh ở hành lang bệnh viện, đau lòng chuyện phía sau",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/ve-que-bi-me-chong-hanh-ha-bo-chong-lam-1-viec-toi-nho-ca-doi-c14a661921.html": {
+    "title": "Về quê bị mẹ chồng hành hạ, bố chồng làm 1 việc tôi nhớ cả đời",
+    "summary": "Về quê bị mẹ chồng hành hạ, bố chồng làm 1 việc tôi nhớ cả đời",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/vo-tinh-mo-quyen-vo-nhap-cua-con-gai-9-tuoi-ra-xem-me-viet-ta-hoa-khi-thay-nhung-hinh-ve-ky-la-su-that-he-lo-c14a661923.html": {
+    "title": "Vô tình mở quyển vở nháp của con gái 9 tuổi ra xem, mẹ Việt tá hoả khi thấy những hình vẽ kỳ lạ, sự thật hé lộ",
+    "summary": "Vô tình mở quyển vở nháp của con gái 9 tuổi ra xem, mẹ Việt tá hoả khi thấy những hình vẽ kỳ lạ, sự thật hé lộ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-kem-me-41-tuoi-cua-nsnd-hong-van-co-khuon-mat-dep-phuc-hau-choi-than-voi-ai-nu-nha-quyen-linh-c14a661903.html": {
+    "title": "Con gái kém mẹ 41 tuổi của NSND Hồng Vân có khuôn mặt đẹp phúc hậu, chơi thân với ái nữ nhà Quyền Linh",
+    "summary": "Con gái kém mẹ 41 tuổi của NSND Hồng Vân có khuôn mặt đẹp phúc hậu, chơi thân với ái nữ nhà Quyền Linh",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-gai-nghich-dien-thoai-quay-livestream-hinh-anh-nguoi-me-phia-sau-khien-nhieu-nguoi-do-mat-c14a661568.html": {
+    "title": "Bé gái nghịch điện thoại quay livestream, hình ảnh người mẹ phía sau khiến nhiều người \"đỏ mặt\"",
+    "summary": "Bé gái nghịch điện thoại quay livestream, hình ảnh người mẹ phía sau khiến nhiều người \"đỏ mặt\"",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/ong-ngoai-91-tuoi-cam-cui-chuan-bi-qua-tet-cho-chau-dong-chu-tren-moi-goi-qua-khien-ai-xem-cung-rom-nuoc-mat-c14a661675.html": {
+    "title": "Ông ngoại 91 tuổi cặm cụi chuẩn bị quà Tết cho cháu, dòng chữ trên mỗi gói quà khiến ai xem cũng rớm nước mắt",
+    "summary": "Ông ngoại 91 tuổi cặm cụi chuẩn bị quà Tết cho cháu, dòng chữ trên mỗi gói quà khiến ai xem cũng rớm nước mắt",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bo-me-ne-tranh-giao-duc-gioi-tinh-con-to-mo-ve-chuyen-ay-lam-dieu-cam-ky-c14a661394.html": {
+    "title": "Bố mẹ né tránh giáo dục giới tính, con tò mò về \"chuyện ấy\", làm điều cấm kỵ",
+    "summary": "Bố mẹ né tránh giáo dục giới tính, con tò mò về \"chuyện ấy\", làm điều cấm kỵ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/luc-cap-thay-loat-tranh-con-gai-ve-cong-viec-hang-ngay-cua-bo-tren-giuong-me-vua-xem-vua-do-mat-c14a661448.html": {
+    "title": "Lục cặp thấy loạt tranh con gái vẽ công việc hàng ngày của bố trên giường, mẹ vừa xem vừa đỏ mặt",
+    "summary": "Lục cặp thấy loạt tranh con gái vẽ công việc hàng ngày của bố trên giường, mẹ vừa xem vừa đỏ mặt",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/lam-me-don-than-tren-dat-my-vo-cu-dan-truong-thay-co-phuoc-khi-sinh-duoc-con-trai-vua-ngoan-vua-hieu-chuyen-c14a661372.html": {
+    "title": "Làm mẹ đơn thân trên đất Mỹ, vợ cũ Đan Trường thấy có phước khi sinh được con trai vừa ngoan vừa hiểu chuyện",
+    "summary": "Làm mẹ đơn thân trên đất Mỹ, vợ cũ Đan Trường thấy có phước khi sinh được con trai vừa ngoan vừa hiểu chuyện",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-trai-tu-tu-sau-33-nam-song-dua-vao-cha-me-nguoi-me-nghen-ngao-biet-su-that-khi-don-dep-do-dac-cua-con-c14a661330.html": {
+    "title": "Con trai tự tử sau 33 năm sống dựa vào cha mẹ, người mẹ nghẹn ngào biết sự thật khi dọn dẹp đồ đạc của con",
+    "summary": "Con trai tự tử sau 33 năm sống dựa vào cha mẹ, người mẹ nghẹn ngào biết sự thật khi dọn dẹp đồ đạc của con",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/khoe-anh-me-ruot-hon-40-tuoi-con-gai-lien-tuc-bi-nguoi-la-lam-phien-doi-xin-so-lam-quen-vi-ba-qua-tre-c14a661113.html": {
+    "title": "Khoe ảnh mẹ ruột hơn 40 tuổi, con gái liên tục bị người lạ làm phiền, đòi xin số làm quen vì bà quá trẻ",
+    "summary": "Khoe ảnh mẹ ruột hơn 40 tuổi, con gái liên tục bị người lạ làm phiền, đòi xin số làm quen vì bà quá trẻ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/hot-girl-nhi-bo-oi-minh-di-dau-the-gay-tranh-cai-voi-voc-dang-phong-phao-tuoi-day-thi-nghi-pttm-c14a661092.html": {
+    "title": "Hot girl nhí \"Bố ơi! Mình đi đâu thế?\" gây tranh cãi với vóc dáng phổng phao tuổi dậy thì, nghi PTTM",
+    "summary": "Hot girl nhí \"Bố ơi! Mình đi đâu thế?\" gây tranh cãi với vóc dáng phổng phao tuổi dậy thì, nghi PTTM",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-chong-giau-chi-vang-trong-tu-nhung-lai-do-toi-cho-con-dau-an-cap-ly-do-khien-con-dau-tam-phuc-khau-phuc-c14a661214.html": {
+    "title": "Mẹ chồng giấu chỉ vàng trong tủ nhưng lại đổ tội cho con dâu ăn cắp, lý do khiến con dâu tâm phục khẩu phục",
+    "summary": "Mẹ chồng giấu chỉ vàng trong tủ nhưng lại đổ tội cho con dâu ăn cắp, lý do khiến con dâu tâm phục khẩu phục",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-don-than-xinh-nhat-nhi-vtv-bach-lan-phuong-khoe-con-gai-day-thi-vua-xinh-vua-gioi-bang-diem-cap-2-cao-ngat-c14a661213.html": {
+    "title": "Mẹ đơn thân xinh nhất nhì VTV Bạch Lan Phương khoe con gái dậy thì vừa xinh vừa giỏi, bảng điểm cấp 2 cao ngất",
+    "summary": "Mẹ đơn thân xinh nhất nhì VTV Bạch Lan Phương khoe con gái dậy thì vừa xinh vừa giỏi, bảng điểm cấp 2 cao ngất",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/gan-tet-dua-con-gai-di-trung-tam-thuong-mai-mua-quan-ao-moi-ong-bo-lam-lac-dua-tre-va-cai-ket-dieu-dung-c14a661175.html": {
+    "title": "Gần Tết đưa con gái đi trung tâm thương mại mua quần áo mới, ông bố làm lạc đứa trẻ và cái kết điêu đứng",
+    "summary": "Gần Tết đưa con gái đi trung tâm thương mại mua quần áo mới, ông bố làm lạc đứa trẻ và cái kết điêu đứng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bo-mang-ho-hiem-dinh-dat-ten-con-la-nong-thi-canh-nhan-vien-tu-phap-sua-thanh-ten-rat-cao-quy-c14a661174.html": {
+    "title": "Bố mang họ hiếm, đặt tên con là Nông Thị Cành, được sửa thành cái tên cao quý",
+    "summary": "Bố mang họ hiếm, đặt tên con là Nông Thị Cành, được sửa thành cái tên cao quý",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bi-phat-khong-cho-an-com-vi-buong-binh-chau-noi-chu-tich-tap-doan-o-ha-noi-co-hanh-dong-khien-me-lo-lang-c14a660730.html": {
+    "title": "Bị phạt không cho ăn cơm vì bướng bỉnh, cháu nội chủ tịch tập đoàn ở Hà Nội có hành động khiến mẹ lo lắng",
+    "summary": "Bị phạt không cho ăn cơm vì bướng bỉnh, cháu nội chủ tịch tập đoàn ở Hà Nội có hành động khiến mẹ lo lắng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bo-vo-nuc-no-khen-con-re-nha-hang-xom-duoc-thuong-tet-100-trieu-chi-5-chu-toi-noi-ra-ong-toat-mo-hoi-c14a660581.html": {
+    "title": "Bố vợ nức nở khen con rể nhà hàng xóm được thưởng Tết 100 triệu, chỉ 5 chữ tôi nói ra, ông toát mồ hôi",
+    "summary": "Bố vợ nức nở khen con rể nhà hàng xóm được thưởng Tết 100 triệu, chỉ 5 chữ tôi nói ra, ông toát mồ hôi",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-uong-trom-nuoc-trong-sieu-thi-bi-nhan-vien-buoc-toi-bo-dap-ong-phai-xin-loi-con-toi-c14a660373.html": {
+    "title": "Con uống trộm nước trong siêu thị bị nhân viên buộc tội, bố đáp \"Ông phải xin lỗi con tôi\"",
+    "summary": "Con uống trộm nước trong siêu thị bị nhân viên buộc tội, bố đáp \"Ông phải xin lỗi con tôi\"",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/vua-thang-han-quoc-dinh-bac-u23-lap-tuc-cong-khai-binh-luan-tren-facebook-me-don-than-noi-tieng-tphcm-ru-di-bao-c14a660197.html": {
+    "title": "Vừa thắng Hàn Quốc, Đình Bắc U23 lập tức bình luận trên facebook single mom nổi tiếng rủ đi bão",
+    "summary": "Vừa thắng Hàn Quốc, Đình Bắc U23 lập tức bình luận trên facebook single mom nổi tiếng rủ đi bão",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-mc-noi-tieng-vtv-diep-chi-14-tuoi-gay-choang-voi-thanh-tich-cup-vang-chau-a-nhin-loat-giay-khen-moi-ne-c14a660344.html": {
+    "title": "Con gái MC nổi tiếng VTV Diệp Chi 14 tuổi gây choáng với thành tích cúp vàng Châu Á, nhìn loạt giấy khen mới nể",
+    "summary": "Con gái MC nổi tiếng VTV Diệp Chi 14 tuổi gây choáng với thành tích cúp vàng Châu Á, nhìn loạt giấy khen mới nể",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/co-giao-giao-bai-tap-tieng-viet-dien-thanh-ngu-nhuong-com-ba-chim-hoc-sinh-dua-ra-loat-dap-an-khong-ai-ngo-c14a660261.html": {
+    "title": "Cô giáo giao bài tập tiếng Việt điền thành ngữ “Nhường cơm… Ba chìm…”, học sinh đưa ra loạt đáp án không ai ngờ",
+    "summary": "Cô giáo giao bài tập tiếng Việt điền thành ngữ “Nhường cơm… Ba chìm…”, học sinh đưa ra loạt đáp án không ai ngờ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/di-hop-phu-huynh-ong-bo-duoc-yeu-cau-ngoi-ghe-con-minh-hay-ngoi-tren-lop-gia-dinh-lap-tuc-chuyen-truong-cho-con-c14a660103.html": {
+    "title": "Đi họp phụ huynh ông bố được yêu cầu ngồi ghế con mình thường ngồi ở lớp, gia đình lập tức chuyển trường cho con",
+    "summary": "Đi họp phụ huynh ông bố được yêu cầu ngồi ghế con mình thường ngồi ở lớp, gia đình lập tức chuyển trường cho con",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/mang-10-tyhoi-cuoi-me-don-than-mien-tay-gio-ly-binh-buot-mieng-noi-so-tien-cho-con-rieng-cua-vo-tieu-vat-moi-thang-c14a659829.html": {
+    "title": "Mang 10 tỷ hỏi cưới mẹ đơn thân miền Tây, giờ Lý Bình buột miệng nói số tiền cho con riêng của vợ tiêu vặt mỗi tháng",
+    "summary": "Mang 10 tỷ hỏi cưới mẹ đơn thân miền Tây, giờ Lý Bình buột miệng nói số tiền cho con riêng của vợ tiêu vặt mỗi tháng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/gio-an-trua-o-truong-con-trai-mam-non-co-hanh-dong-gay-chu-y-voi-co-giao-me-dang-ngay-doan-video-len-mang-c14a659837.html": {
+    "title": "Giờ ăn trưa ở trường con trai mầm non có hành động gây chú ý với cô giáo, mẹ đăng ngay đoạn video lên mạng",
+    "summary": "Giờ ăn trưa ở trường con trai mầm non có hành động gây chú ý với cô giáo, mẹ đăng ngay đoạn video lên mạng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-33-tuoi-tot-nghiep-dh-ca-ngay-chi-an-ngu-xem-tv-bi-duoi-ra-khoi-nha-lien-dap-1-cau-khien-bo-me-chet-sung-c14a659614.html": {
+    "title": "Con gái 33 tuổi tốt nghiệp ĐH cả ngày chỉ ăn ngủ, xem TV, bị đuổi ra khỏi nhà liền đáp 1 câu khiến bố mẹ \"chết sững\"",
+    "summary": "Con gái 33 tuổi tốt nghiệp ĐH cả ngày chỉ ăn ngủ, xem TV, bị đuổi ra khỏi nhà liền đáp 1 câu khiến bố mẹ \"chết sững\"",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/den-truong-don-con-me-ngan-ngam-khi-thay-co-giao-dung-giang-bai-tieng-anh-chup-voi-tam-hinh-dang-len-mang-c14a659458.html": {
+    "title": "Đến trường đón con, mẹ ngán ngẩm khi thấy cô giáo đứng giảng bài tiếng Anh, chụp vội tấm hình đăng lên mạng",
+    "summary": "Đến trường đón con, mẹ ngán ngẩm khi thấy cô giáo đứng giảng bài tiếng Anh, chụp vội tấm hình đăng lên mạng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/khoanh-khac-trong-tiec-sinh-nhat-rieng-tu-cua-con-gai-nha-phuong-khien-dan-tinh-thot-len-khong-ai-bang-truong-giang-c14a659409.html": {
+    "title": "Khoảnh khắc trong tiệc sinh nhật riêng tư của con gái Nhã Phương khiến dân tình thốt lên: “Không ai bằng Trường Giang”",
+    "summary": "Khoảnh khắc trong tiệc sinh nhật riêng tư của con gái Nhã Phương khiến dân tình thốt lên: “Không ai bằng Trường Giang”",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/cuoi-nhau-duoc-2-thang-nhung-chong-mai-van-khong-dung-vao-nguoi-vo-thay-to-giay-giau-duoi-goi-toi-chet-lang-c14a659317.html": {
+    "title": "Cưới nhau được 2 tháng nhưng chồng mãi vẫn không đụng vào người vợ, thấy tờ giấy giấu dưới gối tôi chết lặng",
+    "summary": "Cưới nhau được 2 tháng nhưng chồng mãi vẫn không đụng vào người vợ, thấy tờ giấy giấu dưới gối tôi chết lặng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/buc-anh-chup-len-nam-sinh-tren-tau-dien-gay-bao-mang-xa-hoi-hanh-khach-nhin-cham-cham-hanh-dong-tren-ghe-ngoi-c14a659315.html": {
+    "title": "Bức ảnh chụp lén nam sinh trên tàu điện gây bão mạng xã hội, hành khách nhìn chăm chăm hành động trên ghế ngồi",
+    "summary": "Bức ảnh chụp lén nam sinh trên tàu điện gây bão mạng xã hội, hành khách nhìn chăm chăm hành động trên ghế ngồi",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-tieu-hoc-den-lop-bo-bai-nhieu-va-noi-doi-bi-co-giao-xe-vo-me-viet-len-mang-buc-xuc-gay-tranh-cai-c14a659314.html": {
+    "title": "Con tiểu học đến lớp bỏ bài nhiều và nói dối bị cô giáo xé vở, mẹ Việt lên mạng bức xúc gây tranh cãi",
+    "summary": "Con tiểu học đến lớp bỏ bài nhiều và nói dối bị cô giáo xé vở, mẹ Việt lên mạng bức xúc gây tranh cãi",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-gai-4-tuoi-ngu-day-khoc-thet-vi-mieng-moc-day-vet-den-la-nguyen-nhan-tu-mon-an-yeu-thich-moi-ngay-c14a659244.html": {
+    "title": "Bé gái 4 tuổi ngủ dậy khóc thét vì miệng “mọc” đầy vết đen lạ, nguyên nhân từ món ăn yêu thích mỗi ngày",
+    "summary": "Bé gái 4 tuổi ngủ dậy khóc thét vì miệng “mọc” đầy vết đen lạ, nguyên nhân từ món ăn yêu thích mỗi ngày",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-cap-2-danh-ban-cung-lop-me-noi-mot-cau-khien-hieu-truong-voi-xin-loi-phu-huynh-nan-nhan-khong-dam-kien-c14a658880.html": {
+    "title": "Con gái cấp 2 đánh bạn cùng lớp, mẹ nói một câu khiến hiệu trưởng vội xin lỗi, phụ huynh nạn nhân không dám kiện",
+    "summary": "Con gái cấp 2 đánh bạn cùng lớp, mẹ nói một câu khiến hiệu trưởng vội xin lỗi, phụ huynh nạn nhân không dám kiện",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-don-than-can-tho-phai-long-nhac-cong-cuba-hon-15-tuoi-con-gai-rieng-giong-bo-duong-y-duc-c14a659145.html": {
+    "title": "Mẹ đơn thân Cần Thơ chặn liên lạc khi nhạc công Cuba hơn 15 tuổi theo đuổi, cuối cùng phải lòng sau lần ở bệnh viện",
+    "summary": "Mẹ đơn thân Cần Thơ chặn liên lạc khi nhạc công Cuba hơn 15 tuổi theo đuổi, cuối cùng phải lòng sau lần ở bệnh viện",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bo-dua-con-gai-di-tau-dien-nhung-chi-dung-ma-khong-ngoi-hanh-khach-chu-y-den-cai-tay-nguoi-dan-ong-c14a659012.html": {
+    "title": "Bố đưa con gái đi tàu điện nhưng chỉ đứng mà không ngồi, hành khách chú ý đến cái tay người đàn ông",
+    "summary": "Bố đưa con gái đi tàu điện nhưng chỉ đứng mà không ngồi, hành khách chú ý đến cái tay người đàn ông",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/viet-van-ke-ve-lan-gap-lai-thay-giao-sau-10-nam-nam-sinh-lop-7-bi-cham-1-diem-vi-noi-dung-kho-chap-nhan-c14a659010.html": {
+    "title": "Viết văn kể về lần gặp lại thầy giáo sau 10 năm, nam sinh lớp 7 bị chấm 1 điểm vì nội dung “khó chấp nhận”",
+    "summary": "Viết văn kể về lần gặp lại thầy giáo sau 10 năm, nam sinh lớp 7 bị chấm 1 điểm vì nội dung “khó chấp nhận”",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/mxh-xon-xao-buc-hinh-me-thai-nguyen-chuan-bi-phao-chep-tay-cho-con-lop-2-di-thi-toan-phu-huynh-dong-loat-lam-theo-c14a658922.html": {
+    "title": "MXH xôn xao bức hình mẹ Thái Nguyên chuẩn bị “phao” chép tay cho con lớp 2 đi thi Toán, phụ huynh đồng loạt làm theo",
+    "summary": "MXH xôn xao bức hình mẹ Thái Nguyên chuẩn bị “phao” chép tay cho con lớp 2 đi thi Toán, phụ huynh đồng loạt làm theo",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/phai-long-dai-gia-tren-may-bay-hotgirl-tvhk-lam-me-don-than-duoc-tro-cap-8-ty-thang-bi-nham-la-nguoi-tinh-cua-con-trai-vi-tre-dep-c14a658921.html": {
+    "title": "Cưới đại gia quen trên máy bay, nữ tiếp viên hàng không sau ly hôn được trợ cấp 8 tỷ/tháng, làm mẹ đơn thân sung sướng",
+    "summary": "Cưới đại gia quen trên máy bay, nữ tiếp viên hàng không sau ly hôn được trợ cấp 8 tỷ/tháng, làm mẹ đơn thân sung sướng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/kiem-tra-camera-o-nha-thay-chong-om-2-con-gai-ngu-say-canh-tuong-o-goc-giuong-khien-vo-do-mat-c14a658843.html": {
+    "title": "Kiểm tra camera ở nhà thấy chồng ôm 2 con gái ngủ say, cảnh tượng ở góc giường khiến vợ đỏ mặt",
+    "summary": "Kiểm tra camera ở nhà thấy chồng ôm 2 con gái ngủ say, cảnh tượng ở góc giường khiến vợ đỏ mặt",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/o-biet-thu-rong-1600m2-hoc-truong-quoc-te-tieu-thieu-gia-nha-chi-bao-van-quan-dui-ao-thun-lam-vuon-du-moi-3-tuoi-c14a658800.html": {
+    "title": "Ở biệt thự rộng 1600m2, học trường quốc tế, “tiểu thiếu gia” nhà Chi Bảo vẫn quần đùi áo thun làm vườn dù mới 3 tuổi",
+    "summary": "Ở biệt thự rộng 1600m2, học trường quốc tế, “tiểu thiếu gia” nhà Chi Bảo vẫn quần đùi áo thun làm vườn dù mới 3 tuổi",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-gai-rang-sun-bo-oi-minh-di-dau-the-tung-chiem-song-vtv-sau-12-nam-duoc-vi-giong-bieu-tuong-nhan-sac-han-quoc-c14a658718.html": {
+    "title": "Bé gái răng sún \"Bố ơi, mình đi đâu thế\" từng chiếm sóng VTV, sau 12 năm được ví giống biểu tượng nhan sắc Hàn Quốc",
+    "summary": "Bé gái răng sún \"Bố ơi, mình đi đâu thế\" từng chiếm sóng VTV, sau 12 năm được ví giống biểu tượng nhan sắc Hàn Quốc",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/thay-canh-con-gai-day-thi-dan-ban-trai-ve-nha-canh-tuong-tiep-theo-cua-hai-dua-tre-khien-bo-me-choang-c14a658391.html": {
+    "title": "Thấy cảnh con gái dậy thì dẫn bạn trai về nhà, cảnh tượng tiếp theo của hai đứa trẻ khiến bố mẹ choáng",
+    "summary": "Thấy cảnh con gái dậy thì dẫn bạn trai về nhà, cảnh tượng tiếp theo của hai đứa trẻ khiến bố mẹ choáng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-ninh-binh-phat-hien-doan-tin-nhan-con-lop-9-cung-ban-hoc-lien-tung-ngay-len-mang-noi-dung-nguoi-lon-gay-xon-xao-c14a658572.html": {
+    "title": "Mẹ Ninh Bình phát hiện đoạn tin nhắn con lớp 9 cùng bạn học liền tung ngay lên mạng, nội dung \"người lớn\" gây xôn xao",
+    "summary": "Mẹ Ninh Bình phát hiện đoạn tin nhắn con lớp 9 cùng bạn học liền tung ngay lên mạng, nội dung \"người lớn\" gây xôn xao",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/sau-do-vo-chan-dai-noi-tieng-tphcm-lay-chong-tay-4-nam-sinh-lien-tiep-3-con-lai-dua-tre-qua-dep-cao-2m-c14a658449.html": {
+    "title": "Sau đổ vỡ, “chân dài” nổi tiếng TP.HCM lấy chồng Tây 4 năm sinh liên tiếp 3 con lai, đứa trẻ quá đẹp, cao 2m",
+    "summary": "Sau đổ vỡ, “chân dài” nổi tiếng TP.HCM lấy chồng Tây 4 năm sinh liên tiếp 3 con lai, đứa trẻ quá đẹp, cao 2m",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-gai-mam-non-cua-quay-trong-chan-suot-gio-ngu-trua-co-giao-goi-bo-duong-gap-khi-thay-thu-trong-tui-quan-dua-tre-c14a658333.html": {
+    "title": "Bé gái mầm non cựa quậy trong chăn suốt giờ ngủ trưa, cô giáo gọi bố dượng gấp khi thấy thứ trong túi quần đứa trẻ",
+    "summary": "Bé gái mầm non cựa quậy trong chăn suốt giờ ngủ trưa, cô giáo gọi bố dượng gấp khi thấy thứ trong túi quần đứa trẻ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bai-tap-tieng-viet-khien-ca-nha-bo-tay-tu-nao-de-nguyen-nghia-la-me-bo-bot-chu-van-la-me-c14a658271.html": {
+    "title": "Bài tập tiếng Việt khiến cả nhà bó tay: \"Từ nào để nguyên nghĩa là mẹ, bỏ bớt chữ vẫn là mẹ?\"",
+    "summary": "Bài tập tiếng Việt khiến cả nhà bó tay: \"Từ nào để nguyên nghĩa là mẹ, bỏ bớt chữ vẫn là mẹ?\"",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-chup-len-co-giao-day-tieng-anh-o-lop-gui-cho-bo-me-phu-huynh-xem-anh-ma-ngan-nguoi-c14a658148.html": {
+    "title": "Con chụp lén cô giáo dạy tiếng Anh ở lớp gửi cho bố mẹ, phụ huynh xem ảnh mà ngẩn người",
+    "summary": "Con chụp lén cô giáo dạy tiếng Anh ở lớp gửi cho bố mẹ, phụ huynh xem ảnh mà ngẩn người",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/troi-lanh-thieu-nu-mac-ho-hang-ra-pho-con-gai-hoi-vi-sao-me-dap-rat-hay-khien-ai-cung-tam-tac-khen-c14a658152.html": {
+    "title": "Trời lạnh, thiếu nữ mặc hở hang ra phố, con gái hỏi \"Vì sao?\", mẹ đáp rất hay khiến ai cũng tấm tắc khen",
+    "summary": "Trời lạnh, thiếu nữ mặc hở hang ra phố, con gái hỏi \"Vì sao?\", mẹ đáp rất hay khiến ai cũng tấm tắc khen",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/co-giao-giao-bai-tap-tieng-viet-dien-tu-hoc-sinh-lop-1-dua-ra-loat-dap-an-khien-cong-dong-mang-xon-xao-c14a658090.html": {
+    "title": "Cô giáo giao bài tập tiếng Việt điền từ, học sinh lớp 1 đưa ra loạt đáp án khiến cộng đồng mạng xôn xao",
+    "summary": "Cô giáo giao bài tập tiếng Việt điền từ, học sinh lớp 1 đưa ra loạt đáp án khiến cộng đồng mạng xôn xao",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-rieng-cua-vo-toi-nao-cung-o-trong-buong-tam-2-tieng-thay-thu-dua-tre-cam-tren-tay-toi-moi-vo-le-c14a657961.html": {
+    "title": "Con gái riêng của vợ tối nào cũng ở trong buồng tắm 2 tiếng, thấy thứ đứa trẻ cầm trên tay tôi mới vỡ lẽ",
+    "summary": "Con gái riêng của vợ tối nào cũng ở trong buồng tắm 2 tiếng, thấy thứ đứa trẻ cầm trên tay tôi mới vỡ lẽ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/coi-mang-ram-ro-buc-anh-chup-bo-va-con-gai-o-ga-tau-hanh-dong-cua-dua-tre-khien-ong-bo-duoc-khen-het-loi-c14a657960.html": {
+    "title": "Cõi mạng rầm rộ bức ảnh chụp bố và con gái ở ga tàu, hành động của đứa trẻ khiến ông bố được khen hết lời",
+    "summary": "Cõi mạng rầm rộ bức ảnh chụp bố và con gái ở ga tàu, hành động của đứa trẻ khiến ông bố được khen hết lời",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-viet-cau-cuu-khi-nhin-thay-buc-tranh-rung-ron-con-7-tuoi-ve-cong-dong-mang-len-tieng-canh-bao-c14a657957.html": {
+    "title": "Mẹ Việt “cầu cứu” khi nhìn thấy bức tranh rùng rợn con 7 tuổi vẽ, cộng đồng mạng lên tiếng cảnh báo",
+    "summary": "Mẹ Việt “cầu cứu” khi nhìn thấy bức tranh rùng rợn con 7 tuổi vẽ, cộng đồng mạng lên tiếng cảnh báo",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/nu-sinh-ha-noi-xuat-hien-tren-dai-thvn-gay-thuong-nho-vi-qua-xinh-danh-tinh-bo-soai-ca-man-anh-moi-bat-ngo-c14a657822.html": {
+    "title": "Nữ sinh Hà Nội xuất hiện trên Đài THVN quá xinh, bố ruột hoá ra là \"Soái ca màn ảnh\"",
+    "summary": "Nữ sinh Hà Nội xuất hiện trên Đài THVN quá xinh, bố ruột hoá ra là \"Soái ca màn ảnh\"",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-lam-vo-vien-da-3-ty-dong-cau-noi-cua-nguoi-bo-khien-ai-cung-gat-gu-chu-cua-hang-cam-nin-c14a657751.html": {
+    "title": "Con làm vỡ viên đá 3 tỷ đồng, câu nói của người bố khiến ai cũng gật gù, chủ cửa hàng câm nín",
+    "summary": "Con làm vỡ viên đá 3 tỷ đồng, câu nói của người bố khiến ai cũng gật gù, chủ cửa hàng câm nín",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/jennifer-pham-khoe-loat-anh-ben-gia-dinh-ngoai-hinh-con-rieng-va-con-gai-quoc-tich-my-day-thi-khac-han-c14a657764.html": {
+    "title": "Jennifer Phạm khoe loạt ảnh bên gia đình, ngoại hình con riêng và con gái quốc tịch Mỹ dậy thì khác hẳn",
+    "summary": "Jennifer Phạm khoe loạt ảnh bên gia đình, ngoại hình con riêng và con gái quốc tịch Mỹ dậy thì khác hẳn",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-chuot-di-duong-nao-an-toan-nhat-cau-tra-loi-qua-bat-ngo-cua-con-khien-me-viet-rung-tim-c14a657597.html": {
+    "title": "\"Con chuột đi đường nào an toàn nhất?\", câu trả lời quá bất ngờ của con khiến mẹ Việt \"rụng tim\"",
+    "summary": "\"Con chuột đi đường nào an toàn nhất?\", câu trả lời quá bất ngờ của con khiến mẹ Việt \"rụng tim\"",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bai-tap-tieng-viet-tim-tu-trai-nghia-voi-ngay-thang-be-hoc-sinh-viet-ra-mot-dap-an-khien-giao-vien-hoang-mang-c14a657565.html": {
+    "title": "Bài tập tiếng Việt tìm từ trái nghĩa với \"ngay thẳng\", bé học sinh viết ra một đáp án khiến giáo viên hoang mang",
+    "summary": "Bài tập tiếng Việt tìm từ trái nghĩa với \"ngay thẳng\", bé học sinh viết ra một đáp án khiến giáo viên hoang mang",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-trai-8-tuoi-trom-soi-day-chuyen-gia-70-trieu-den-lop-tang-ban-gai-bo-me-phat-hien-lien-co-cach-ung-xu-ai-cung-ne-c14a657529.html": {
+    "title": "Con trai 8 tuổi trộm sợi dây chuyền giá 70 triệu đến lớp tặng bạn gái, bố mẹ phát hiện liền có cách ứng xử ai cũng nể",
+    "summary": "Con trai 8 tuổi trộm sợi dây chuyền giá 70 triệu đến lớp tặng bạn gái, bố mẹ phát hiện liền có cách ứng xử ai cũng nể",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-viet-thac-mac-vi-con-lam-toan-63-9-bi-co-gach-sai-len-mang-hoi-thi-tam-phuc-vi-loi-giai-c14a657026.html": {
+    "title": "Mẹ Việt thắc mắc vì con làm toán \"6+3 = 9\" bị cô gạch sai, lên mạng hỏi thì tâm phục vì lời giải",
+    "summary": "Mẹ Việt thắc mắc vì con làm toán \"6+3 = 9\" bị cô gạch sai, lên mạng hỏi thì tâm phục vì lời giải",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bi-con-danh-vo-dai-gia-cua-quang-hai-lap-tuc-tat-lai-thai-do-cua-nguoi-phu-nu-ben-canh-gay-chu-y-c14a657231.html": {
+    "title": "Bị con đánh, vợ đại gia của Quang Hải lập tức \"tát\" lại, thái độ của người phụ nữ bên cạnh gây chú ý",
+    "summary": "Bị con đánh, vợ đại gia của Quang Hải lập tức \"tát\" lại, thái độ của người phụ nữ bên cạnh gây chú ý",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/viet-bai-van-dai-trang-giay-ta-hang-xom-dau-chi-10-den-15-soi-toc-be-lop-2-khien-dan-tinh-cuoi-te-ghe-c14a657162.html": {
+    "title": "Viết bài văn dài trang giấy tả hàng xóm “đầu chỉ 10 đến 15 sợi tóc”, bé lớp 2 khiến dân tình cười té ghế",
+    "summary": "Viết bài văn dài trang giấy tả hàng xóm “đầu chỉ 10 đến 15 sợi tóc”, bé lớp 2 khiến dân tình cười té ghế",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/chong-di-lam-xa-nha-chi-con-2-me-con-nhung-toi-nao-con-gai-cung-nhac-ve-nguoi-thu-3-toi-so-xanh-mat-c14a657163.html": {
+    "title": "Chồng đi làm xa nhà chỉ còn 2 mẹ con nhưng tối nào con gái cũng nhắc về người thứ 3, tôi sợ xanh mặt",
+    "summary": "Chồng đi làm xa nhà chỉ còn 2 mẹ con nhưng tối nào con gái cũng nhắc về người thứ 3, tôi sợ xanh mặt",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/co-be-7-tuoi-ve-tranh-gia-dinh-3-thanh-vien-su-xuat-hien-cua-2-nguoi-phu-nu-khien-cong-dong-mang-phan-no-c14a657158.html": {
+    "title": "Cô bé 7 tuổi vẽ tranh gia đình 3 thành viên, sự xuất hiện của 2 người phụ nữ khiến cộng đồng mạng phẫn nộ",
+    "summary": "Cô bé 7 tuổi vẽ tranh gia đình 3 thành viên, sự xuất hiện của 2 người phụ nữ khiến cộng đồng mạng phẫn nộ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/huy-khanh-than-thiet-voi-con-trai-giau-co-hoc-truong-danh-gia-o-canada-gap-kho-khan-voi-con-gai-o-phan-lan-c14a657102.html": {
+    "title": "Huy Khánh thân thiết với con trai giàu có, học trường danh giá ở Canada, gặp khó khăn với con gái ở Phần Lan",
+    "summary": "Huy Khánh thân thiết với con trai giàu có, học trường danh giá ở Canada, gặp khó khăn với con gái ở Phần Lan",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/mot-minh-dua-me-di-sinh-o-benh-vien-be-trai-tieu-hoc-noi-mot-cau-khien-bac-si-y-ta-do-de-xot-xa-c14a656975.html": {
+    "title": "Một mình đưa mẹ đi sinh ở bệnh viện, bé trai tiểu học nói một câu khiến bác sĩ, y tá đỡ đẻ xót xa",
+    "summary": "Một mình đưa mẹ đi sinh ở bệnh viện, bé trai tiểu học nói một câu khiến bác sĩ, y tá đỡ đẻ xót xa",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bi-co-giao-moi-phu-huynh-vi-chuyen-di-ve-sinh-o-truong-cau-be-noi-mot-cau-khien-me-hoi-han-c14a656809.html": {
+    "title": "Bị cô giáo mời phụ huynh vì chuyện đi vệ sinh ở trường, cậu bé nói một câu khiến mẹ hối hận",
+    "summary": "Bị cô giáo mời phụ huynh vì chuyện đi vệ sinh ở trường, cậu bé nói một câu khiến mẹ hối hận",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bo-me-cung-chieu-con-trai-viet-anh-van-hoc-chua-on-hot-mom-huong-tran-khong-dam-tu-day-con-hoc-c14a656770.html": {
+    "title": "Bố mẹ cưng chiều, con trai Việt Anh vẫn học chưa ổn, hot mom Hương Trần không dám tự dạy con học",
+    "summary": "Bố mẹ cưng chiều, con trai Việt Anh vẫn học chưa ổn, hot mom Hương Trần không dám tự dạy con học",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/coi-mang-tranh-cai-doan-video-giao-vien-dang-tai-vao-gio-ngu-trua-o-truong-mau-giao-hanh-dong-be-trai-gay-soc-c14a656724.html": {
+    "title": "Cõi mạng tranh cãi đoạn video giáo viên quay giờ ngủ trưa ở trường mẫu giáo, bé trai có hành vi gây sốc",
+    "summary": "Cõi mạng tranh cãi đoạn video giáo viên quay giờ ngủ trưa ở trường mẫu giáo, bé trai có hành vi gây sốc",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/lay-chong-dao-dien-hon-20-tuoi-nu-dien-vien-nguoi-hre-xinh-con-gai-dep-het-me-dua-tre-duoc-dat-ten-ho-luu-rat-la-c14a656674.html": {
+    "title": "Lấy chồng đạo diễn hơn 20 tuổi, nữ diễn viên người H’rê xinh con gái đẹp hệt mẹ, đứa trẻ được đặt tên họ Lưu rất lạ",
+    "summary": "Lấy chồng đạo diễn hơn 20 tuổi, nữ diễn viên người H’rê xinh con gái đẹp hệt mẹ, đứa trẻ được đặt tên họ Lưu rất lạ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/co-giao-giao-bai-tap-ve-nha-ve-tranh-thu-cung-tac-pham-cua-cau-hoc-sinh-khien-giao-vien-hoang-mang-kho-cham-diem-c14a656587.html": {
+    "title": "Cô giáo giao bài tập về nhà vẽ tranh thú cưng, tác phẩm của cậu học sinh khiến giáo viên hoang mang, khó chấm điểm",
+    "summary": "Cô giáo giao bài tập về nhà vẽ tranh thú cưng, tác phẩm của cậu học sinh khiến giáo viên hoang mang, khó chấm điểm",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/chia-7-con-bo-cho-3-nguoi-ma-khong-duoc-lam-thit-chung-dap-an-bai-toan-tieu-hockhien-nu-mc-nga-ngua-c14a656250.html": {
+    "title": "“Chia 7 con bò cho 3 người mà không được làm thịt chúng?”, đáp án bài toán tiểu học khiến nữ MC ngã ngửa",
+    "summary": "“Chia 7 con bò cho 3 người mà không được làm thịt chúng?”, đáp án bài toán tiểu học khiến nữ MC ngã ngửa",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-trai-mam-non-hai-phong-khoc-nuc-no-vi-co-giao-ky-hieu-dac-biet-tren-tay-dua-tre-khien-cdm-lien-tuc-binh-luan-c14a656507.html": {
+    "title": "Bé trai mầm non Hải Phòng khóc nức nở vì cô giáo, ký hiệu đặc biệt trên tay đứa trẻ khiến CĐM liên tục bình luận",
+    "summary": "Bé trai mầm non Hải Phòng khóc nức nở vì cô giáo, ký hiệu đặc biệt trên tay đứa trẻ khiến CĐM liên tục bình luận",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/net-nam-than-cua-dua-tre-duoc-tang-thanh-ha-xem-nhu-con-de-day-thi-cao-1m8-mat-y-het-me-ac-nu-man-anh-c14a656422.html": {
+    "title": "Đứa trẻ được Tăng Thanh Hà xem như con đẻ: Dậy thì chân dài 1m8, mặt y hệt mẹ \"ác nữ màn ảnh\"",
+    "summary": "Đứa trẻ được Tăng Thanh Hà xem như con đẻ: Dậy thì chân dài 1m8, mặt y hệt mẹ \"ác nữ màn ảnh\"",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-hoc-sinh-dat-cau-thanh-ngu-nhac-den-me-va-anh-trai-co-giao-phe-mot-chu-do-bai-khien-cdm-bo-tay-c14a656354.html": {
+    "title": "Bé học sinh đặt câu thành ngữ nhắc đến mẹ và anh trai, cô giáo phê một chữ đỏ bài khiến CĐM “bó tay”",
+    "summary": "Bé học sinh đặt câu thành ngữ nhắc đến mẹ và anh trai, cô giáo phê một chữ đỏ bài khiến CĐM “bó tay”",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-co-gai-mien-bien-lien-quy-goi-xin-cuoi-sao-nam-viet-gio-co-nha-21-ty-hai-ai-nu-dep-chuan-hoa-hau-tuong-lai-c14a656205.html": {
+    "title": "Mê cô gái miền biển liền quỳ gối xin cưới, đại gia Việt có nhà 21 tỷ giờ \"lãi\" hai ái nữ đẹp chuẩn Hoa hậu tương lai",
+    "summary": "Mê cô gái miền biển liền quỳ gối xin cưới, đại gia Việt có nhà 21 tỷ giờ \"lãi\" hai ái nữ đẹp chuẩn Hoa hậu tương lai",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/hoc-sinh-ve-tranh-ngoi-nha-cua-em-co-giao-vua-nhin-lien-goi-ngay-cho-phu-huynh-dua-be-di-kham-c14a656207.html": {
+    "title": "Học sinh vẽ tranh “ngôi nhà của em”, cô giáo vừa nhìn liền gọi ngay cho phụ huynh đưa bé đi khám",
+    "summary": "Học sinh vẽ tranh “ngôi nhà của em”, cô giáo vừa nhìn liền gọi ngay cho phụ huynh đưa bé đi khám",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-5-tuoi-hoi-sao-con-khong-co-nguc-bo-tra-loi-ap-ung-roi-cuoi-nguong-ngung-khi-be-noi-ly-do-c14a655578.html": {
+    "title": "Con gái 5 tuổi hỏi \"Sao con không có ngực?\", bố trả lời ấp úng rồi cười ngượng ngùng khi bé nói lý do",
+    "summary": "Con gái 5 tuổi hỏi \"Sao con không có ngực?\", bố trả lời ấp úng rồi cười ngượng ngùng khi bé nói lý do",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/phu-huynh-cuoi-chay-nuoc-mat-voi-nhung-khoanh-khac-co-1-0-2-o-truong-hoc-cua-con-c14a655979.html": {
+    "title": "Phụ huynh cười chảy nước mắt với những khoảnh khắc có \"1-0-2\" ở trường học của con",
+    "summary": "Phụ huynh cười chảy nước mắt với những khoảnh khắc có \"1-0-2\" ở trường học của con",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bai-do-xe-o-mot-truong-mam-non-gay-xon-xao-mxh-nhin-loat-sieu-xe-cua-tre-hieu-ngay-cach-phu-huynh-day-con-c14a655867.html": {
+    "title": "Bãi đỗ xe ở một trường mầm non gây xôn xao MXH, nhìn loạt “siêu xe” của trẻ hiểu ngay cách phụ huynh dạy con",
+    "summary": "Bãi đỗ xe ở một trường mầm non gây xôn xao MXH, nhìn loạt “siêu xe” của trẻ hiểu ngay cách phụ huynh dạy con",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-lop-3-viet-van-ta-anh-trai-khien-phu-huynh-doc-ma-nong-mat-doan-ket-gay-bat-ngo-nhat-c14a655831.html": {
+    "title": "Bé lớp 3 viết văn tả anh trai khiến phụ huynh đọc mà nóng mặt, đoạn kết gây bất ngờ nhất",
+    "summary": "Bé lớp 3 viết văn tả anh trai khiến phụ huynh đọc mà nóng mặt, đoạn kết gây bất ngờ nhất",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-trai-lop-4-luoi-hoc-bo-bat-di-lam-boc-vac-o-cong-truong-va-cai-ket-c14a655790.html": {
+    "title": "Bé trai lớp 4 lười học, bố bắt đi làm bốc vác ở công trường và cái kết",
+    "summary": "Bé trai lớp 4 lười học, bố bắt đi làm bốc vác ở công trường và cái kết",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-lai-2-dong-mau-cua-ha-anh-hoc-truong-quoc-te-noi-tieng-anh-vanh-vach-ve-nha-cham-chi-hoc-them-tieng-viet-c14a655789.html": {
+    "title": "Con gái lai 2 dòng máu của Hà Anh học trường Quốc tế nói tiếng Anh vanh vách, về nhà chăm chỉ học thêm tiếng Việt",
+    "summary": "Con gái lai 2 dòng máu của Hà Anh học trường Quốc tế nói tiếng Anh vanh vách, về nhà chăm chỉ học thêm tiếng Việt",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-hoc-sinh-ha-noi-chiem-song-vtv-vi-qua-xinh-danh-tinh-me-ruot-la-co-giao-bup-be-dinh-dam-mxh-gay-tram-tro-c14a655605.html": {
+    "title": "Bé học sinh Hà Nội chiếm sóng VTV vì quá xinh, danh tính mẹ ruột là \"cô giáo búp bê đình đám MXH\" gây trầm trồ",
+    "summary": "Bé học sinh Hà Nội chiếm sóng VTV vì quá xinh, danh tính mẹ ruột là \"cô giáo búp bê đình đám MXH\" gây trầm trồ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/buc-hinh-chup-2-be-gai-10-tuoi-tai-mot-trien-lam-khien-coi-mang-xon-xao-phu-huynh-dua-tre-bi-chi-trich-c14a655504.html": {
+    "title": "Bức hình chụp 2 bé gái 10 tuổi tại một triển lãm khiến cõi mạng xôn xao, phụ huynh đứa trẻ bị chỉ trích",
+    "summary": "Bức hình chụp 2 bé gái 10 tuổi tại một triển lãm khiến cõi mạng xôn xao, phụ huynh đứa trẻ bị chỉ trích",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bai-tap-tieng-viet-dien-thanh-ngu-con-trau-la-dau-cay-ngay-khong-so-cua-hoc-sinh-cap-1-khien-cdm-tram-tro-c14a655274.html": {
+    "title": "Bài tập tiếng Việt điền thành ngữ “con trâu là đầu…”, “cây ngay không sợ…” của học sinh cấp 1 khiến CĐM trầm trồ",
+    "summary": "Bài tập tiếng Việt điền thành ngữ “con trâu là đầu…”, “cây ngay không sợ…” của học sinh cấp 1 khiến CĐM trầm trồ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/em-so-sinh-khoc-mai-khong-nin-anh-trai-2-tuoi-lien-lam-mot-hanh-dong-cuc-thong-minh-khien-nguoi-me-ngo-ngang-c14a655256.html": {
+    "title": "Em sơ sinh khóc mãi không nín, anh trai 2 tuổi liền làm một hành động cực thông minh khiến người mẹ ngỡ ngàng",
+    "summary": "Em sơ sinh khóc mãi không nín, anh trai 2 tuổi liền làm một hành động cực thông minh khiến người mẹ ngỡ ngàng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/chi-hai-ban-dat-anh-ba-ban-vang-chay-chua-benh-ung-thu-cho-em-ut-20-nam-sau-nhan-cai-ket-dam-le-c14a655183.html": {
+    "title": "Chị hai bán đất, anh ba bán vàng chạy chữa bệnh ung thư cho em út, 20 năm sau nhận cái kết đẫm lệ",
+    "summary": "Chị hai bán đất, anh ba bán vàng chạy chữa bệnh ung thư cho em út, 20 năm sau nhận cái kết đẫm lệ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-trai-ngay-cang-khac-thuong-phai-dieu-tri-tam-ly-bac-si-chi-ra-nguyen-do-la-tu-thoi-quen-sai-lam-cua-me-c14a655083.html": {
+    "title": "Con trai ngày càng khác thường phải điều trị tâm lý, bác sĩ chỉ ra nguyên do là từ thói quen sai lầm của mẹ",
+    "summary": "Con trai ngày càng khác thường phải điều trị tâm lý, bác sĩ chỉ ra nguyên do là từ thói quen sai lầm của mẹ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/gai-lang-choi-trong-quynh-bup-be-20-tuoi-lay-chong-gio-u40-lam-me-don-than-dep-boc-lua-2-con-gai-cuc-pham-c14a654935.html": {
+    "title": "\"Gái ngành Quỳnh búp bê\" 20 tuổi lấy chồng doanh nhân sinh 2 con, giờ U40 làm mẹ đơn thân đẹp bốc lửa",
+    "summary": "\"Gái ngành Quỳnh búp bê\" 20 tuổi lấy chồng doanh nhân sinh 2 con, giờ U40 làm mẹ đơn thân đẹp bốc lửa",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/ve-tranh-de-tai-mot-ngay-cua-em-be-hoc-sinh-khien-co-giao-bat-khoc-ngay-sau-khi-nhin-thay-noi-dung-c14a654849.html": {
+    "title": "Vẽ tranh đề tài “một ngày của em”, bé học sinh khiến cô giáo bật khóc ngay sau khi nhìn thấy nội dung",
+    "summary": "Vẽ tranh đề tài “một ngày của em”, bé học sinh khiến cô giáo bật khóc ngay sau khi nhìn thấy nội dung",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/1001-kiep-nan-cua-cac-mam-non-khi-duoc-bo-me-giao-nhiem-vu-o-nha-cham-em-vua-thuong-vua-buon-cuoi-c14a654753.html": {
+    "title": "1001 \"kiếp nạn\" của các mầm non khi được bố mẹ giao nhiệm vụ ở nhà chăm em, vừa thương vừa buồn cười",
+    "summary": "1001 \"kiếp nạn\" của các mầm non khi được bố mẹ giao nhiệm vụ ở nhà chăm em, vừa thương vừa buồn cười",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bai-kiem-tra-tieng-viet-cua-hoc-sinh-tieu-hoc-khien-giao-vien-khong-the-cho-diem-4-chu-viet-ve-me-day-xot-xa-c14a654635.html": {
+    "title": "Bài kiểm tra tiếng Việt của học sinh tiểu học khiến giáo viên không thể cho điểm, 4 chữ viết về mẹ đầy xót xa",
+    "summary": "Bài kiểm tra tiếng Việt của học sinh tiểu học khiến giáo viên không thể cho điểm, 4 chữ viết về mẹ đầy xót xa",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/be-gai-tphcm-11-tuoi-vuot-17000km-den-brazil-phat-bieu-tieng-anh-tai-dien-dan-lien-hop-quoc-c14a654718.html": {
+    "title": "Bé gái TP.HCM 11 tuổi vượt 17.000km đến Brazil phát biểu tiếng Anh tại diễn đàn Liên Hợp Quốc",
+    "summary": "Bé gái TP.HCM 11 tuổi vượt 17.000km đến Brazil phát biểu tiếng Anh tại diễn đàn Liên Hợp Quốc",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-trai-di-hoc-mau-giao-bi-co-mang-von-hay-lam-phien-ban-hoc-me-ta-hoa-khi-thay-hanh-dong-be-lam-c14a654600.html": {
+    "title": "Con trai đi học mẫu giáo bị cô “mắng vốn” hay làm phiền bạn học, mẹ tá hoả khi thấy hành động bé làm",
+    "summary": "Con trai đi học mẫu giáo bị cô “mắng vốn” hay làm phiền bạn học, mẹ tá hoả khi thấy hành động bé làm",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/hoc-quoc-te-700-trieu-con-gai-phan-nhu-thao-gioi-choi-piano-ve-dep-ngoai-ngu-tot-hoc-sinh-noi-bat-o-truong-c14a654598.html": {
+    "title": "Học quốc tế 700 triệu, con gái Phan Như Thảo giỏi chơi piano, vẽ đẹp, ngoại ngữ tốt, học sinh nổi bật ở trường",
+    "summary": "Học quốc tế 700 triệu, con gái Phan Như Thảo giỏi chơi piano, vẽ đẹp, ngoại ngữ tốt, học sinh nổi bật ở trường",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/duoc-nuong-chieu-tu-nho-hotgirl-22-tuoi-mua-xe-hoi-11-ty-dong-gay-xon-xao-mxh-gio-rao-ban-nha-tra-no-c14a654435.html": {
+    "title": "Được nuông chiều từ nhỏ, hotgirl 22 tuổi mua xe hơi 1,1 tỷ đồng gây xôn xao MXH giờ rao bán nhà trả nợ",
+    "summary": "Được nuông chiều từ nhỏ, hotgirl 22 tuổi mua xe hơi 1,1 tỷ đồng gây xôn xao MXH giờ rao bán nhà trả nợ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-sinh-non-nghi-bai-nao-4-tuoi-bo-bat-coi-tran-chay-duoi-tuyet-dua-tre-noi-1-cau-khien-bo-nghen-ngao-c14a654232.html": {
+    "title": "Con sinh non nghi bại não, 4 tuổi bố bắt cởi trần chạy dưới tuyết, đứa trẻ nói 1 câu khiến bố nghẹn ngào",
+    "summary": "Con sinh non nghi bại não, 4 tuổi bố bắt cởi trần chạy dưới tuyết, đứa trẻ nói 1 câu khiến bố nghẹn ngào",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/xuat-than-tieu-thu-tap-doan-lon-con-gai-dong-nhi-5-tuoi-noi-tieng-anh-vanh-vach-ve-dep-hat-hay-dien-xuat-gioi-c14a654427.html": {
+    "title": "Xuất thân tiểu thư tập đoàn lớn, con gái Đông Nhi 5 tuổi nói tiếng Anh vanh vách, vẽ đẹp, hát hay, diễn xuất giỏi",
+    "summary": "Xuất thân tiểu thư tập đoàn lớn, con gái Đông Nhi 5 tuổi nói tiếng Anh vanh vách, vẽ đẹp, hát hay, diễn xuất giỏi",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-mac-vay-rong-cu-bi-tut-khi-be-con-vao-quan-mua-do-an-hanh-dong-cua-dua-tre-khien-ai-cung-khen-c14a654324.html": {
+    "title": "Mẹ mặc váy rộng cứ bị tụt khi bế con vào quán mua đồ ăn, hành động của đứa trẻ khiến ai cũng khen",
+    "summary": "Mẹ mặc váy rộng cứ bị tụt khi bế con vào quán mua đồ ăn, hành động của đứa trẻ khiến ai cũng khen",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/co-giao-yeu-cau-dien-tu-con-thieu-vao-cho-trong-bo-thich-choi-bat-cuoi-voi-dap-an-cua-hoc-sinh-c14a654288.html": {
+    "title": "Cô giáo yêu cầu điền từ còn thiếu vào chỗ trống: \"Bố thích chơi...\", bật cười với đáp án của học sinh",
+    "summary": "Cô giáo yêu cầu điền từ còn thiếu vào chỗ trống: \"Bố thích chơi...\", bật cười với đáp án của học sinh",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/len-bo-me-mang-qua-den-truong-mau-giao-tang-co-cau-hoc-sinh-vua-mo-cap-sach-da-khien-ca-lop-cuoi-xiu-c14a654282.html": {
+    "title": "Lén bố mẹ mang quà đến trường mẫu giáo tặng cô, cậu học sinh vừa mở cặp sách đã khiến cả lớp cười xỉu",
+    "summary": "Lén bố mẹ mang quà đến trường mẫu giáo tặng cô, cậu học sinh vừa mở cặp sách đã khiến cả lớp cười xỉu",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/co-giao-cap-3-gay-sot-mxh-voi-1001-trang-phuc-di-day-moi-ngay-xinh-nhu-hoa-hau-c14a654147.html": {
+    "title": "Cô giáo cấp 3 “gây sốt” MXH với 1001 trang phục đi dạy mỗi ngày, xinh như Hoa hậu",
+    "summary": "Cô giáo cấp 3 “gây sốt” MXH với 1001 trang phục đi dạy mỗi ngày, xinh như Hoa hậu",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/gio-hoa-qua-mot-phu-huynh-tang-cho-giao-vien-lop-con-nhan-dip-20-11-gay-tranh-cai-c14a654120.html": {
+    "title": "Giỏ hoa quả một phụ huynh tặng cho giáo viên lớp con nhân dịp 20/11 gây tranh cãi",
+    "summary": "Giỏ hoa quả một phụ huynh tặng cho giáo viên lớp con nhân dịp 20/11 gây tranh cãi",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/viet-van-ta-co-giao-nhung-lai-tiet-lo-bi-mat-lien-quan-den-bac-bao-ve-be-hoc-sinh-bi-gach-do-bai-c14a654032.html": {
+    "title": "Viết văn tả cô giáo nhưng lại tiết lộ “bí mật” liên quan đến bác bảo vệ, bé học sinh bị gạch đỏ bài",
+    "summary": "Viết văn tả cô giáo nhưng lại tiết lộ “bí mật” liên quan đến bác bảo vệ, bé học sinh bị gạch đỏ bài",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/hoc-truong-quoc-te-400-trieu-nam-nhung-lien-tuc-nghi-con-gai-lucie-nguyen-vao-lop-do-cai-mat-vi-ai-cung-noi-tieng-anh-c14a654011.html": {
+    "title": "Học trường quốc tế 400 triệu/năm nhưng liên tục nghỉ, con gái nữ đại gia TP.HCM vào lớp \"đơ cái mặt\" vì ai cũng nói...",
+    "summary": "Học trường quốc tế 400 triệu/năm nhưng liên tục nghỉ, con gái nữ đại gia TP.HCM vào lớp \"đơ cái mặt\" vì ai cũng nói...",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/chan-dung-co-giao-tieu-hoc-9x-mac-gian-di-khi-di-day-tan-lam-lai-xe-17-ty-ve-khu-biet-thu-nha-giau-c14a653993.html": {
+    "title": "Gặp cô giáo tiểu học 9X mặc giản dị khi đi dạy, tan làm lái xe 17 tỷ về biệt thự khu nhà giàu",
+    "summary": "Gặp cô giáo tiểu học 9X mặc giản dị khi đi dạy, tan làm lái xe 17 tỷ về biệt thự khu nhà giàu",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/co-giao-yeu-cau-dien-thanh-ngu-la-lanh-tinh-lang-loat-dap-an-hoc-sinh-dua-ra-khien-phu-huynh-do-mat-c14a653922.html": {
+    "title": "Cô giáo yêu cầu điền thành ngữ \"lá lành..., tình làng...\", loạt đáp án học sinh đưa ra khiến phụ huynh đỏ mặt",
+    "summary": "Cô giáo yêu cầu điền thành ngữ \"lá lành..., tình làng...\", loạt đáp án học sinh đưa ra khiến phụ huynh đỏ mặt",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/hai-con-song-sinh-ngay-cang-than-thiet-nguoi-me-vui-mung-cho-den-khi-nghe-len-duoc-cuoc-tro-chuyen-luc-nua-dem-c14a653810.html": {
+    "title": "Hai con song sinh ngày càng thân thiết, người mẹ vui mừng cho đến khi nghe lén được cuộc trò chuyện lúc nửa đêm",
+    "summary": "Hai con song sinh ngày càng thân thiết, người mẹ vui mừng cho đến khi nghe lén được cuộc trò chuyện lúc nửa đêm",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/me-bat-con-gai-lam-van-ta-me-la-nang-cong-chua-xinh-dep-cau-tra-loi-cua-dua-tre-khien-me-cam-nin-c14a653739.html": {
+    "title": "Mẹ bắt con gái làm văn tả \"Mẹ là nàng công chúa xinh đẹp\", câu trả lời của đứa trẻ khiến mẹ câm nín",
+    "summary": "Mẹ bắt con gái làm văn tả \"Mẹ là nàng công chúa xinh đẹp\", câu trả lời của đứa trẻ khiến mẹ câm nín",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/dao-nay-con-gai-hay-di-hoc-som-nhung-ve-nha-rat-muon-mot-lan-thay-con-mac-ao-nguoc-toi-bat-khoc-goi-chong-c14a653781.html": {
+    "title": "Dạo này con gái hay đi học sớm nhưng về nhà rất muộn, một lần thấy con mặc áo ngược, tôi bật khóc gọi chồng",
+    "summary": "Dạo này con gái hay đi học sớm nhưng về nhà rất muộn, một lần thấy con mặc áo ngược, tôi bật khóc gọi chồng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/cap-vo-chong-ngu-say-khong-hay-biet-gi-hanh-dong-con-gai-lam-voi-em-so-sinh-o-goc-giuong-khien-ai-nay-nghen-ngao-c14a653780.html": {
+    "title": "Cặp vợ chồng ngủ say không hay biết gì, hành động con gái làm với em sơ sinh ở góc giường khiến ai nấy nghẹn ngào",
+    "summary": "Cặp vợ chồng ngủ say không hay biết gì, hành động con gái làm với em sơ sinh ở góc giường khiến ai nấy nghẹn ngào",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/gio-trua-o-nha-tre-me-kiem-tra-camera-thay-con-gai-khong-ngu-lien-tuc-co-nhung-hanh-dong-kho-tin-voi-giao-vien-c14a653690.html": {
+    "title": "Giờ trưa ở nhà trẻ, mẹ kiểm tra camera thấy con gái không ngủ, liên tục có những hành động khó tin với giáo viên",
+    "summary": "Giờ trưa ở nhà trẻ, mẹ kiểm tra camera thấy con gái không ngủ, liên tục có những hành động khó tin với giáo viên",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/quyen-linh-chieu-con-gai-56-tuoi-hoa-thu-nhay-de-thuong-cung-ai-nu-ba-xa-chang-ngai-ma-con-vao-khen-ninh-c14a653569.html": {
+    "title": "Quyền Linh chiều con gái, 56 tuổi \"hóa thú\" nhảy dễ thương cùng ái nữ, bà xã chẳng ngại mà còn vào khen nịnh",
+    "summary": "Quyền Linh chiều con gái, 56 tuổi \"hóa thú\" nhảy dễ thương cùng ái nữ, bà xã chẳng ngại mà còn vào khen nịnh",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/hoc-truong-quoc-te-phi-hon-700-trieu-nam-chau-gai-hh-do-my-linh-noi-tieng-anhgioi-nhu-tre-tay-c14a653265.html": {
+    "title": "Học trường quốc tế phí hơn 700 triệu/năm, cháu gái HH Đỗ Mỹ Linh nói tiếng Anh giỏi như trẻ Tây",
+    "summary": "Học trường quốc tế phí hơn 700 triệu/năm, cháu gái HH Đỗ Mỹ Linh nói tiếng Anh giỏi như trẻ Tây",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/co-nhieu-bds-xe-hoi-tien-ty-me-don-than-hoa-minzy-gay-bat-ngo-khi-cho-con-trai-hoc-truong-cong-tai-que-nha-bac-ninh-c14a653279.html": {
+    "title": "Có nhiều BĐS, xe hơi tiền tỷ, mẹ đơn thân Hòa Minzy gây bất ngờ khi cho con trai học trường công tại quê nhà Bắc Ninh",
+    "summary": "Có nhiều BĐS, xe hơi tiền tỷ, mẹ đơn thân Hòa Minzy gây bất ngờ khi cho con trai học trường công tại quê nhà Bắc Ninh",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-day-thi-co-vet-la-tren-co-me-ung-xu-thong-minh-moi-phu-huynh-nen-hoc-hoi-c14a653034.html": {
+    "title": "Con gái dậy thì có vết lạ trên cổ, mẹ ứng xử thông minh mọi phụ huynh nên học hỏi",
+    "summary": "Con gái dậy thì có vết lạ trên cổ, mẹ ứng xử thông minh mọi phụ huynh nên học hỏi",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/lan-dan-voi-3-doi-vo-nsnd-tran-luc-lai-4-con-deu-duoc-dat-ten-ngan-gon-2-chu-giong-bo-rat-hay-c14a653184.html": {
+    "title": "Lận đận với 3 đời vợ, NSND Trần Lực “lãi” 4 con, đều được đặt tên ngắn gọn 2 chữ giống bố rất hay",
+    "summary": "Lận đận với 3 đời vợ, NSND Trần Lực “lãi” 4 con, đều được đặt tên ngắn gọn 2 chữ giống bố rất hay",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-gai-to-bi-bo-nuoi-cua-me-nguoc-dai-moi-ngay-me-kiem-tra-camera-thay-canh-tuong-lien-mung-ro-c14a653115.html": {
+    "title": "Con gái tố bị bố nuôi của mẹ “ngược đãi” mỗi ngày, mẹ kiểm tra camera thấy cảnh tượng liền mừng rỡ",
+    "summary": "Con gái tố bị bố nuôi của mẹ “ngược đãi” mỗi ngày, mẹ kiểm tra camera thấy cảnh tượng liền mừng rỡ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bo-tuc-gian-khi-thay-con-gai-ve-baylen-xe-o-to-dat-tien-khi-buc-tranh-hoan-thanh-ong-hoi-han-c14a653041.html": {
+    "title": "Bố tức giận khi thấy con gái vẽ bậy lên xe ô tô đắt tiền, khi bức tranh hoàn thành, ông hối hận",
+    "summary": "Bố tức giận khi thấy con gái vẽ bậy lên xe ô tô đắt tiền, khi bức tranh hoàn thành, ông hối hận",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/tu-nao-trong-tieng-viet-bo-dau-sac-ma-van-giu-nguyen-nghia-hs-dap-khien-co-tam-tac-khen-thong-minh-c14a653013.html": {
+    "title": "\"Từ nào trong Tiếng Việt bỏ dấu sắc mà vẫn giữ nguyên nghĩa?\", HS đáp khiến cô tấm tắc khen thông minh",
+    "summary": "\"Từ nào trong Tiếng Việt bỏ dấu sắc mà vẫn giữ nguyên nghĩa?\", HS đáp khiến cô tấm tắc khen thông minh",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/con-trai-dan-truong-8-tuoi-duoc-me-cho-lam-chu-cong-ty-o-campuchia-nhin-linh-vuc-kinh-doanh-ai-cung-ne-c14a652996.html": {
+    "title": "Con trai Đan Trường 8 tuổi được mẹ cho làm chủ công ty ở Campuchia, nhìn lĩnh vực kinh doanh ai cũng nể",
+    "summary": "Con trai Đan Trường 8 tuổi được mẹ cho làm chủ công ty ở Campuchia, nhìn lĩnh vực kinh doanh ai cũng nể",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/cho-con-gai-di-hoc-ve-de-phat-trien-nang-khieu-tinh-co-phat-hien-buc-tranh-trong-cap-con-nguoi-me-toat-mo-hoi-lanh-c14a652997.html": {
+    "title": "Cho con gái đi học vẽ để phát triển năng khiếu, tình cờ phát hiện bức tranh trong cặp con, người mẹ toát mồ hôi lạnh",
+    "summary": "Cho con gái đi học vẽ để phát triển năng khiếu, tình cờ phát hiện bức tranh trong cặp con, người mẹ toát mồ hôi lạnh",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/troi-mien-bac-tro-lanh-tre-mam-non-di-hoc-khong-tam-co-giao-len-mang-nai-ni-khien-phu-huynh-phan-ung-c14a652884.html": {
+    "title": "Trời miền Bắc trở lạnh, trẻ mầm non đi học không tắm, cô giáo lên mạng nài nỉ khiến phụ huynh phản ứng",
+    "summary": "Trời miền Bắc trở lạnh, trẻ mầm non đi học không tắm, cô giáo lên mạng nài nỉ khiến phụ huynh phản ứng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bo-chong-cu-thay-chau-noi-1-tuoi-la-to-thai-do-lanh-nhat-con-dau-xem-camera-giam-sat-o-nha-moi-vo-le-c14a652382.html": {
+    "title": "Bố chồng cứ thấy cháu nội 1 tuổi là tỏ thái độ lạnh nhạt, con dâu xem camera giám sát ở nhà mới vỡ lẽ",
+    "summary": "Bố chồng cứ thấy cháu nội 1 tuổi là tỏ thái độ lạnh nhạt, con dâu xem camera giám sát ở nhà mới vỡ lẽ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/viet-van-ta-co-giao-nhung-lai-vua-dam-vua-xoa-be-lop-3-khien-cong-dong-mang-cuoi-be-bung-c14a652383.html": {
+    "title": "Viết văn tả cô giáo nhưng lại “vừa đấm vừa xoa”, bé lớp 3 khiến cộng đồng mạng cười bể bụng",
+    "summary": "Viết văn tả cô giáo nhưng lại “vừa đấm vừa xoa”, bé lớp 3 khiến cộng đồng mạng cười bể bụng",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/bo-mat-nhung-con-trai-khong-khoc-luc-dua-tre-nam-tay-co-giup-viec-dung-truoc-di-anh-moi-chuyen-vo-le-c14a651659.html": {
+    "title": "Bố mất nhưng con trai không khóc, lúc đứa trẻ nắm tay cô giúp việc đứng trước di ảnh, mọi chuyện vỡ lẽ",
+    "summary": "Bố mất nhưng con trai không khóc, lúc đứa trẻ nắm tay cô giúp việc đứng trước di ảnh, mọi chuyện vỡ lẽ",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/camera-ghi-lai-canh-tre-mau-giao-ngu-trua-o-truong-hanh-dong-cua-3-co-giao-khien-phu-huynh-khong-noi-nen-loi-c14a652380.html": {
+    "title": "Camera ghi lại cảnh trẻ mẫu giáo ngủ trưa ở trường, hành động của 3 cô giáo khiến phụ huynh không nói nên lời",
+    "summary": "Camera ghi lại cảnh trẻ mẫu giáo ngủ trưa ở trường, hành động của 3 cô giáo khiến phụ huynh không nói nên lời",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/suot-1-tuan-cu-den-gio-com-toi-la-con-gai-nap-trong-tu-doan-tin-nhan-tiet-lo-su-that-khien-bo-me-hoi-han-c14a652367.html": {
+    "title": "Suốt 1 tuần cứ đến giờ cơm tối là con gái nấp trong tủ, đoạn tin nhắn tiết lộ sự thật khiến bố mẹ hối hận",
+    "summary": "Suốt 1 tuần cứ đến giờ cơm tối là con gái nấp trong tủ, đoạn tin nhắn tiết lộ sự thật khiến bố mẹ hối hận",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/don-con-di-hoc-ve-thi-phat-hien-tren-co-be-co-vet-bam-kiem-tra-camera-nguoi-me-bun-run-voi-canh-tuong-giua-lop-c14a652259.html": {
+    "title": "Đón con đi học về thì phát hiện trên cổ bé có vết bầm, kiểm tra camera mẹ Nga bủn rủn với cảnh tượng giữa lớp",
+    "summary": "Đón con đi học về thì phát hiện trên cổ bé có vết bầm, kiểm tra camera mẹ Nga bủn rủn với cảnh tượng giữa lớp",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/day-con/1001-man-hoa-trang-halloween-lay-loi-nhat-khoi-bup-mang-non-phu-huynh-xem-den-dau-cuoi-ngat-den-day-c14a651969.html": {
+    "title": "1001 màn hoá trang Halloween \"lầy lội\" nhất khối búp măng non, phụ huynh xem đến đâu cười ngất đến đấy",
+    "summary": "1001 màn hoá trang Halloween \"lầy lội\" nhất khối búp măng non, phụ huynh xem đến đâu cười ngất đến đấy",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/nghe-thuat-lam-vo/hotgirl-da-tai-ha-thanh-cuoi-con-trai-ty-phu-song-nhu-nu-hoang-trong-biet-thu-sang-trong-o-tphcm-c408a678354.html": {
+    "title": "Hotgirl đa tài Hà thành cưới con trai tỷ phú, sống như \"nữ hoàng\" trong biệt thự sang trọng ở TP.HCM",
+    "summary": "Hotgirl đa tài Hà thành cưới con trai tỷ phú, sống như \"nữ hoàng\" trong biệt thự sang trọng ở TP.HCM",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/nghe-thuat-lam-vo/vo-tre-nsnd-cong-ly-noi-thang-ve-chuyen-chan-chong-ly-hon-he-lo-thuc-te-hon-nhan-hien-tai-c408a678036.html": {
+    "title": "Vợ trẻ NSND Công Lý nói thẳng về chuyện chán chồng, ly hôn, hé lộ thực tế hôn nhân hiện tại",
+    "summary": "Vợ trẻ NSND Công Lý nói thẳng về chuyện chán chồng, ly hôn, hé lộ thực tế hôn nhân hiện tại",
+    "scraped": false,
+    "file": "",
+    "added_at": "2026-07-30"
+  },
+  "https://eva.vn/nghe-thuat-lam-vo/mc-dai-truyen-hinh-viet-nam-cuoi-chong-tre-lam-dien-vien-khong-ghen-canh-hon-nhung-khoc-thut-thit-vi-mot-chuyen-c408a677873.html": {
+    "title": "MC Đài Truyền hình Việt Nam cưới chồng trẻ làm diễn viên, không ghen cảnh hôn nhưng khóc thút thít...",
+    "summary": "MC Đài Truyền hình Việt Nam cưới chồng trẻ làm diễn viên, không ghen cảnh hôn nhưng khóc thút thít...",
     "scraped": false,
     "file": "",
     "added_at": "2026-07-30"
