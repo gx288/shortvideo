@@ -56,9 +56,17 @@ jobs:
             echo "----------------------------------------"
           done
 
+      - name: Commit and Push Generated Video to GitHub output/ Folder
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add output/*.mp4
+          git commit -m "Auto-generate dramatic short video [skip ci]" || echo "No new video to commit"
+          git push origin main
+
       - name: Upload Output Video Artifact
         uses: actions/upload-artifact@v4
         with:
           name: generated-dramatic-videos
-          path: output/full_dramatic_video_*.mp4
+          path: output/*.mp4
           retention-days: 7
