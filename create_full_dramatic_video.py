@@ -3,12 +3,8 @@ create_full_dramatic_video.py
 =============================
 Tự động Biên tập lại (Rewrite) TOÀN BỘ CÂU CHUYỆN thành Kịch bản Kể chuyện Drama 3 Hồi chuẩn Short (< 3 phút):
 - Nguồn câu chuyện: Kho 3,078 bài báo Tâm sự gia đình Afamily.vn (afamily_scraper/afamily_links.json)
-- Nguồn video nền: Kho 15,427 video DIY/Handmade (instagram/link_pool.json)
-- Hồi 1: Câu Hook mở đầu 3s giật tít gây tò mò cực độ
-- Hồi 2: Diễn biến mâu thuẫn dồn dập, đẩy cao trào cảm xúc
-- Hồi 3: Vén màn bí mật & nút thắt cao trào bất ngờ
-- Tốc độ đọc 1.2x dồn dập
-- Nhạc nền nhacnen.mp3 (7% volume)
+- Nguồn video nền: Kho 15,427 video DIY/Handmade (instagram/link_pool.json) với cơ chế TỰ ĐỘNG TẢI THAY THẾ (Fallback retry) nếu link bị hỏng.
+- Tốc độ đọc 1.2x dồn dập + Nhạc nền nhacnen.mp3 (7% volume)
 - Bitrate 2Mbps (2000k) + H.264 Baseline + yuv420p + Faststart mượt 100% xem được trên mọi thiết bị
 """
 
@@ -117,6 +113,46 @@ Hãy trả về CHỈ NỘI DUNG KỊCH BẢN ĐÃ VIẾT LẠI (không kèm l�
     return f"{hook_text}\n\n{summary}\n\n" + "\n\n".join(narrative_body)
 
 
+def download_background_video_with_retry(pool: dict, max_retries: int = 5) -> str:
+    """Tải video nền với cơ chế tự động thử lại link khác nếu bị hỏng."""
+    pool_items = list(pool.values())
+    raw_bg = os.path.join("temp_fix", "raw_bg.mp4")
+
+    for attempt in range(max_retries):
+        bg_item = random.choice(pool_items)
+        bg_url = bg_item.get("url")
+        print(f"🎨 [Tải Video Nền Lần {attempt+1}/{max_retries}] Hashtag: {bg_item.get('hashtag')} | Title: {bg_item.get('title')[:50]}")
+
+        if os.path.exists(raw_bg):
+            try: os.remove(raw_bg)
+            except: pass
+
+        cmd_dl = [
+            "yt-dlp",
+            "-f", "bestvideo[height<=720][ext=mp4]/best[height<=720]/best",
+            "-o", raw_bg,
+            "--no-playlist",
+            "--quiet",
+            bg_url
+        ]
+        subprocess.run(cmd_dl, capture_output=True)
+
+        if os.path.exists(raw_bg) and os.path.getsize(raw_bg) > 50000:
+            print("✅ Tải video nền thành công!")
+            return raw_bg
+
+        print("⚠️ Link video bị hỏng/lỗi, đang thử link khác...")
+
+    # Fallback: Tạo video nền màu tĩnh 720p nếu tất cả link tải thất bại
+    print("⚠️ Dùng video nền màu gradient fallback...")
+    cmd_fallback = [
+        "ffmpeg", "-y", "-f", "lavfi", "-i", "color=c=darkblue:s=720x1280:d=10",
+        "-c:v", "libx264", "-r", "24", raw_bg
+    ]
+    subprocess.run(cmd_fallback, capture_output=True)
+    return raw_bg
+
+
 def create_guaranteed_video():
     print("🚀 [DỰ ÁN SHORT VIDEO MỚI] Bắt đầu quy trình tạo Video Short Drama Hàng Đầu...")
 
@@ -167,23 +203,10 @@ def create_guaranteed_video():
     audio_dur = float(subprocess.run(cmd_dur, capture_output=True, text=True).stdout.strip() or 60.0)
     print(f"⏱️ Thời lượng Audio 1.2x: {audio_dur:.1f}s (~{audio_dur/60:.1f} phút)")
 
-    # 4. Tải ngẫu nhiên 1 video nền từ kho 15,427 video DIY/Handmade
+    # 4. Tải video nền có cơ chế tự động thử lại 5 lần (Retry 5 times)
     with open(POOL_FILE, "r", encoding="utf-8") as f:
         pool = json.load(f)
-    bg_item = random.choice(list(pool.values()))
-    bg_url = bg_item.get("url")
-    print(f"🎨 [Video Nền 9:16] Hashtag: {bg_item.get('hashtag')} | Title: {bg_item.get('title')[:50]}")
-
-    raw_bg = os.path.join("temp_fix", "raw_bg.mp4")
-    cmd_dl = [
-        "yt-dlp",
-        "-f", "bestvideo[height<=720][ext=mp4]/best[height<=720]",
-        "-o", raw_bg,
-        "--no-playlist",
-        "--quiet",
-        bg_url
-    ]
-    subprocess.run(cmd_dl, capture_output=True)
+    raw_bg = download_background_video_with_retry(pool, max_retries=5)
 
     # 5. BƯỚC A - TẠO VIDEO NỀN CHUẨN (720x1280, 24fps, yuv420p, 2Mbps, đúng thời lượng)
     temp_bg = os.path.join("temp_fix", "temp_bg.mp4")
@@ -210,7 +233,9 @@ def create_guaranteed_video():
         "ffmpeg", "-y",
         "-i", temp_bg,
         "-i", mixed_audio,
-        "-c:v", "copy",
+        "-c:v", "libx264",
+        "-preset", "ultrafast",
+        "-b:v", "2000k",
         "-c:a", "aac",
         "-b:a", "128k",
         "-movflags", "+faststart",
@@ -219,6 +244,21 @@ def create_guaranteed_video():
     t0 = time.time()
     subprocess.run(cmd_step_b, capture_output=True)
     t1 = time.time()
+
+    if not os.path.exists(output_mp4):
+        # Emergency single-pass encode
+        cmd_emergency = [
+            "ffmpeg", "-y",
+            "-stream_loop", "10", "-i", raw_bg,
+            "-i", mixed_audio,
+            "-t", str(audio_dur),
+            "-vf", "scale=720:1280:force_original_aspect_ratio=increase,crop=720:1280,format=yuv420p",
+            "-c:v", "libx264", "-preset", "ultrafast", "-b:v", "2000k",
+            "-c:a", "aac", "-b:a", "128k",
+            "-movflags", "+faststart",
+            output_mp4
+        ]
+        subprocess.run(cmd_emergency, capture_output=True)
 
     size_mb = os.path.getsize(output_mp4) / (1024 * 1024)
     print(f"\n🎉 [THÀNH CÔNG RỰC RỠ] Đã xuất video MP4 chuẩn mượt 100% (Bitrate 2Mbps) trong {t1 - t0:.2f}s!")
