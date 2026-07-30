@@ -2,7 +2,10 @@
 create_full_dramatic_video.py
 =============================
 Tự động Biên tập lại (Rewrite) TOÀN BỘ CÂU CHUYỆN thành Kịch bản Kể chuyện Drama 3 Hồi chuẩn Short (< 3 phút):
-- Tải video nền 9:16 DIY/Handmade HD mượt 100% trên GitHub Actions bằng Kho CDN Trực Tiếp + Pexels API (không bị chặn IP Datacenter)
+- TÍCH HỢP BỘ CÀO PROXY & XOAY PROXY TỰ ĐỘNG (Proxy Scraper & Rotator Engine):
+  + Tự động cào hàng chục HTTP Proxy miễn phí live từ các nguồn công cộng.
+  + Thử từng Proxy với yt-dlp. Nếu hết proxy/lỗi thì tự động cào batch proxy mới.
+  + Chạy lặp liên tục cho tới khi tải video nền thành công mới thôi!
 - Tự động gọi Gemini AI hoặc Narrative Rewriter Engine
 - Bitrate 2Mbps (2000k) + H.264 Baseline + yuv420p + Faststart mượt 100% xem được trên mọi thiết bị
 """
@@ -29,19 +32,39 @@ AFAMILY_FILE = os.path.join("afamily_scraper", "afamily_links.json")
 POOL_FILE    = os.path.join("instagram", "link_pool.json")
 BG_MUSIC     = "nhacnen.mp3"
 
-# KHO VIDEO NỀN DỌC 9:16 HD TRỰC TIẾP (PEXELS / MIXKIT / COVERR CDN - 100% KHÔNG BỊ CHẶN IP DATACENTER)
-DIRECT_916_STOCK_VIDEOS = [
-    "https://assets.mixkit.co/videos/preview/mixkit-hands-crafting-a-clay-pot-43405-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-person-drawing-on-a-tablet-41584-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-hands-knitting-with-pink-yarn-42861-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-baking-and-decorating-cookies-43513-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-close-up-of-hands-cutting-paper-43210-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-artist-painting-with-acrylics-on-canvas-42990-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-woman-making-handmade-soap-43112-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-hands-woodworking-and-sanding-wood-43301-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-person-arranging-fresh-flowers-43005-large.mp4",
-    "https://assets.mixkit.co/videos/preview/mixkit-crafting-leather-wallet-by-hand-43250-large.mp4"
-]
+
+# ---------------------------------------------------------------------------
+# BỘ CÀO & XOAY PROXY TỰ ĐỘNG (PROXY SCRAPER & ROTATOR ENGINE)
+# ---------------------------------------------------------------------------
+def scrape_free_proxies(limit: int = 30) -> list:
+    """Cào danh sách Proxy HTTP miễn phí mới nhất từ các nguồn API công cộng."""
+    print("🌐 Đang tự động cào danh sách HTTP Proxy mới nhất...")
+    proxy_urls = [
+        "https://api.proxyscrape.com/v2/?request=getproxies&protocol=http&timeout=5000&country=all&ssl=all&anonymity=all",
+        "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt",
+        "https://raw.githubusercontent.com/monosans/proxy-list/main/proxies/http.txt",
+        "https://raw.githubusercontent.com/clarketm/proxy-list/master/proxy-list-raw.txt"
+    ]
+
+    proxies = set()
+    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+
+    for src_url in proxy_urls:
+        try:
+            res = requests.get(src_url, timeout=6, headers={"User-Agent": user_agent})
+            if res.status_code == 200:
+                matches = re.findall(r'\b(?:\d{1,3}\.){3}\d{1,3}:\d{2,5}\b', res.text)
+                for ip_port in matches:
+                    proxies.add(f"http://{ip_port}")
+                if len(proxies) >= limit * 2:
+                    break
+        except Exception:
+            continue
+
+    proxy_list = list(proxies)
+    random.shuffle(proxy_list)
+    print(f"✅ Đã cào thành công {len(proxy_list)} Proxy live!")
+    return proxy_list[:limit]
 
 
 def fetch_afamily_full_content(url: str) -> str:
@@ -111,6 +134,7 @@ Dữ liệu đầu vào:
 
 Hãy trả về CHỈ NỘI DUNG KỊCH BẢN ĐÃ VIẾT LẠI (không kèm lời chào hay ghi chú)."""
 
+            print(f"🔍 Danh sách Model Text sẽ thử fallback: {target_models[:5]}")
             for m_name in target_models:
                 try:
                     model = genai.GenerativeModel(m_name)
@@ -119,6 +143,7 @@ Hãy trả về CHỈ NỘI DUNG KỊCH BẢN ĐÃ VIẾT LẠI (không kèm l�
                         print(f"✨ Đã biên tập kịch bản thành công bằng Gemini Text Model: {m_name}")
                         return res.text.strip()
                 except Exception as e_m:
+                    print(f"⚠️ Model '{m_name}' không phản hồi, tự động chuyển sang model tiếp theo...")
                     continue
         except Exception as e:
             print(f"⚠️ Gemini AI không khả dụng ({e}), dùng Narrative Rewriter Engine...")
@@ -151,83 +176,78 @@ Hãy trả về CHỈ NỘI DUNG KỊCH BẢN ĐÃ VIẾT LẠI (không kèm l�
     return f"{hook_text}\n\n{summary}\n\n" + "\n\n".join(narrative_body)
 
 
-def fetch_pexels_video(query: str = "handmade crafts") -> str:
-    """Tải video 9:16 HD từ Pexels API miễn phí (không bao giờ bị chặn IP Datacenter)."""
-    pexels_key = os.getenv("PEXELS_API_KEY", "")
-    headers = {"Authorization": pexels_key} if pexels_key else {}
-    if not pexels_key:
-        return ""
-
-    try:
-        url = f"https://api.pexels.com/videos/search?query={query}&orientation=portrait&per_page=15"
-        res = requests.get(url, headers=headers, timeout=10)
-        if res.status_code == 200:
-            data = res.json()
-            videos = data.get("videos", [])
-            if videos:
-                vid = random.choice(videos)
-                files = vid.get("video_files", [])
-                for f in files:
-                    if f.get("width", 0) < f.get("height", 1): # Lọc 9:16 portrait
-                        return f.get("link", "")
-                if files:
-                    return files[0].get("link", "")
-    except Exception as e:
-        print(f"⚠️ Pexels API search error: {e}")
-    return ""
-
-
-def download_background_video_with_retry(pool: dict) -> str:
-    """Tải video nền HD 9:16 mượt 100% không bị rào cản IP Datacenter."""
+def download_background_video_with_proxy_loop(pool: dict) -> str:
+    """
+    TẢI VIDEO NỀN DÙNG PROXY XOAY TỰ ĐỘNG:
+    - Lấy chục Proxy live để tải. Nếu hết proxy/lỗi thì tự động cào batch proxy mới.
+    - Chạy lặp liên tục tới khi tải xong video mới thôi!
+    """
     raw_bg = os.path.join("temp_fix", "raw_bg.mp4")
-    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
+    pool_items = list(pool.values())
+    
+    proxy_pool = scrape_free_proxies(limit=30)
+    attempt_count = 0
 
-    # Cách 1: Thử Pexels API miễn phí
-    pexels_url = fetch_pexels_video("handmade craft")
-    if pexels_url:
-        print("🎨 [Pexels API HD Stock] Đang tải video nền 9:16 chất lượng cao...")
-        try:
-            r = requests.get(pexels_url, timeout=20, headers={"User-Agent": user_agent})
-            if r.status_code == 200 and len(r.content) > 100000:
-                with open(raw_bg, "wb") as f:
-                    f.write(r.content)
-                print("✅ Tải video nền Pexels API thành công!")
-                return raw_bg
-        except Exception as e:
-            print(f"⚠️ Pexels download error: {e}")
+    while True:
+        attempt_count += 1
 
-    # Cách 2: Tải trực tiếp từ Kho Direct CDN Stock Video (100% Thành công trên GitHub Actions)
-    print("🎨 [Direct HD Stock CDN] Tải video 9:16 DIY/Handmade trực tiếp...")
-    random.shuffle(DIRECT_916_STOCK_VIDEOS)
-    for stock_url in DIRECT_916_STOCK_VIDEOS:
-        try:
-            r = requests.get(stock_url, timeout=15, headers={"User-Agent": user_agent})
-            if r.status_code == 200 and len(r.content) > 100000:
-                with open(raw_bg, "wb") as f:
-                    f.write(r.content)
-                print("✅ Tải thành công video nền HD Stock 9:16!")
-                return raw_bg
-        except Exception as e:
-            continue
+        # Nếu hết proxy trong pool thì cào đợt proxy mới
+        if not proxy_pool:
+            print("🔄 Danh sách Proxy hiện tại đã dùng hết, đang tự động CÀO BẮT BỘ PROXY MỚI...")
+            proxy_pool = scrape_free_proxies(limit=30)
 
-    # Fallback 3: Tải từ kho yt-dlp nếu chạy local
-    if pool:
-        bg_item = random.choice(list(pool.values()))
+        current_proxy = proxy_pool.pop(0) if proxy_pool else None
+        bg_item = random.choice(pool_items)
+        bg_url = bg_item.get("url")
+
+        print(f"🎨 [Tải Video Nền Thử Lần {attempt_count}] Proxy: {current_proxy or 'Direct'} | Title: {bg_item.get('title')[:45]}")
+
+        if os.path.exists(raw_bg):
+            try: os.remove(raw_bg)
+            except: pass
+
         cmd_dl = [
-            "yt-dlp", "-f", "bestvideo[height<=720][ext=mp4]/best[height<=720]",
-            "-o", raw_bg, "--no-playlist", "--quiet", bg_item.get("url")
+            "yt-dlp",
+            "-f", "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=720]/best[height<=720]/best",
+            "-o", raw_bg,
+            "--no-playlist",
+            "--quiet",
+            "--socket-timeout", "10"
         ]
-        subprocess.run(cmd_dl, capture_output=True)
-        if os.path.exists(raw_bg) and os.path.getsize(raw_bg) > 100000:
-            return raw_bg
 
-    # Fallback 4: Gradient Color
-    cmd_fallback = [
-        "ffmpeg", "-y", "-f", "lavfi", "-i", "color=c=navy:s=720x1280:d=10",
-        "-c:v", "libx264", "-r", "24", raw_bg
-    ]
-    subprocess.run(cmd_fallback, capture_output=True)
-    return raw_bg
+        if current_proxy:
+            cmd_dl.extend(["--proxy", current_proxy])
+
+        cmd_dl.append(bg_url)
+
+        try:
+            res = subprocess.run(cmd_dl, capture_output=True, timeout=25)
+            if os.path.exists(raw_bg) and os.path.getsize(raw_bg) > 100000:
+                print(f"🎉 [THÀNH CÔNG RỰC RỠ] Đã tải xong Video Nền qua Proxy: {current_proxy}!")
+                return raw_bg
+        except subprocess.TimeoutExpired:
+            print("⚠️ Proxy bị timeout (quá 25s), chuyển sang proxy tiếp theo...")
+        except Exception as e:
+            print(f"⚠️ Thử proxy thất bại: {e}")
+
+        # Thử Direct Stock Video CDN nếu proxy thất bại liên tục > 8 lần
+        if attempt_count % 8 == 0:
+            print("🎨 Tải dự phòng video HD Stock 9:16 CDN...")
+            stock_urls = [
+                "https://assets.mixkit.co/videos/preview/mixkit-hands-crafting-a-clay-pot-43405-large.mp4",
+                "https://assets.mixkit.co/videos/preview/mixkit-person-drawing-on-a-tablet-41584-large.mp4",
+                "https://assets.mixkit.co/videos/preview/mixkit-hands-knitting-with-pink-yarn-42861-large.mp4"
+            ]
+            for s_url in stock_urls:
+                try:
+                    r = requests.get(s_url, timeout=12)
+                    if r.status_code == 200 and len(r.content) > 100000:
+                        with open(raw_bg, "wb") as f:
+                            f.write(r.content)
+                        print("✅ Tải dự phòng HD Stock thành công!")
+                        return raw_bg
+                except Exception:
+                    continue
 
 
 def create_guaranteed_video():
@@ -280,10 +300,10 @@ def create_guaranteed_video():
     audio_dur = float(subprocess.run(cmd_dur, capture_output=True, text=True).stdout.strip() or 60.0)
     print(f"⏱️ Thời lượng Audio 1.2x: {audio_dur:.1f}s (~{audio_dur/60:.1f} phút)")
 
-    # 4. Tải video nền HD 9:16 mượt 100% qua CDN Direct / Pexels
+    # 4. Tải video nền DÙNG PROXY XOAY TỰ ĐỘNG (Bao giờ tải xong mới thôi)
     with open(POOL_FILE, "r", encoding="utf-8") as f:
         pool = json.load(f)
-    raw_bg = download_background_video_with_retry(pool)
+    raw_bg = download_background_video_with_proxy_loop(pool)
 
     # 5. BƯỚC A - TẠO VIDEO NỀN CHUẨN (720x1280, 24fps, yuv420p, 2Mbps, đúng thời lượng)
     temp_bg = os.path.join("temp_fix", "temp_bg.mp4")
@@ -339,7 +359,6 @@ def create_guaranteed_video():
         ]
         subprocess.run(cmd_emergency, capture_output=True)
 
-    # Lưu đồng thời ra cả 2 file để chắc chắn nằm trong thư mục output và tương thích artifact
     if os.path.exists(output_mp4):
         import shutil
         shutil.copyfile(output_mp4, fixed_mp4)
