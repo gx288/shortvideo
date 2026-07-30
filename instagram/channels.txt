@@ -1,0 +1,15 @@
+# Danh sách kênh Instagram cần tải Reels
+# Mỗi dòng 1 username (không có @)
+# Workflow sẽ tự đọc file này khi chạy theo lịch
+
+# ── FUNNY / MEME ──────────────────────────────
+daquan
+9gag
+pubity
+fuckjerry
+
+# ── DIY / LIFEHACK ────────────────────────────
+# 5minutecrafts
+# diytomake
+
+# ── THÊM KÊNH CỦA BẠN Ở ĐÂY ─────────────────

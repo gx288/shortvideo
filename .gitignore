@@ -22,6 +22,10 @@ clean_title.txt
 # ==================== OUTPUT (chỉ commit qua Actions) ====================
 output/*.mp4
 
+# ==================== INSTAGRAM POOL (video local cache) ====================
+instagram/downloads/
+# pool_index.json được COMMIT để track trạng thái giữa các lần chạy
+
 # ==================== ENV ====================
 .env
 .env.local

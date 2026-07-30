@@ -1,0 +1,140 @@
+name: Instagram Pool Downloader
+
+permissions:
+  contents: write
+
+on:
+  # ─── Chạy định kỳ: Thứ 2, 4, 6 lúc 2:00 sáng giờ VN (19:00 UTC hôm trước) ───
+  schedule:
+    - cron: '0 19 * * 1,3,5'
+
+  # ─── Trigger thủ công (hoặc từ Make.com) ─────────────────────────────────────
+  workflow_dispatch:
+    inputs:
+      usernames:
+        description: 'Danh sách username Instagram (cách nhau bằng dấu phẩy)'
+        required: true
+        default: 'daquan,9gag,pubity'
+        type: string
+      max_per_channel:
+        description: 'Số Reels tối đa mỗi kênh'
+        required: true
+        default: '20'
+        type: string
+      upload_onedrive:
+        description: 'Upload lên OneDrive sau khi tải?'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+
+jobs:
+  download-instagram:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120   # 2 giờ cho nhiều video
+
+    steps:
+      # ─── 1. Checkout ──────────────────────────────────────────────────────────
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      # ─── 2. Python ────────────────────────────────────────────────────────────
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      # ─── 3. FFmpeg ────────────────────────────────────────────────────────────
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg
+
+      # ─── 4. Python deps ───────────────────────────────────────────────────────
+      - name: Install Python dependencies
+        run: pip install yt-dlp msal requests
+
+      # ─── 5. Credentials ───────────────────────────────────────────────────────
+      - name: Set up OneDrive credentials
+        env:
+          GOOGLE_SHEETS_KEY: ${{ secrets.GOOGLE_SHEETS_KEY }}
+        run: |
+          # Pool index được lưu trong repo (commit lại sau mỗi lần chạy)
+          mkdir -p instagram
+          echo "✅ Credentials ready"
+
+      # ─── 6. Parse usernames ───────────────────────────────────────────────────
+      - name: Parse channel list
+        run: |
+          # Dùng default list nếu là schedule trigger
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+            # Đọc từ file channels.txt nếu có, hoặc dùng default
+            if [[ -f instagram/channels.txt ]]; then
+              USERNAMES=$(cat instagram/channels.txt | tr '\n' ',' | sed 's/,$//')
+            else
+              USERNAMES="daquan,9gag,pubity"
+            fi
+            MAX=20
+          else
+            USERNAMES="${{ github.event.inputs.usernames }}"
+            MAX="${{ github.event.inputs.max_per_channel }}"
+          fi
+          echo "USERNAMES=$USERNAMES" >> $GITHUB_ENV
+          echo "MAX_PER_CHANNEL=$MAX" >> $GITHUB_ENV
+          echo "📋 Kênh cần tải: $USERNAMES (tối đa $MAX mỗi kênh)"
+
+      # ─── 7. Download Reels ────────────────────────────────────────────────────
+      - name: Download Instagram Reels
+        env:
+          ONEDRIVE_CLIENT_ID:     ${{ secrets.ONEDRIVE_CLIENT_ID }}
+          ONEDRIVE_CLIENT_SECRET: ${{ secrets.ONEDRIVE_CLIENT_SECRET }}
+          ONEDRIVE_TENANT_ID:     ${{ secrets.ONEDRIVE_TENANT_ID }}
+          ONEDRIVE_USER_EMAIL:    ${{ secrets.ONEDRIVE_USER_EMAIL }}
+        run: |
+          # Convert comma-separated → space-separated args
+          USERNAMES_ARGS=$(echo "$USERNAMES" | tr ',' ' ')
+          SKIP_OD=""
+          if [[ "${{ github.event.inputs.upload_onedrive }}" == "false" ]]; then
+            SKIP_OD="--no-onedrive"
+          fi
+
+          echo "🚀 Bắt đầu tải..."
+          python instagram/downloader.py \
+            --username $USERNAMES_ARGS \
+            --max $MAX_PER_CHANNEL \
+            $SKIP_OD
+
+      # ─── 8. Commit pool index ─────────────────────────────────────────────────
+      - name: Commit pool index update
+        run: |
+          git config --global user.name  "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add instagram/pool_index.json 2>/dev/null || true
+
+          if git diff --cached --quiet; then
+            echo "Không có thay đổi pool index."
+          else
+            COUNT=$(python -c "
+          import json
+          with open('instagram/pool_index.json') as f:
+              d = json.load(f)
+          unused = sum(1 for v in d.values() if not v.get('used') and v.get('status')=='done')
+          print(f'{len(d)} total, {unused} unused')
+          " 2>/dev/null || echo "?")
+            git commit -m "Update Instagram pool index [$COUNT] [$(date '+%Y-%m-%d')]"
+            git pull --rebase origin main
+            git push origin main
+            echo "✅ Pool index đã được cập nhật."
+          fi
+
+      # ─── 9. Print pool stats ──────────────────────────────────────────────────
+      - name: Pool statistics
+        if: always()
+        run: |
+          python instagram/video_picker.py 2>/dev/null || true
