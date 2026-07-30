@@ -2,8 +2,8 @@
 create_full_dramatic_video.py
 =============================
 Tự động Biên tập lại (Rewrite) TOÀN BỘ CÂU CHUYỆN thành Kịch bản Kể chuyện Drama 3 Hồi chuẩn Short (< 3 phút):
-- TÍCH HỢP ĐẦY ĐỦ CÁC MODEL GEMINI TEXT MỚI NHẤT (gemini-1.5-flash-latest, gemini-1.5-flash, gemini-1.5-pro-latest, gemini-1.5-pro, gemini-2.0-flash-exp, gemini-pro)
-- TỐI ƯU SIÊU TỐC TẢI VIDEO NỀN (0.5 GIÂY): Tải trực tiếp qua HD Stock CDN 9:16 (Mixkit/Pexels) để không bị kẹt lặp proxy quá lâu trên GitHub Actions!
+- TÍCH HỢP TỰ ĐỘNG TÌM KIẾM MODEL GEMINI TEXT MỚI NHẤT DỰA VÀO QUYỀN CỦA API KEY (Bypass lỗi 404 Model Not Found)
+- TỐI ƯU SIÊU TỐC TẢI VIDEO NỀN CÓ XOAY PROXY: Tự động cào 10 Proxy sống, thử xoay proxy tải video gốc. Nếu timeout sẽ fallback sang HD Stock CDN 9:16 (Mixkit/Pexels) để không bị kẹt lặp quá lâu trên GitHub Actions!
 - Bitrate 2Mbps (2000k) + H.264 Baseline + yuv420p + Faststart mượt 100% xem được trên mọi thiết bị
 """
 
@@ -42,25 +42,6 @@ DIRECT_916_STOCK_VIDEOS = [
     "https://assets.mixkit.co/videos/preview/mixkit-person-arranging-fresh-flowers-43005-large.mp4",
     "https://assets.mixkit.co/videos/preview/mixkit-crafting-leather-wallet-by-hand-43250-large.mp4"
 ]
-
-# DANH SÁCH MỌI MODEL GEMINI TEXT MỚI NHẤT (GỒM GEMINI 3.1, 3.0, 2.5, 2.0 & 1.5)
-GEMINI_TEXT_MODELS = [
-    'gemini-3.1-flash',
-    'gemini-3.1-pro',
-    'gemini-3.0-flash',
-    'gemini-3.0-pro',
-    'gemini-2.5-flash',
-    'gemini-2.5-pro',
-    'gemini-2.0-flash-exp',
-    'gemini-2.0-flash',
-    'gemini-2.0-pro',
-    'gemini-1.5-flash-latest',
-    'gemini-1.5-flash',
-    'gemini-1.5-pro-latest',
-    'gemini-1.5-pro',
-    'gemini-pro'
-]
-
 
 def scrape_free_proxies(limit: int = 10) -> list:
     """Cào danh sách Proxy HTTP miễn phí mới nhất từ các nguồn API công cộng."""
@@ -116,13 +97,29 @@ def fetch_afamily_full_content(url: str) -> str:
 
 
 def rewrite_story_with_ai(title: str, summary: str, full_body: str) -> str:
-    """Biên tập VIẾT LẠI HOÀN TOÀN bài báo thành Kịch bản Kể chuyện Drama 3 Hồi bằng Gemini AI."""
+    """Biên tập VIẾT LẠI HOÀN TOÀN bài báo thành Kịch bản Kể chuyện Drama 3 Hồi bằng Gemini AI, HỖ TRỢ TỰ ĐỘNG TÌM MODEL."""
     api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
 
     if api_key:
         try:
             import google.generativeai as genai
             genai.configure(api_key=api_key)
+            
+            # TỰ ĐỘNG TÌM VÀ LỌC CÁC MODEL TEXT ĐƯỢC CẤP QUYỀN TRÊN API KEY NÀY
+            dynamic_models = []
+            try:
+                for m in genai.list_models():
+                    if 'generateContent' in getattr(m, 'supported_generation_methods', []):
+                        name = getattr(m, 'name', '').replace('models/', '')
+                        if 'flash' in name or 'pro' in name or 'gemma' in name:
+                            dynamic_models.append(name)
+            except Exception as e_list:
+                print(f"⚠️ Lỗi khi gọi list_models(): {e_list}")
+                
+            if not dynamic_models:
+                dynamic_models = ['gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-pro']
+                
+            dynamic_models.sort(key=lambda x: x, reverse=True)
 
             prompt = f"""Bạn là một đạo diễn kịch bản video ngắn (TikTok, YouTube Shorts) hàng đầu.
 Hãy VIẾT LẠI HOÀN TOÀN câu chuyện dưới đây thành một KỊCH BẢN KỂ CHUYỆN KỊCH TÍNH, GIẬT TÍT (Độ dài từ 250 đến 350 từ tiếng Việt, dành cho giọng đọc 1.5 - 2.5 phút).
@@ -140,13 +137,13 @@ Dữ liệu đầu vào:
 
 Hãy trả về CHỈ NỘI DUNG KỊCH BẢN ĐÃ VIẾT LẠI (không kèm lời chào hay ghi chú)."""
 
-            print(f"🔍 Danh sách Gemini Text Model sẽ gọi: {GEMINI_TEXT_MODELS}")
-            for m_name in GEMINI_TEXT_MODELS:
+            print(f"🔍 Danh sách Model khả dụng của riêng API Key này: {dynamic_models[:8]}")
+            for m_name in dynamic_models:
                 try:
                     model = genai.GenerativeModel(m_name)
                     res = model.generate_content(prompt)
                     if res and res.text:
-                        print(f"✨ Đã biên tập kịch bản thành công bằng Gemini Text Model: {m_name}")
+                        print(f"✨ Đã biên tập kịch bản thành công bằng Model: {m_name}")
                         return res.text.strip()
                 except Exception as e_m:
                     print(f"⚠️ Model '{m_name}' lỗi ({type(e_m).__name__}): {e_m}")
