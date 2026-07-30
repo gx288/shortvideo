@@ -1,0 +1,132 @@
+name: Hashtag Link Crawler
+
+permissions:
+  contents: write
+
+on:
+  # ─── Crawl 1 lần/tuần (Chủ nhật 3AM giờ VN = 20:00 UTC Thứ 7) ──────────────
+  schedule:
+    - cron: '0 20 * * 6'
+
+  # ─── Trigger thủ công / Make.com ─────────────────────────────────────────────
+  workflow_dispatch:
+    inputs:
+      hashtags:
+        description: 'Hashtag cần crawl (cách nhau bằng dấu phẩy, không có #)'
+        required: true
+        default: 'diy,funny,lifehack,satisfying,oddlysatisfying'
+        type: string
+      platform:
+        description: 'Nền tảng'
+        required: true
+        default: 'tiktok'
+        type: choice
+        options:
+          - tiktok
+          - instagram
+      limit_per_tag:
+        description: 'Số link tối đa mỗi hashtag'
+        required: true
+        default: '2000'
+        type: string
+
+jobs:
+  crawl-hashtags:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      # ─── 1. Checkout (fetch pool_index để không mất dữ liệu cũ) ─────────────
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 1
+
+      # ─── 2. Python + yt-dlp ──────────────────────────────────────────────────
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install yt-dlp
+        run: pip install yt-dlp
+
+      # ─── 3. Determine params ─────────────────────────────────────────────────
+      - name: Determine crawl params
+        run: |
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+            # Đọc hashtag từ file config
+            if [[ -f instagram/hashtags.txt ]]; then
+              TAGS=$(grep -v '^#' instagram/hashtags.txt | grep -v '^$' | tr '\n' ',' | sed 's/,$//')
+            else
+              TAGS="diy,funny,lifehack,satisfying"
+            fi
+            PLATFORM="tiktok"
+            LIMIT=2000
+          else
+            TAGS="${{ github.event.inputs.hashtags }}"
+            PLATFORM="${{ github.event.inputs.platform }}"
+            LIMIT="${{ github.event.inputs.limit_per_tag }}"
+          fi
+          echo "HASHTAGS=$TAGS"     >> $GITHUB_ENV
+          echo "PLATFORM=$PLATFORM" >> $GITHUB_ENV
+          echo "LIMIT=$LIMIT"       >> $GITHUB_ENV
+          echo "🔖 Crawl: $TAGS | platform=$PLATFORM | limit=$LIMIT"
+
+      # ─── 4. Crawl hashtags ───────────────────────────────────────────────────
+      - name: Crawl hashtag links
+        run: |
+          echo "========================================"
+          echo "🕷️ BẮT ĐẦU CRAWL HASHTAG"
+          echo "========================================"
+
+          # Convert comma → space-separated cho --hashtag args
+          TAGS_ARGS=$(echo "$HASHTAGS" | tr ',' ' ')
+
+          python instagram/hashtag_crawler.py \
+            --hashtag $TAGS_ARGS \
+            --platform "$PLATFORM" \
+            --limit "$LIMIT"
+
+      # ─── 5. Print pool stats ─────────────────────────────────────────────────
+      - name: Pool statistics
+        run: python instagram/hashtag_crawler.py --hashtag diy --stats 2>/dev/null || \
+             python -c "
+          import json, os
+          f = 'instagram/link_pool.json'
+          if os.path.exists(f):
+              pool = json.load(open(f))
+              unused = sum(1 for v in pool.values() if not v.get('used') and not v.get('failed'))
+              print(f'Pool: {len(pool)} total, {unused} unused')
+              days = unused // 3
+              print(f'Đủ dùng cho ~{days} ngày (3 video/ngày)')
+          "
+
+      # ─── 6. Commit link pool ─────────────────────────────────────────────────
+      - name: Commit link pool
+        run: |
+          git config --global user.name  "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add instagram/link_pool.json instagram/pool_stats.json 2>/dev/null || true
+
+          if git diff --cached --quiet; then
+            echo "Không có link mới."
+          else
+            # Đếm số link mới
+            NEW_COUNT=$(python -c "
+          import json, os
+          f = 'instagram/link_pool.json'
+          if os.path.exists(f):
+              pool = json.load(open(f))
+              print(len(pool))
+          else:
+              print(0)
+          " 2>/dev/null || echo "?")
+
+            git commit -m "Update link pool: $NEW_COUNT total links [$(date '+%Y-%m-%d')]"
+            git pull --rebase origin main
+            git push origin main
+            echo "✅ Link pool đã được commit!"
+          fi

@@ -1,0 +1,26 @@
+# Danh sách hashtag cần crawl link video
+# Chạy mỗi tuần 1 lần (Chủ nhật) — thêm vào link_pool.json
+# Mỗi hashtag: tối đa 2,000 link
+
+# ── DIY / Thủ công ────────────────────────────────
+diy
+lifehack
+diytips
+crafts
+howto
+
+# ── Funny / Giải trí ──────────────────────────────
+funny
+funnymemes
+trynottolaugh
+fails
+
+# ── Satisfying / ASMR ─────────────────────────────
+satisfying
+oddlysatisfying
+asmr
+
+# ── Science / Interesting ─────────────────────────
+didyouknow
+sciencefacts
+interestingfacts

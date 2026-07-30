@@ -1,150 +1,215 @@
 """
 instagram/video_picker.py
 =========================
-Chọn ngẫu nhiên 1 video từ kho OneDrive pool để dùng làm nền Shorts.
-Đánh dấu video là "used = true" trong pool_index.json sau khi chọn.
+Chọn ngẫu nhiên 1-2 video từ link_pool.json, download về local để dùng làm nền Shorts.
+Không cần OneDrive — tải thẳng từ TikTok/Instagram lúc cần.
 
 Cách dùng trong main.py:
-    from instagram.video_picker import pick_pool_video
-    local_path = pick_pool_video()  # Tải từ OneDrive về local, trả về path
+    from instagram.video_picker import pick_and_download
+    video_path = pick_and_download(prefer_hashtag="#diy")
 """
 
 import os
 import sys
 import json
 import random
-import requests
+import subprocess
+from datetime import datetime
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
-from onedrive_uploader import get_access_token
 
-POOL_INDEX = os.path.join("instagram", "pool_index.json")
-DOWNLOAD_DIR = os.path.join("instagram", "downloads")
-GRAPH_BASE = "https://graph.microsoft.com/v1.0"
+POOL_FILE    = os.path.join("instagram", "link_pool.json")
+DOWNLOAD_DIR = os.path.join("output", "bg_videos")   # Lưu tạm, xóa sau khi dùng
+MAX_DURATION = 65   # Giây tối đa cho video nền
 
 
-def load_index() -> dict:
-    if os.path.exists(POOL_INDEX):
-        with open(POOL_INDEX, "r", encoding="utf-8") as f:
+# ─────────────────────────────────────────────────────────────────────────────
+# POOL I/O
+# ─────────────────────────────────────────────────────────────────────────────
+
+def load_pool() -> dict:
+    if os.path.exists(POOL_FILE):
+        with open(POOL_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
     return {}
 
 
-def save_index(index: dict):
-    with open(POOL_INDEX, "w", encoding="utf-8") as f:
-        json.dump(index, f, ensure_ascii=False, indent=2)
+def save_pool(pool: dict):
+    with open(POOL_FILE, "w", encoding="utf-8") as f:
+        json.dump(pool, f, ensure_ascii=False, separators=(",", ":"))
 
 
-def pick_pool_video(prefer_username: str = None) -> str | None:
+# ─────────────────────────────────────────────────────────────────────────────
+# PICK RANDOM URL
+# ─────────────────────────────────────────────────────────────────────────────
+
+def pick_url(prefer_hashtag: str = None, prefer_platform: str = None) -> tuple[str, str] | tuple[None, None]:
     """
-    Chọn ngẫu nhiên 1 video chưa dùng từ pool.
-    - prefer_username: nếu có, ưu tiên video từ kênh đó
-    Trả về local path sau khi tải về, hoặc None nếu không có video khả dụng.
+    Chọn ngẫu nhiên 1 video chưa dùng và chưa fail từ pool.
+    Trả về (video_id, url) hoặc (None, None).
     """
-    index = load_index()
+    pool = load_pool()
 
-    # Lọc video chưa dùng và đã upload OneDrive
-    available = [
+    candidates = [
         (vid_id, info)
-        for vid_id, info in index.items()
-        if not info.get("used", False)
-        and info.get("status") == "done"
-        and info.get("onedrive_url")
+        for vid_id, info in pool.items()
+        if not info.get("used") and not info.get("failed")
     ]
 
-    if not available:
-        print("[Picker] ❌ Không còn video nào trong pool chưa dùng.")
+    if not candidates:
+        print("[Picker] ❌ Pool rỗng hoặc tất cả đã được dùng.")
+        return None, None
+
+    # Ưu tiên hashtag / platform nếu có
+    filtered = candidates
+    if prefer_hashtag:
+        tag = prefer_hashtag if prefer_hashtag.startswith("#") else f"#{prefer_hashtag}"
+        subset = [(i, v) for i, v in candidates if v.get("hashtag") == tag]
+        if subset:
+            filtered = subset
+    if prefer_platform:
+        subset = [(i, v) for i, v in filtered if v.get("platform") == prefer_platform]
+        if subset:
+            filtered = subset
+
+    vid_id, info = random.choice(filtered)
+    print(f"[Picker] Chọn: {info.get('hashtag','?')} | {info.get('platform','?')} | {vid_id}")
+    return vid_id, info["url"]
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# DOWNLOAD VIDEO
+# ─────────────────────────────────────────────────────────────────────────────
+
+def download_video(vid_id: str, url: str) -> str | None:
+    """
+    Download video từ URL, convert về 9:16, trả về local path hoặc None.
+    """
+    os.makedirs(DOWNLOAD_DIR, exist_ok=True)
+    raw_path    = os.path.join(DOWNLOAD_DIR, f"raw_{vid_id}.mp4")
+    output_path = os.path.join(DOWNLOAD_DIR, f"bg_{vid_id}.mp4")
+
+    # Download
+    cmd = [
+        "yt-dlp",
+        "--no-warnings", "--quiet",
+        "-f", "bestvideo[height<=1920][ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
+        "--merge-output-format", "mp4",
+        "--max-filesize", "200M",
+        "--max-downloads", "1",
+        "-o", raw_path,
+        url,
+    ]
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+        if result.returncode != 0 or not os.path.exists(raw_path):
+            print(f"[Picker] ❌ Download lỗi: {result.stderr[:200]}")
+            return None
+    except subprocess.TimeoutExpired:
+        print("[Picker] ❌ Download timeout.")
+        return None
+    except Exception as e:
+        print(f"[Picker] ❌ {e}")
         return None
 
-    # Ưu tiên username nếu có
-    if prefer_username:
-        preferred = [(i, v) for i, v in available if v.get("username") == prefer_username]
-        if preferred:
-            available = preferred
-
-    # Chọn ngẫu nhiên
-    vid_id, info = random.choice(available)
-    filename = info.get("filename", f"{vid_id}.mp4")
-    onedrive_url = info["onedrive_url"]
-
-    print(f"[Picker] Chọn video: {filename} từ @{info.get('username', '?')}")
-
-    # Tải về local
-    os.makedirs(DOWNLOAD_DIR, exist_ok=True)
-    local_path = os.path.join(DOWNLOAD_DIR, filename)
-
-    if os.path.exists(local_path):
-        print(f"[Picker] File đã có local: {local_path}")
+    # Convert về 9:16 portrait
+    if _convert_portrait(raw_path, output_path):
+        try: os.remove(raw_path)
+        except: pass
+        size_mb = os.path.getsize(output_path) / 1024 / 1024
+        print(f"[Picker] ✅ Video sẵn sàng: {output_path} ({size_mb:.1f} MB)")
+        return output_path
     else:
-        print(f"[Picker] Đang tải từ OneDrive...")
-        downloaded = _download_from_onedrive_url(onedrive_url, local_path)
-        if not downloaded:
-            print("[Picker] ❌ Tải thất bại.")
+        # Trả về raw nếu convert lỗi
+        print("[Picker] ⚠️ Dùng file raw (convert thất bại).")
+        return raw_path
+
+
+def _convert_portrait(input_path: str, output_path: str) -> bool:
+    """FFmpeg: scale + crop về 1080x1920, cắt tối đa MAX_DURATION giây."""
+    cmd = [
+        "ffmpeg", "-y",
+        "-i", input_path,
+        "-t", str(MAX_DURATION),
+        "-vf", (
+            "scale=iw*max(1080/iw\\,1920/ih):ih*max(1080/iw\\,1920/ih),"
+            "crop=1080:1920"
+        ),
+        "-c:v", "libx264", "-preset", "fast", "-crf", "23",
+        "-c:a", "aac", "-b:a", "128k",
+        "-movflags", "+faststart",
+        output_path,
+    ]
+    r = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+    return r.returncode == 0 and os.path.exists(output_path)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# MAIN FUNCTION (gọi từ main.py)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def pick_and_download(prefer_hashtag: str = None,
+                      prefer_platform: str = "tiktok",
+                      max_retries: int = 5) -> str | None:
+    """
+    Chọn ngẫu nhiên + download video từ pool.
+    Tự retry nếu download thất bại (đánh dấu failed và chọn cái khác).
+    Trả về local path hoặc None.
+    """
+    pool = load_pool()
+
+    for attempt in range(max_retries):
+        vid_id, url = pick_url(prefer_hashtag, prefer_platform)
+        if not vid_id:
             return None
 
-    # Đánh dấu đã dùng
-    index[vid_id]["used"] = True
-    save_index(index)
-    print(f"[Picker] ✅ Đã đánh dấu '{filename}' là đã dùng.")
+        print(f"[Picker] Thử lần {attempt+1}/{max_retries}: {url[:60]}...")
+        local_path = download_video(vid_id, url)
 
-    return local_path
+        if local_path:
+            # Đánh dấu đã dùng
+            if vid_id in pool:
+                pool[vid_id]["used"] = True
+                pool[vid_id]["used_at"] = datetime.now().strftime("%Y-%m-%d")
+            save_pool(pool)
+            return local_path
+        else:
+            # Đánh dấu failed, thử cái khác
+            if vid_id in pool:
+                pool[vid_id]["failed"] = True
+            save_pool(pool)
+            pool = load_pool()  # Reload để tránh chọn lại
 
-
-def _download_from_onedrive_url(share_url: str, output_path: str) -> bool:
-    """
-    Tải file từ OneDrive share URL.
-    Share URL dạng: https://onedrive.live.com/...
-    """
-    try:
-        # OneDrive share link → direct download bằng cách thêm ?download=1
-        download_url = share_url
-        if "1drv.ms" in share_url or "onedrive.live.com" in share_url:
-            # Convert share link sang direct download
-            download_url = share_url.replace("?", "?download=1&") if "?" in share_url \
-                else share_url + "?download=1"
-
-        r = requests.get(download_url, stream=True, timeout=120, allow_redirects=True)
-        r.raise_for_status()
-
-        with open(output_path, "wb") as f:
-            for chunk in r.iter_content(chunk_size=8192):
-                f.write(chunk)
-
-        size_mb = os.path.getsize(output_path) / 1024 / 1024
-        print(f"[Picker] Tải xong: {size_mb:.1f} MB")
-        return True
-    except Exception as e:
-        print(f"[Picker] Lỗi tải: {e}")
-        return False
+    print(f"[Picker] ❌ Thất bại sau {max_retries} lần thử.")
+    return None
 
 
 def pool_stats() -> dict:
-    """Trả về thống kê pool hiện tại."""
-    index = load_index()
-    total = len(index)
-    unused = sum(1 for v in index.values() if not v.get("used") and v.get("status") == "done")
-    used = sum(1 for v in index.values() if v.get("used"))
-    failed = sum(1 for v in index.values() if v.get("status") != "done")
+    """Thống kê pool."""
+    pool = load_pool()
+    total  = len(pool)
+    unused = sum(1 for v in pool.values() if not v.get("used") and not v.get("failed"))
+    used   = sum(1 for v in pool.values() if v.get("used"))
+    failed = sum(1 for v in pool.values() if v.get("failed"))
+    by_tag = {}
+    for v in pool.values():
+        tag = v.get("hashtag", "?")
+        by_tag[tag] = by_tag.get(tag, 0) + 1
+    return {"total": total, "unused": unused, "used": used, "failed": failed, "by_hashtag": by_tag}
 
-    by_channel = {}
-    for v in index.values():
-        u = v.get("username", "unknown")
-        by_channel[u] = by_channel.get(u, 0) + 1
 
-    return {
-        "total": total,
-        "unused": unused,
-        "used": used,
-        "failed": failed,
-        "by_channel": by_channel,
-    }
-
+# ─────────────────────────────────────────────────────────────────────────────
+# CLI
+# ─────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     stats = pool_stats()
-    print("📊 Pool Statistics:")
-    print(f"  Tổng:        {stats['total']}")
-    print(f"  Chưa dùng:  {stats['unused']}")
-    print(f"  Đã dùng:    {stats['used']}")
-    print(f"  Thất bại:   {stats['failed']}")
-    print(f"  Theo kênh:  {stats['by_channel']}")
+    print("📊 Link Pool Stats:")
+    print(f"  Tổng link:     {stats['total']:,}")
+    print(f"  Chưa dùng:    {stats['unused']:,}")
+    print(f"  Đã dùng:      {stats['used']:,}")
+    print(f"  Failed:       {stats['failed']:,}")
+    print(f"  Theo hashtag: {stats['by_hashtag']}")
+
+    remaining_days = stats['unused'] // 3 if stats['unused'] > 0 else 0
+    print(f"\n  ⏳ Đủ dùng cho ~{remaining_days} ngày (3 video/ngày)")
