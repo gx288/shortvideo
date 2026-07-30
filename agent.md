@@ -6,12 +6,13 @@ Tài liệu này hướng dẫn Agent tự động từng bước thực hiện 
 
 ## 🎯 MỤC TIÊU TỔNG THỂ
 
-Tự động hóa hoàn toàn 100% pipeline tạo video ngắn (YouTube Shorts 9:16):
+Tự động hóa hoàn toàn 100% pipeline tạo video ngắn (YouTube Shorts 9:16, thời lượng < 3 phút):
 1. **Crawl link truyện**: Lấy link câu chuyện từ `eva.vn/tam-su` vào `eva_scraper/links_master.json`.
 2. **Crawl nội dung truyện**: Bóc tách nội dung chi tiết bài viết lưu thành từng file JSON trong `eva_scraper/data/`.
-3. **Crawl video nền**: Thu thập link video ngắn từ YouTube Shorts / TikTok vào `instagram/link_pool.json`.
-4. **Tạo video Shorts**: Ghép TTS giọng Việt + video nền + hiệu ứng Lissajous panning + nhạc nền.
-5. **Đồng bộ & Hẹn giờ**: Cập nhật trạng thái và tự động lên lịch (`schedule`) cho task tiếp theo.
+3. **Biên tập kịch bản video**: Viết lại câu chuyện với câu Hook mở đầu hấp dẫn, thời lượng 2 - 3 phút (~250-420 từ) lưu vào `eva_scraper/scripts/`.
+4. **Crawl video nền**: Thu thập link video ngắn từ YouTube Shorts / TikTok vào `instagram/link_pool.json`.
+5. **Tạo video Shorts**: Ghép kịch bản + TTS giọng Việt + video nền + hiệu ứng Lissajous panning + nhạc nền.
+6. **Đồng bộ & Hẹn giờ**: Cập nhật trạng thái và tự động lên lịch (`schedule`) cho task tiếp theo.
 
 ---
 
@@ -37,13 +38,19 @@ python eva_scraper/article_scraper.py --batch 30
 ```
 - Đọc các link chưa scrape trong `eva_scraper/links_master.json` và lưu các file `.json` bài viết vào `eva_scraper/data/`.
 
-#### 🔹 Task 3: Thu thập Link video nền (YouTube Shorts / TikTok)
+#### 🔹 Task 3: Viết lại Kịch bản Video ngắn (< 3 phút)
+```bash
+python eva_scraper/script_rewriter.py --batch 20
+```
+- Đọc file JSON từ `eva_scraper/data/`, tạo câu Hook gây tò mò trong 3 giây đầu, biên tập hành văn mượt mà và tối ưu độ dài **220 - 420 từ (thời lượng 1.5 - 3 phút)** vào `eva_scraper/scripts/`.
+
+#### 🔹 Task 4: Thu thập Link video nền (YouTube Shorts / TikTok)
 ```bash
 python instagram/hashtag_crawler.py --hashtag diy funny lifehack --limit 50
 ```
 - Kiểm tra `instagram/link_pool.json`. Đảm bảo có ít nhất >20 link video nền khả dụng (`used: false`).
 
-#### 🔹 Task 4: Tạo Video Shorts hoàn chỉnh
+#### 🔹 Task 5: Tạo Video Shorts hoàn chỉnh
 ```bash
 python main.py
 ```

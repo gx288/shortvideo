@@ -3,6 +3,7 @@
 !package.json
 !eva_scraper/*.json
 !eva_scraper/data/*.json
+!eva_scraper/scripts/*.json
 !instagram/*.json
 *_key.json
 google_tts_key.json
