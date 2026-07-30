@@ -396,8 +396,8 @@ for worksheet_name in WORKSHEET_LIST:
                     codec="libx264",
                     audio_codec="aac",
                     fps=24,
-                    bitrate="800k",
-                    audio_bitrate="96k",
+                    bitrate="2000k",
+                    audio_bitrate="128k",
                     ffmpeg_params=["-movflags", "+faststart", "-pix_fmt", "yuv420p", "-preset", "superfast"]
                 )
                 print(f"Saved video: {output_path}")

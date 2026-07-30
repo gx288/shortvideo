@@ -98,9 +98,9 @@ def create_guaranteed_video():
         "-r", "24",
         "-c:v", "libx264",
         "-preset", "ultrafast",
-        "-b:v", "800k",
-        "-maxrate", "1200k",
-        "-bufsize", "1600k",
+        "-b:v", "2000k",
+        "-maxrate", "2500k",
+        "-bufsize", "3000k",
         "-an",
         temp_bg
     ]
