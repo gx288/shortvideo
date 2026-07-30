@@ -4,8 +4,8 @@ create_full_dramatic_video.py
 Tự động Biên tập lại (Rewrite) TOÀN BỘ CÂU CHUYỆN thành Kịch bản Kể chuyện Drama 3 Hồi chuẩn Short (< 3 phút):
 - Nguồn câu chuyện: Kho 3,078 bài báo Tâm sự gia đình Afamily.vn (afamily_scraper/afamily_links.json)
 - Nguồn video nền: Kho 15,427 video DIY/Handmade (instagram/link_pool.json)
+- Tự động quét danh sách Model Động (Dynamic genai.list_models()) chỉ lọc các mô hình Text/generateContent và tự động Fallback từng model 1.
 - Tối ưu yt-dlp trên GitHub Actions Runner với User-Agent và YouTube Player Client Android
-- Tự động fallback linh hoạt các model Gemini AI (gemini-1.5-flash, gemini-2.0-flash, gemini-pro)
 - Bitrate 2Mbps (2000k) + H.264 Baseline + yuv420p + Faststart mượt 100% xem được trên mọi thiết bị
 """
 
@@ -55,16 +55,39 @@ def fetch_afamily_full_content(url: str) -> str:
 
 
 def rewrite_story_with_ai(title: str, summary: str, full_body: str) -> str:
-    """Biên tập VIẾT LẠI HOÀN TOÀN bài báo thành Kịch bản Kể chuyện Drama 3 Hồi (< 3 phút)."""
+    """
+    Biên tập VIẾT LẠI HOÀN TOÀN bài báo thành Kịch bản Kể chuyện Drama 3 Hồi (< 3 phút).
+    Tự động quét danh sách Model Động (genai.list_models()) chỉ lọc mô hình Text & generateContent, fallback từng model.
+    """
     api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
 
     if api_key:
-        # Thử lần lượt các model Gemini hỗ trợ API mới nhất
-        model_names = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash-exp', 'gemini-pro']
-        
         try:
             import google.generativeai as genai
             genai.configure(api_key=api_key)
+
+            # 1. TỰ ĐỘNG QUÉT DANH SÁCH MODEL ĐỘNG TỪ GOOGLE API (CHỈ LỌC MÔ HÌNH TEXT)
+            dynamic_models = []
+            try:
+                for m in genai.list_models():
+                    methods = getattr(m, 'supported_generation_methods', [])
+                    name = getattr(m, 'name', '')
+                    # Chỉ lọc các mô hình Gemini hỗ trợ tạo nội dung Text generateContent
+                    if 'generateContent' in methods and 'gemini' in name.lower():
+                        dynamic_models.append(name)
+            except Exception as e_list:
+                print(f"⚠️ Không list được models từ API: {e_list}")
+
+            # Danh sách ưu tiên mặc định bổ sung
+            default_priority = [
+                'gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash',
+                'gemini-1.5-pro', 'gemini-pro', 'models/gemini-1.5-flash', 'models/gemini-pro'
+            ]
+
+            target_models = []
+            for m_item in dynamic_models + default_priority:
+                if m_item not in target_models:
+                    target_models.append(m_item)
 
             prompt = f"""Bạn là một đạo diễn kịch bản video ngắn (TikTok, YouTube Shorts) hàng đầu.
 Hãy VIẾT LẠI HOÀN TOÀN câu chuyện dưới đây thành một KỊCH BẢN KỂ CHUYỆN KỊCH TÍNH, GIẬT TÍT (Độ dài từ 250 đến 350 từ tiếng Việt, dành cho giọng đọc 1.5 - 2.5 phút).
@@ -82,14 +105,16 @@ Dữ liệu đầu vào:
 
 Hãy trả về CHỈ NỘI DUNG KỊCH BẢN ĐÃ VIẾT LẠI (không kèm lời chào hay ghi chú)."""
 
-            for m_name in model_names:
+            print(f"🔍 Danh sách Model Text sẽ thử fallback: {target_models[:5]}")
+            for m_name in target_models:
                 try:
                     model = genai.GenerativeModel(m_name)
                     res = model.generate_content(prompt)
                     if res and res.text:
-                        print(f"✨ Đã biên tập kịch bản thành công bằng Gemini AI Model ({m_name})!")
+                        print(f"✨ Đã biên tập kịch bản thành công bằng Gemini Text Model: {m_name}")
                         return res.text.strip()
                 except Exception as e_m:
+                    print(f"⚠️ Model '{m_name}' không phản hồi, tự động chuyển sang model tiếp theo...")
                     continue
         except Exception as e:
             print(f"⚠️ Gemini AI không khả dụng ({e}), dùng Narrative Rewriter Engine...")
@@ -159,7 +184,6 @@ def download_background_video_with_retry(pool: dict, max_retries: int = 10) -> s
 
         print("⚠️ Link video bị hỏng/lỗi, đang thử link khác...")
 
-    # Fallback: Tạo video nền màu gradient 720p nếu tất cả link tải thất bại
     print("⚠️ Dùng video nền màu gradient fallback...")
     cmd_fallback = [
         "ffmpeg", "-y", "-f", "lavfi", "-i", "color=c=navy:s=720x1280:d=10",
