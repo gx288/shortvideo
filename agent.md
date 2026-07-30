@@ -15,12 +15,11 @@ Tài liệu này hướng dẫn quy trình phối hợp: **Tạo dữ liệu t�
 
 ### 📌 GIAI ĐOẠN 1: Chuẩn bị dữ liệu tại Local (hoặc Scheduled Actions)
 
-#### 🔹 Task 1: Quét Link & Nội dung truyện Eva.vn
+#### 🔹 Task 1: Quét Hàng NGHÌN Link truyện Eva.vn siêu tốc
 ```bash
-python eva_scraper/link_crawler.py --scan-ids --start-id 678450 --count 100
-python eva_scraper/article_scraper.py --batch 30
+python eva_scraper/scan_all_links.py --start-id 678500 --count 5000 --threads 50
 ```
-- Kết quả: Lưu các file JSON bài viết vào `eva_scraper/data/`.
+- Kết quả: Thu thập hàng NGHÌN link câu chuyện khả dụng lưu vào `eva_scraper/links_master.json`.
 
 #### 🔹 Task 2: Viết lại Kịch bản Video ngắn (< 3 phút)
 ```bash
