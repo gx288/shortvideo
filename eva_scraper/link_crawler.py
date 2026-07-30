@@ -197,7 +197,7 @@ if __name__ == "__main__":
         scraped = sum(1 for v in master.values() if v.get("scraped"))
         pending = len(master) - scraped
         print(f"📊 Master: {len(master)} links | {scraped} đã lấy nội dung | {pending} chưa lấy")
-    elif args.scan-ids:
+    elif args.scan_ids:
         scan_ids_range(args.start_id, args.count)
     else:
         crawl_categories()

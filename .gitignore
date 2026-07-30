@@ -11,7 +11,11 @@ onedrive_token.json
 *.wav
 *.zip
 
-# ==================== TEMP FILES ====================
+# ==================== TEMP / SCRATCH FILES ====================
+scratch/
+test_git/
+*.html
+*_files/
 temp_*/
 __pycache__/
 *.tmp
