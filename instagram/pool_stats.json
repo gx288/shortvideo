@@ -1,12 +1,13 @@
 {
-  "total": 41,
-  "unused": 41,
+  "total": 476,
+  "unused": 476,
   "used": 0,
   "failed": 0,
   "by_hashtag": {
-    "#diy": 4,
+    "#diy": 171,
     "#funny": 1,
-    "#lifehack": 36
+    "#lifehack": 36,
+    "#handmade": 268
   },
-  "updated_at": "2026-07-30 19:58"
+  "updated_at": "2026-07-30 21:21"
 }

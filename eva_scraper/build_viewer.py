@@ -2,14 +2,13 @@
 eva_scraper/build_viewer.py
 ============================
 Tạo trang Web HTML dạng bảng Excel tương tác cao (Interactive Table Viewer)
-hiển thị TOÀN BỘ bài viết cào được từ links_master.json.
+phân biệt RÕ RÀNG NGUỒN TRANG (Eva.vn vs Afamily.vn) không bị lộn xộn.
 
 Tính năng:
-- Bảng kiểu Excel siêu gọn gàng (Compact Density), không tốn diện tích
-- Tìm kiếm tức thì (Search Filter) theo tiêu đề, mô tả, link
-- Lọc theo từng Chuyên mục (Filter by Category)
-- Thống kê tổng số bài, chuyên mục
-- Mở link gốc Eva.vn trong tab mới khi click
+- Bảng kiểu Excel siêu gọn gàng (Compact Density)
+- Phân loại rõ từng Trang nguồn: Eva.vn | Afamily.vn
+- Bộ lọc theo Nguồn trang (Filter by Source) & Chuyên mục
+- Tìm kiếm tức thì theo tiêu đề, mô tả, link
 
 Chạy:
     python eva_scraper/build_viewer.py
@@ -23,11 +22,21 @@ from datetime import datetime
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
 
-LINKS_FILE   = os.path.join("eva_scraper", "links_master.json")
-VIEWER_FILE  = os.path.join("eva_scraper", "stories_viewer.html")
+LINKS_FILE      = os.path.join("eva_scraper", "links_master.json")
+EVA_LINKS_FILE  = os.path.join("eva_scraper", "eva_links.json")
+AFAMILY_FILE    = os.path.join("afamily_scraper", "afamily_links.json")
+VIEWER_FILE     = os.path.join("eva_scraper", "stories_viewer.html")
+
+
+def detect_source(url: str) -> str:
+    if 'afamily.vn' in url:
+        return 'Afamily.vn'
+    return 'Eva.vn'
 
 
 def detect_category(url: str) -> str:
+    if 'afamily.vn' in url:
+        return 'Tâm sự Gia đình'
     if '/tam-su/' in url or '/tam-su-c' in url:
         return 'Tâm sự'
     elif '/chuyen-tinh-yeu/' in url or '/chuyen-tinh-yeu-c' in url:
@@ -42,13 +51,33 @@ def detect_category(url: str) -> str:
         return 'Bí mật phòng thế'
     elif '/gia-dinh/' in url or '/gia-dinh-c' in url:
         return 'Gia đình'
-    elif '/day-con/' in url or '/day-con-c' in url:
-        return 'Dạy con'
     elif '/goc-tam-su/' in url or '/goc-tam-su-c' in url:
         return 'Góc tâm sự'
-    elif '/chuyen-eva/' in url or '/chuyen-eva-c' in url:
-        return 'Chuyện Eva'
     return 'Tâm sự'
+
+
+def split_source_files(master: dict):
+    """Tách biệt master dict ra 2 file json riêng biệt theo từng trang."""
+    eva_dict = {}
+    afamily_dict = {}
+
+    for url, info in master.items():
+        src = detect_source(url)
+        info["source"] = src
+        if src == "Afamily.vn":
+            afamily_dict[url] = info
+        else:
+            eva_dict[url] = info
+
+    os.makedirs("afamily_scraper", exist_ok=True)
+    with open(EVA_LINKS_FILE, "w", encoding="utf-8") as f:
+        json.dump(eva_dict, f, ensure_ascii=False, indent=2)
+
+    with open(AFAMILY_FILE, "w", encoding="utf-8") as f:
+        json.dump(afamily_dict, f, ensure_ascii=False, indent=2)
+
+    print(f"📁 [TÁCH NGUỒN FILE] Eva.vn: {len(eva_dict)} bài → {EVA_LINKS_FILE}")
+    print(f"📁 [TÁCH NGUỒN FILE] Afamily.vn: {len(afamily_dict)} bài → {AFAMILY_FILE}")
 
 
 def generate_html_viewer():
@@ -59,16 +88,21 @@ def generate_html_viewer():
     with open(LINKS_FILE, "r", encoding="utf-8") as f:
         master = json.load(f)
 
+    # Tách file riêng
+    split_source_files(master)
+
     # Chuyển master dict thành danh sách bài viết
     data_list = []
     idx = 1
     for url, info in master.items():
         title = info.get("title", "").strip() or "Untitled Story"
         summary = info.get("summary", "").strip() or title
-        category = detect_category(url)
+        source = detect_source(url)
+        category = info.get("category") or detect_category(url)
 
         data_list.append({
             "stt": idx,
+            "source": source,
             "url": url,
             "title": title,
             "summary": summary,
@@ -84,7 +118,7 @@ def generate_html_viewer():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kho Bài Viết Eva.vn - ShortVideo Engine</title>
+    <title>Kho Bài Viết Tâm Sự (Eva.vn & Afamily.vn)</title>
     <!-- Google Fonts: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -98,7 +132,7 @@ def generate_html_viewer():
             --text-muted: #94a3b8;
             --accent-blue: #38bdf8;
             --accent-green: #4ade80;
-            --accent-purple: #c084fc;
+            --accent-pink: #f43f5e;
             --accent-amber: #fbbf24;
         }}
 
@@ -244,12 +278,10 @@ def generate_html_viewer():
         }}
 
         td {{
-            padding: 8px 12px;
+            padding: 10px 12px;
             border-bottom: 1px solid var(--border-color);
             border-right: 1px solid var(--border-color);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            vertical-align: top;
         }}
 
         tr:nth-child(even) {{
@@ -260,14 +292,27 @@ def generate_html_viewer():
             background-color: var(--bg-hover);
         }}
 
-        /* Column Widths (Optimal Space Saving) */
-        .col-stt {{ width: 50px; text-align: center; }}
-        .col-cat {{ width: 150px; }}
-        .col-title {{ width: 380px; }}
-        .col-summary {{ width: 550px; }}
-        .col-link {{ width: 90px; text-align: center; }}
+        /* Column Widths (Tự động co giãn vừa khít 100% màn hình) */
+        .col-stt {{ width: 50px; text-align: center; white-space: nowrap; }}
+        .col-source {{ width: 110px; text-align: center; white-space: nowrap; }}
+        .col-cat {{ width: 140px; white-space: nowrap; }}
+        .col-title {{ 
+            width: 35%; 
+            white-space: normal !important; 
+            word-break: break-word; 
+            line-height: 1.45;
+            color: #f1f5f9;
+        }}
+        .col-summary {{ 
+            width: auto; 
+            white-space: normal !important; 
+            word-break: break-word; 
+            line-height: 1.5;
+            color: #cbd5e1;
+        }}
+        .col-link {{ width: 90px; text-align: center; white-space: nowrap; }}
 
-        /* Category Tag Styling */
+        /* Tag Styling */
         .tag {{
             display: inline-block;
             padding: 3px 8px;
@@ -275,10 +320,11 @@ def generate_html_viewer():
             font-size: 11px;
             font-weight: 600;
         }}
+        .src-eva {{ background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }}
+        .src-afamily {{ background: rgba(244, 63, 94, 0.2); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.4); }}
+
         .tag-tam-su {{ background: rgba(56, 189, 248, 0.15); color: #38bdf8; }}
-        .tag-tinh-yeu {{ background: rgba(244, 63, 94, 0.15); color: #fb7185; }}
         .tag-gia-dinh {{ background: rgba(74, 222, 128, 0.15); color: #4ade80; }}
-        .tag-me-chong {{ background: rgba(251, 191, 36, 0.15); color: #fbbf24; }}
         .tag-other {{ background: rgba(192, 132, 252, 0.15); color: #c084fc; }}
 
         .link-btn {{
@@ -308,12 +354,18 @@ def generate_html_viewer():
 
     <div class="header-bar">
         <div class="title-area">
-            <h1>📊 Bảng Kho Bài Viết Eva.vn</h1>
-            <p>Hiển thị danh sách câu chuyện, tiêu đề và mô tả sapo thu thập tự động</p>
+            <h1>📊 Bảng Kho Bài Viết Tâm Sự (Tách Nguồn)</h1>
+            <p>Phân biệt rõ ràng giữa Eva.vn và Afamily.vn (Có Tìm kiếm & Bộ lọc nguồn)</p>
         </div>
         <div class="stats-group">
             <div class="stat-badge">Tổng bài viết: <span id="stat-total">0</span></div>
-            <div class="stat-badge" style="border-color: rgba(74, 222, 128, 0.3); background: rgba(74, 222, 128, 0.1); color: var(--accent-green);">
+            <div class="stat-badge" style="border-color: rgba(244, 63, 94, 0.4); background: rgba(244, 63, 94, 0.1); color: #fb7185;">
+                Afamily: <span id="stat-afamily" style="color: #fb7185;">0</span>
+            </div>
+            <div class="stat-badge" style="border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.1); color: #38bdf8;">
+                Eva.vn: <span id="stat-eva" style="color: #38bdf8;">0</span>
+            </div>
+            <div class="stat-badge" style="border-color: rgba(74, 222, 128, 0.4); background: rgba(74, 222, 128, 0.1); color: var(--accent-green);">
                 Hiển thị: <span id="stat-showing" style="color: var(--accent-green);">0</span>
             </div>
         </div>
@@ -323,15 +375,10 @@ def generate_html_viewer():
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="🔍 Tìm kiếm theo tiêu đề, mô tả hoặc từ khóa..." oninput="filterTable()">
         </div>
-        <select class="filter-select" id="catFilter" onchange="filterTable()">
-            <option value="ALL">All Categories (Tất cả chuyên mục)</option>
-            <option value="Tâm sự">Tâm sự</option>
-            <option value="Tình yêu - Giới tính">Tình yêu - Giới tính</option>
-            <option value="Chuyện tình yêu">Chuyện tình yêu</option>
-            <option value="Mẹ chồng nàng dâu">Mẹ chồng nàng dâu</option>
-            <option value="Nghệ thuật làm vợ">Nghệ thuật làm vợ</option>
-            <option value="Gia đình">Gia đình</option>
-            <option value="Dạy con">Dạy con</option>
+        <select class="filter-select" id="sourceFilter" onchange="filterTable()">
+            <option value="ALL">🌐 Tất Cả Trang Nguồn (Eva.vn & Afamily.vn)</option>
+            <option value="Afamily.vn">🔥 Afamily.vn (Tâm Sự Gia Đình)</option>
+            <option value="Eva.vn">💖 Eva.vn (Tâm Sự & Gia Đình)</option>
         </select>
     </div>
 
@@ -340,6 +387,7 @@ def generate_html_viewer():
             <thead>
                 <tr>
                     <th class="col-stt">STT</th>
+                    <th class="col-source">Trang Nguồn</th>
                     <th class="col-cat">Chuyên Mục</th>
                     <th class="col-title">Tiêu Đề Bài Viết</th>
                     <th class="col-summary">Mô Tả / Sapo Ngắn</th>
@@ -355,25 +403,18 @@ def generate_html_viewer():
     <script>
         const rawData = {json_data};
 
-        function getTagClass(cat) {{
-            if (cat.includes('Tâm sự')) return 'tag-tam-su';
-            if (cat.includes('Tình yêu')) return 'tag-tinh-yeu';
-            if (cat.includes('Gia đình')) return 'tag-gia-dinh';
-            if (cat.includes('Mẹ chồng')) return 'tag-me-chong';
-            return 'tag-other';
-        }}
-
         function renderTable(data) {{
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
 
             data.forEach((item, index) => {{
                 const tr = document.createElement('tr');
-                const tagClass = getTagClass(item.category);
+                const srcClass = item.source === 'Afamily.vn' ? 'src-afamily' : 'src-eva';
 
                 tr.innerHTML = `
                     <td class="col-stt">${{index + 1}}</td>
-                    <td class="col-cat"><span class="tag ${{tagClass}}">${{item.category}}</span></td>
+                    <td class="col-source"><span class="tag ${{srcClass}}">${{item.source}}</span></td>
+                    <td class="col-cat"><span class="tag tag-tam-su">${{item.category}}</span></td>
                     <td class="col-title" title="${{escapeHtml(item.title)}}"><strong>${{escapeHtml(item.title)}}</strong></td>
                     <td class="col-summary" title="${{escapeHtml(item.summary)}}">${{escapeHtml(item.summary)}}</td>
                     <td class="col-link"><a href="${{item.url}}" target="_blank" class="link-btn">Xem Link 🔗</a></td>
@@ -395,22 +436,28 @@ def generate_html_viewer():
 
         function filterTable() {{
             const query = document.getElementById('searchInput').value.toLowerCase().trim();
-            const cat = document.getElementById('catFilter').value;
+            const source = document.getElementById('sourceFilter').value;
 
             const filtered = rawData.filter(item => {{
-                const matchCat = (cat === 'ALL' || item.category === cat);
+                const matchSrc = (source === 'ALL' || item.source === source);
                 const matchQuery = !query || 
                                    item.title.toLowerCase().includes(query) || 
                                    item.summary.toLowerCase().includes(query) ||
                                    item.url.toLowerCase().includes(query);
-                return matchCat && matchQuery;
+                return matchSrc && matchQuery;
             }});
 
             renderTable(filtered);
         }}
 
-        // Init
+        // Init stats
+        const afamilyCount = rawData.filter(i => i.source === 'Afamily.vn').length;
+        const evaCount = rawData.filter(i => i.source === 'Eva.vn').length;
+
         document.getElementById('stat-total').innerText = rawData.length.toLocaleString();
+        document.getElementById('stat-afamily').innerText = afamilyCount.toLocaleString();
+        document.getElementById('stat-eva').innerText = evaCount.toLocaleString();
+
         renderTable(rawData);
     </script>
 </body>
@@ -420,8 +467,8 @@ def generate_html_viewer():
     with open(VIEWER_FILE, "w", encoding="utf-8") as f:
         f.write(html_content)
 
-    print(f"🎉 [BUILD HOÀN TẤT] Đã tạo file Web Bảng Excel: {VIEWER_FILE}")
-    print(f"📊 Tổng số bài viết hiển thị: {len(data_list)} bài.")
+    print(f"🎉 [BUILD HOÀN TẤT] Đã tạo file Web Bảng Excel tách nguồn: {VIEWER_FILE}")
+    print(f"📊 Tổng số bài viết hiển thị: {len(data_list)} bài (Afamily: {len([d for d in data_list if d['source']=='Afamily.vn'])}, Eva: {len([d for d in data_list if d['source']=='Eva.vn'])}).")
 
 
 if __name__ == "__main__":

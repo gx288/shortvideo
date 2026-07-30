@@ -120,6 +120,11 @@ def crawl_subcategory(page, cat_url: str, master: dict, existing: set, max_click
                 if not href.endswith(".html"):
                     continue
 
+                # Bỏ bài trắc nghiệm / bói toán
+                item_str = (title + " " + summary + " " + href).lower()
+                if any(kw in item_str for kw in EXCLUDE_KEYWORDS):
+                    continue
+
                 if any(cat in href for cat in STORY_CATEGORIES):
                     if href not in existing or not master.get(href, {}).get("summary"):
                         master[href] = {

@@ -149,10 +149,10 @@ Hãy trả về CHỈ NỘI DUNG KỊCH BẢN ĐÃ VIẾT LẠI (không kèm l�
                         print(f"✨ Đã biên tập kịch bản thành công bằng Gemini Text Model: {m_name}")
                         return res.text.strip()
                 except Exception as e_m:
-                    print(f"⚠️ Model '{m_name}' không phản hồi, tự động chuyển sang model tiếp theo...")
+                    print(f"⚠️ Model '{m_name}' lỗi ({type(e_m).__name__}): {e_m}")
                     continue
         except Exception as e:
-            print(f"⚠️ Gemini AI không khả dụng ({e}), dùng Narrative Rewriter Engine...")
+            print(f"⚠️ Khởi tạo Gemini AI thất bại ({type(e).__name__}): {e}. Dùng Narrative Rewriter Engine...")
 
     # Fallback Narrative Engine
     hooks = [
