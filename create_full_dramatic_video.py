@@ -62,6 +62,37 @@ GEMINI_TEXT_MODELS = [
 ]
 
 
+def scrape_free_proxies(limit: int = 10) -> list:
+    """Cào danh sách Proxy HTTP miễn phí mới nhất từ các nguồn API công cộng."""
+    print("🌐 Đang tự động cào danh sách HTTP Proxy mới nhất...")
+    proxy_urls = [
+        "https://api.proxyscrape.com/v2/?request=getproxies&protocol=http&timeout=5000&country=all&ssl=all&anonymity=all",
+        "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt",
+        "https://raw.githubusercontent.com/monosans/proxy-list/main/proxies/http.txt"
+    ]
+
+    proxies = set()
+    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+
+    for src_url in proxy_urls:
+        try:
+            res = requests.get(src_url, timeout=5, headers={"User-Agent": user_agent})
+            if res.status_code == 200:
+                matches = re.findall(r'\b(?:\d{1,3}\.){3}\d{1,3}:\d{2,5}\b', res.text)
+                for ip_port in matches:
+                    proxies.add(f"http://{ip_port}")
+                if len(proxies) >= limit:
+                    break
+        except Exception:
+            continue
+
+    proxy_list = list(proxies)
+    random.shuffle(proxy_list)
+    if proxy_list:
+        print(f"✅ Đã cào thành công {len(proxy_list)} Proxy live!")
+    return proxy_list[:limit]
+
+
 def fetch_afamily_full_content(url: str) -> str:
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
@@ -156,6 +187,9 @@ def download_fast_background_video(pool: dict) -> str:
     raw_bg = os.path.join("temp_fix", "raw_bg.mp4")
     user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
 
+    # Cào proxy trước
+    proxy_pool = scrape_free_proxies(limit=10)
+
     # Cách 1: Ưu tiên lấy Video Source Gốc (từ instagram pool/tiktok)
     if pool:
         pool_items = list(pool.values())
@@ -165,12 +199,14 @@ def download_fast_background_video(pool: dict) -> str:
         # Thử tối đa 3 video ngẫu nhiên từ pool (đề phòng link chết hoặc IP bị chặn)
         for i, bg_item in enumerate(pool_items[:3]):
             bg_url = bg_item.get("url")
-            print(f"   🎥 Lần thử {i+1}/3: Đang tải video source - {str(bg_item.get('title', ''))[:40]}...")
+            current_proxy = proxy_pool.pop(0) if proxy_pool else None
+            
+            print(f"   🎥 Lần thử {i+1}/3: Đang tải video source - {str(bg_item.get('title', ''))[:40]}... (Proxy: {current_proxy or 'Direct'})")
             if os.path.exists(raw_bg):
                 try: os.remove(raw_bg)
                 except: pass
                 
-            # Dùng yt-dlp với args chống block IP, download gốc ko qua proxy để thử trực tiếp
+            # Dùng yt-dlp với args chống block IP, download qua proxy để vượt block
             cmd_dl = [
                 "yt-dlp",
                 "-f", "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=720]/best[height<=720]/best",
@@ -179,18 +215,22 @@ def download_fast_background_video(pool: dict) -> str:
                 "--quiet",
                 "--extractor-args", "youtube:player_client=android,web",
                 "--user-agent", user_agent,
-                bg_url
+                "--socket-timeout", "10"
             ]
             
+            if current_proxy:
+                cmd_dl.extend(["--proxy", current_proxy])
+            cmd_dl.append(bg_url)
+            
             try:
-                subprocess.run(cmd_dl, capture_output=True, timeout=30)
+                subprocess.run(cmd_dl, capture_output=True, timeout=25)
                 if os.path.exists(raw_bg) and os.path.getsize(raw_bg) > 100000:
                     print("✅ [THÀNH CÔNG] Đã tải xong video Source Gốc!")
                     return raw_bg
                 else:
-                    print("   ❌ Tải thất bại (có thể do IP Server GitHub bị chặn hoặc video bị xóa).")
+                    print("   ❌ Tải thất bại (có thể do Proxy chậm, IP Server GitHub bị chặn hoặc video bị xóa).")
             except Exception as e:
-                print(f"   ❌ Lỗi khi gọi yt-dlp: {e}")
+                print(f"   ❌ Lỗi khi gọi yt-dlp (Timeout Proxy): {e}")
 
     # Cách 2: Nếu tải Source Gốc thất bại toàn bộ, dùng Fast HD Stock CDN dự phòng (tránh kẹt lỗi IP)
     print("🎨 [DỰ PHÒNG] Không tải được Source Gốc do bị chặn IP, dùng Video Nền Dự Phòng Siêu Tốc (Fast HD Stock)...")
