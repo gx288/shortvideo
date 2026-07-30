@@ -56,10 +56,11 @@ python main.py
 ```
 - Tạo video `.mp4` trong thư mục `output/`, tự động ghi link và cập nhật Google Sheets.
 
-### 📌 BƯỚC 3: Tự động Hẹn giờ (`schedule`) cho Task tiếp theo
-- **QUAN TRỌNG**: Sau khi kết thúc bất kỳ task nào (dù thành công hay thất bại), Agent **BẮT BUỘC** gọi tool `schedule` để hẹn giờ chạy task tiếp theo.
-- Thời gian khuyến nghị: `DurationSeconds: 300` (5 phút) hoặc `600` (10 phút).
+### 📌 BƯỚC 3: Tự động Hẹn giờ ngắn (`schedule`) cho Task tiếp theo
+- **QUAN TRỌNG**: Sau khi kết thúc bất kỳ task nào, Agent **BẮT BUỘC** gọi tool `schedule` với thời gian ngắn:
+- Thời gian hẹn giờ: `DurationSeconds: 120` (2 phút).
 - Prompt hẹn giờ mẫu: `Đọc agent.md và tiếp tục chạy Task [N] tiếp theo trong pipeline.`
+- Nếu cần User làm gì thủ công, ghi ngay vào file [USER_ACTIONS.md](file:///d:/AT/github/shortvideo/USER_ACTIONS.md).
 
 ---
 
