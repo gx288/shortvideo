@@ -34,6 +34,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4 gTTS yt-dlp google-generativeai moviepy pillow
 
+      - name: Clean Output Directory
+        run: |
+          rm -rf output/* temp_fix/*
+          mkdir -p output temp_fix
+
       - name: Run Dramatic Short Video Creation Pipeline
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -55,5 +60,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: generated-dramatic-videos
-          path: output/*.mp4
+          path: output/full_dramatic_video_*.mp4
           retention-days: 7

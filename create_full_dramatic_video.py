@@ -3,8 +3,9 @@ create_full_dramatic_video.py
 =============================
 Tự động Biên tập lại (Rewrite) TOÀN BỘ CÂU CHUYỆN thành Kịch bản Kể chuyện Drama 3 Hồi chuẩn Short (< 3 phút):
 - Nguồn câu chuyện: Kho 3,078 bài báo Tâm sự gia đình Afamily.vn (afamily_scraper/afamily_links.json)
-- Nguồn video nền: Kho 15,427 video DIY/Handmade (instagram/link_pool.json) với cơ chế TỰ ĐỘNG TẢI THAY THẾ (Fallback retry) nếu link bị hỏng.
-- Tốc độ đọc 1.2x dồn dập + Nhạc nền nhacnen.mp3 (7% volume)
+- Nguồn video nền: Kho 15,427 video DIY/Handmade (instagram/link_pool.json)
+- Tối ưu yt-dlp trên GitHub Actions Runner với User-Agent và YouTube Player Client Android
+- Tự động fallback linh hoạt các model Gemini AI (gemini-1.5-flash, gemini-2.0-flash, gemini-pro)
 - Bitrate 2Mbps (2000k) + H.264 Baseline + yuv420p + Faststart mượt 100% xem được trên mọi thiết bị
 """
 
@@ -58,10 +59,12 @@ def rewrite_story_with_ai(title: str, summary: str, full_body: str) -> str:
     api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
 
     if api_key:
+        # Thử lần lượt các model Gemini hỗ trợ API mới nhất
+        model_names = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash-exp', 'gemini-pro']
+        
         try:
             import google.generativeai as genai
             genai.configure(api_key=api_key)
-            model = genai.GenerativeModel('gemini-1.5-flash')
 
             prompt = f"""Bạn là một đạo diễn kịch bản video ngắn (TikTok, YouTube Shorts) hàng đầu.
 Hãy VIẾT LẠI HOÀN TOÀN câu chuyện dưới đây thành một KỊCH BẢN KỂ CHUYỆN KỊCH TÍNH, GIẬT TÍT (Độ dài từ 250 đến 350 từ tiếng Việt, dành cho giọng đọc 1.5 - 2.5 phút).
@@ -79,11 +82,17 @@ Dữ liệu đầu vào:
 
 Hãy trả về CHỈ NỘI DUNG KỊCH BẢN ĐÃ VIẾT LẠI (không kèm lời chào hay ghi chú)."""
 
-            res = model.generate_content(prompt)
-            if res and res.text:
-                return res.text.strip()
+            for m_name in model_names:
+                try:
+                    model = genai.GenerativeModel(m_name)
+                    res = model.generate_content(prompt)
+                    if res and res.text:
+                        print(f"✨ Đã biên tập kịch bản thành công bằng Gemini AI Model ({m_name})!")
+                        return res.text.strip()
+                except Exception as e_m:
+                    continue
         except Exception as e:
-            print(f"⚠️ Gemini AI không khả dụng ({e}), dùng Narrative Rewriter...")
+            print(f"⚠️ Gemini AI không khả dụng ({e}), dùng Narrative Rewriter Engine...")
 
     # Fallback Narrative Engine
     hooks = [
@@ -113,10 +122,15 @@ Hãy trả về CHỈ NỘI DUNG KỊCH BẢN ĐÃ VIẾT LẠI (không kèm l�
     return f"{hook_text}\n\n{summary}\n\n" + "\n\n".join(narrative_body)
 
 
-def download_background_video_with_retry(pool: dict, max_retries: int = 5) -> str:
-    """Tải video nền với cơ chế tự động thử lại link khác nếu bị hỏng."""
+def download_background_video_with_retry(pool: dict, max_retries: int = 10) -> str:
+    """Tải video nền với User-Agent & Client Android vượt qua chặn IP Datacenter của GitHub Actions Runner."""
     pool_items = list(pool.values())
     raw_bg = os.path.join("temp_fix", "raw_bg.mp4")
+
+    user_agents = [
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+    ]
 
     for attempt in range(max_retries):
         bg_item = random.choice(pool_items)
@@ -129,10 +143,12 @@ def download_background_video_with_retry(pool: dict, max_retries: int = 5) -> st
 
         cmd_dl = [
             "yt-dlp",
-            "-f", "bestvideo[height<=720][ext=mp4]/best[height<=720]/best",
+            "-f", "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=720]/best[height<=720]/best",
             "-o", raw_bg,
             "--no-playlist",
             "--quiet",
+            "--user-agent", random.choice(user_agents),
+            "--extractor-args", "youtube:player_client=android,web",
             bg_url
         ]
         subprocess.run(cmd_dl, capture_output=True)
@@ -143,10 +159,10 @@ def download_background_video_with_retry(pool: dict, max_retries: int = 5) -> st
 
         print("⚠️ Link video bị hỏng/lỗi, đang thử link khác...")
 
-    # Fallback: Tạo video nền màu tĩnh 720p nếu tất cả link tải thất bại
+    # Fallback: Tạo video nền màu gradient 720p nếu tất cả link tải thất bại
     print("⚠️ Dùng video nền màu gradient fallback...")
     cmd_fallback = [
-        "ffmpeg", "-y", "-f", "lavfi", "-i", "color=c=darkblue:s=720x1280:d=10",
+        "ffmpeg", "-y", "-f", "lavfi", "-i", "color=c=navy:s=720x1280:d=10",
         "-c:v", "libx264", "-r", "24", raw_bg
     ]
     subprocess.run(cmd_fallback, capture_output=True)
@@ -203,10 +219,10 @@ def create_guaranteed_video():
     audio_dur = float(subprocess.run(cmd_dur, capture_output=True, text=True).stdout.strip() or 60.0)
     print(f"⏱️ Thời lượng Audio 1.2x: {audio_dur:.1f}s (~{audio_dur/60:.1f} phút)")
 
-    # 4. Tải video nền có cơ chế tự động thử lại 5 lần (Retry 5 times)
+    # 4. Tải video nền có cơ chế tự động thử lại 10 lần với User-Agent giả lập Android
     with open(POOL_FILE, "r", encoding="utf-8") as f:
         pool = json.load(f)
-    raw_bg = download_background_video_with_retry(pool, max_retries=5)
+    raw_bg = download_background_video_with_retry(pool, max_retries=10)
 
     # 5. BƯỚC A - TẠO VIDEO NỀN CHUẨN (720x1280, 24fps, yuv420p, 2Mbps, đúng thời lượng)
     temp_bg = os.path.join("temp_fix", "temp_bg.mp4")
@@ -246,7 +262,6 @@ def create_guaranteed_video():
     t1 = time.time()
 
     if not os.path.exists(output_mp4):
-        # Emergency single-pass encode
         cmd_emergency = [
             "ffmpeg", "-y",
             "-stream_loop", "10", "-i", raw_bg,
