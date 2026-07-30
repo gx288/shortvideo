@@ -13,6 +13,7 @@ onedrive_token.json
 
 # ==================== MEDIA FILES ====================
 *.mp3
+!nhacnen.mp3
 *.wav
 *.zip
 

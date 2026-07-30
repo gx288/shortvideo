@@ -7,7 +7,7 @@ import requests
 import subprocess
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
-from moviepy.editor import ImageClip, concatenate_videoclips, AudioFileClip
+from moviepy.editor import ImageClip, concatenate_videoclips, AudioFileClip, CompositeAudioClip, afx
 import glob
 from google.cloud import texttospeech
 import gspread
@@ -370,7 +370,27 @@ for worksheet_name in WORKSHEET_LIST:
 
             try:
                 video = concatenate_videoclips(clips, method="compose")
-                video = video.set_audio(audio)
+
+                bg_music_path = "nhacnen.mp3"
+                if os.path.exists(bg_music_path):
+                    try:
+                        bg_music = AudioFileClip(bg_music_path)
+                        if bg_music.duration < audio_duration:
+                            bg_music = afx.audio_loop(bg_music, duration=audio_duration)
+                        else:
+                            bg_music = bg_music.subclip(0, audio_duration)
+
+                        # Giảm âm lượng nhạc nền xuống 7% (0.07) theo yêu cầu (5%-10%)
+                        bg_music = bg_music.volumex(0.07)
+                        final_audio = CompositeAudioClip([audio, bg_music])
+                        video = video.set_audio(final_audio)
+                        print("🎵 Đã trộn nhạc nền nhacnen.mp3 (Âm lượng: 7%) với giọng đọc TTS!")
+                    except Exception as e_music:
+                        print(f"⚠️ Không lồng được nhạc nền: {e_music}, dùng giọng đọc gốc.")
+                        video = video.set_audio(audio)
+                else:
+                    video = video.set_audio(audio)
+
                 video.write_videofile(
                     output_path,
                     codec="libx265",
