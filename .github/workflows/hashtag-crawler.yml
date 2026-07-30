@@ -40,6 +40,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
+          token: ${{ secrets.GH_TOKEN }}
           persist-credentials: true
           fetch-depth: 1
 
@@ -91,17 +92,8 @@ jobs:
 
       # ─── 5. Print pool stats ─────────────────────────────────────────────────
       - name: Pool statistics
-        run: python instagram/hashtag_crawler.py --hashtag diy --stats 2>/dev/null || \
-             python -c "
-          import json, os
-          f = 'instagram/link_pool.json'
-          if os.path.exists(f):
-              pool = json.load(open(f))
-              unused = sum(1 for v in pool.values() if not v.get('used') and not v.get('failed'))
-              print(f'Pool: {len(pool)} total, {unused} unused')
-              days = unused // 3
-              print(f'Đủ dùng cho ~{days} ngày (3 video/ngày)')
-          "
+        run: |
+          python -c 'import json,os; f="instagram/link_pool.json"; pool=json.load(open(f)) if os.path.exists(f) else {}; unused=sum(1 for v in pool.values() if not v.get("used") and not v.get("failed")); print("Pool:",len(pool),"total,",unused,"unused")'
 
       # ─── 6. Commit link pool ─────────────────────────────────────────────────
       - name: Commit link pool
@@ -114,19 +106,10 @@ jobs:
           if git diff --cached --quiet; then
             echo "Không có link mới."
           else
-            # Đếm số link mới
-            NEW_COUNT=$(python -c "
-          import json, os
-          f = 'instagram/link_pool.json'
-          if os.path.exists(f):
-              pool = json.load(open(f))
-              print(len(pool))
-          else:
-              print(0)
-          " 2>/dev/null || echo "?")
+            NEW_COUNT=$(python -c 'import json,os; f="instagram/link_pool.json"; print(len(json.load(open(f)))) if os.path.exists(f) else print(0)' 2>/dev/null || echo "?")
 
             git commit -m "Update link pool: $NEW_COUNT total links [$(date '+%Y-%m-%d')]"
             git pull --rebase origin main
-            git push origin main
+            git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git main
             echo "✅ Link pool đã được commit!"
           fi

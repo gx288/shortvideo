@@ -45,6 +45,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
+          token: ${{ secrets.GH_TOKEN }}
           persist-credentials: true
 
       # ─── 2. Cache apt ──────────────────────────────────────────────────────
@@ -103,7 +104,7 @@ jobs:
         env:
           VIDEO_URL:  ${{ github.event.inputs.video_url }}
           STORY_URL:  ${{ github.event.inputs.story_url }}
-          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}   # optional
         run: |
           echo "========================================"
           echo "🚀 BẮT ĐẦU TẠO $RUN_COUNT VIDEO"
@@ -153,7 +154,7 @@ jobs:
           else
             git commit -m "Add $RUN_COUNT auto-generated video(s) [$(date '+%Y-%m-%d')]"
             git pull --rebase origin main
-            git push origin main
+            git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git main
             echo "✅ Đã push thành công!"
           fi
 
