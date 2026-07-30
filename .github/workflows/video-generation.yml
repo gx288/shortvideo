@@ -45,7 +45,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GH_TOKEN }}
           persist-credentials: true
 
       # ─── 2. Cache apt ──────────────────────────────────────────────────────
@@ -154,7 +153,7 @@ jobs:
           else
             git commit -m "Add $RUN_COUNT auto-generated video(s) [$(date '+%Y-%m-%d')]"
             git pull --rebase origin main
-            git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git main
+            git push origin main
             echo "✅ Đã push thành công!"
           fi
 
