@@ -220,6 +220,9 @@ def download_fast_background_video(pool: dict) -> str:
                     "--socket-timeout", "8"
                 ]
                 
+                if os.path.exists("cookies.txt"):
+                    cmd_dl.extend(["--cookies", "cookies.txt"])
+                
                 if current_proxy:
                     cmd_dl.extend(["--proxy", current_proxy])
                 cmd_dl.append(bg_url)
