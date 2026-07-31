@@ -121,14 +121,17 @@ def rewrite_story_with_ai(title: str, summary: str, full_body: str) -> str:
             # Xếp hạng Model từ CAO đến THẤP (Version cao trước, Pro trước Flash, Exp đưa xuống cuối)
             def model_score(n):
                 s = 0
-                if '2.5' in n: s += 2500
-                elif '2.0' in n: s += 2000
-                elif '1.5' in n: s += 1500
-                elif '1.0' in n: s += 1000
-                else: s += 500
+                import re
+                match = re.search(r'(\d+\.\d+)', n)
+                if match:
+                    s += int(float(match.group(1)) * 1000)
+                else:
+                    s += 500  # Fallback cho bản không có số (vd: gemini-pro)
+                
                 if 'pro' in n: s += 100
                 if 'flash' in n: s += 50
                 if 'exp' in n: s -= 2000
+                if 'preview' in n: s -= 2000
                 return s
                 
             dynamic_models.sort(key=model_score, reverse=True)
