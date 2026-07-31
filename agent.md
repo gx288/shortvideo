@@ -58,3 +58,10 @@ Mỗi khi được đánh thức bởi hẹn giờ (`schedule`):
 3. **Subtask 3**: Push dữ liệu JSON mới lên `origin main`.
 4. **Subtask 4**: Hẹn giờ ngắn 120s bằng tool `schedule`.
 5. **Subtask 5**: Cập nhật file [USER_ACTIONS.md](file:///d:/AT/github/shortvideo/USER_ACTIONS.md) nếu cần User bấm nút Trigger workflow trên GitHub.
+
+---
+
+## 🛑 QUY TẮC NGHIÊM CẤM DÀNH CHO AGENT (CRITICAL RULES)
+
+1. **KHÔNG ĐƯỢC BỊA DỮ LIỆU (NO MOCKING)**: Tuyệt đối không được giả lập (mock) kết quả API, tự bịa ra dữ liệu test, hoặc giả vờ đã chạy lệnh thành công để lừa User.
+2. **BÁO CÁO TRUNG THỰC**: Nếu thiếu thông tin (ví dụ không tìm thấy API Key ở local, mất context, hoặc lỗi mạng), phải báo cáo thẳng thắn là không chạy được. Không được tự ý đưa ra kết quả giả định.
