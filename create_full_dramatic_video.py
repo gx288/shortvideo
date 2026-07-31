@@ -105,8 +105,33 @@ def rewrite_story_with_ai(title: str, summary: str, full_body: str) -> str:
             genai.configure(api_key=api_key)
             
             # TỰ ĐỘNG TÌM VÀ LỌC CÁC MODEL TEXT ĐƯỢC CẤP QUYỀN TRÊN API KEY NÀY
-            # Khoá cứng danh sách model tối ưu cho tạo Text, tránh dùng các model cũ/không được hỗ trợ gây lỗi API
-            dynamic_models = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.5-flash', 'gemini-pro']
+            dynamic_models = []
+            try:
+                for m in genai.list_models():
+                    if 'generateContent' in getattr(m, 'supported_generation_methods', []):
+                        name = getattr(m, 'name', '').replace('models/', '')
+                        if name.startswith('gemini-') and 'image' not in name and 'audio' not in name and 'vision' not in name:
+                            dynamic_models.append(name)
+            except Exception as e_list:
+                print(f"⚠️ Lỗi khi gọi list_models(): {e_list}")
+                
+            if not dynamic_models:
+                dynamic_models = ['gemini-2.5-flash', 'gemini-1.5-pro', 'gemini-1.5-flash', 'gemini-pro']
+                
+            # Xếp hạng Model từ CAO đến THẤP (Version cao trước, Pro trước Flash, Exp đưa xuống cuối)
+            def model_score(n):
+                s = 0
+                if '2.5' in n: s += 2500
+                elif '2.0' in n: s += 2000
+                elif '1.5' in n: s += 1500
+                elif '1.0' in n: s += 1000
+                else: s += 500
+                if 'pro' in n: s += 100
+                if 'flash' in n: s += 50
+                if 'exp' in n: s -= 2000
+                return s
+                
+            dynamic_models.sort(key=model_score, reverse=True)
 
             prompt = f"""Bạn là một đạo diễn kịch bản video ngắn (TikTok, YouTube Shorts) hàng đầu.
 Hãy VIẾT LẠI HOÀN TOÀN câu chuyện dưới đây thành một KỊCH BẢN KỂ CHUYỆN KỊCH TÍNH, GIẬT TÍT (Độ dài từ 250 đến 350 từ tiếng Việt, dành cho giọng đọc 1.5 - 2.5 phút).
