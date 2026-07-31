@@ -198,7 +198,31 @@ def download_fast_background_video(pool: dict) -> str:
             bg_url = bg_item.get("url")
             print(f"   🎥 Lần thử video {i+1}/2: {str(bg_item.get('title', ''))[:40]}...")
             
-            # Thử kết nối Direct (None) trước, sau đó thử thêm tối đa 4 proxy nếu bị block
+            # Thử RapidAPI (Vượt tường lửa Instagram) nếu có cấu hình
+            if os.environ.get("RAPIDAPI_KEY") and "instagram.com" in bg_url:
+                print("      ⚡ Kích hoạt RapidAPI (Bypass Instagram 100%)...")
+                try:
+                    rapid_url = "https://instagram-scraper-api2.p.rapidapi.com/v1/post_info"
+                    querystring = {"code_or_id_or_url": bg_url}
+                    headers = {
+                        "X-RapidAPI-Key": os.environ.get("RAPIDAPI_KEY"),
+                        "X-RapidAPI-Host": "instagram-scraper-api2.p.rapidapi.com"
+                    }
+                    rapid_res = requests.get(rapid_url, headers=headers, params=querystring, timeout=10).json()
+                    
+                    # Trích xuất video_url từ Response của RapidAPI
+                    video_url = rapid_res.get('data', {}).get('video_url')
+                    if video_url:
+                        v_req = requests.get(video_url, timeout=15)
+                        if v_req.status_code == 200:
+                            with open(raw_bg, "wb") as f: f.write(v_req.content)
+                            if os.path.getsize(raw_bg) > 100000:
+                                print("✅ [THÀNH CÔNG] Đã tải xong video Instagram qua RapidAPI!")
+                                return raw_bg
+                except Exception as e:
+                    print("      ❌ RapidAPI thất bại:", e)
+            
+            # Thử kết nối Direct (None) trước, sau đó thử thêm tối đa 4 proxy nếu bị block (Dành cho yt-dlp)
             attempts = [None]
             for _ in range(4):
                 if proxy_pool: attempts.append(proxy_pool.pop(0))

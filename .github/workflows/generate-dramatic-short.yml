@@ -42,6 +42,7 @@ jobs:
       - name: Run Dramatic Short Video Creation Pipeline
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
         run: |
           echo "========================================"
           echo "🚀 BẮT ĐẦU TẠO ${{ github.event.inputs.video_count }} VIDEO SHORT DRAMA"
