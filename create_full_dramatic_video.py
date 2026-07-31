@@ -222,6 +222,56 @@ def download_fast_background_video(pool: dict) -> str:
                 except Exception as e:
                     print("      ❌ RapidAPI thất bại:", e)
             
+            # Thử Playwright cào web thứ 3 (Cách 100% miễn phí, không key, không cookies)
+            print("      ⚡ Thử tải qua Playwright (Cào ẩn danh)...")
+            try:
+                from playwright.sync_api import sync_playwright
+                with sync_playwright() as p:
+                    browser = p.chromium.launch(headless=True)
+                    page = browser.new_page()
+                    # Thử igdownloader
+                    try:
+                        page.goto('https://igdownloader.me/en', timeout=30000)
+                        page.fill('input[name="q"]', bg_url)
+                        page.click('button[type="submit"]')
+                        page.wait_for_selector('a[href*=".mp4"], a[href*="dl=1"]', timeout=15000)
+                        video_url = page.query_selector('a[href*=".mp4"], a[href*="dl=1"]').get_attribute('href')
+                        if video_url:
+                            v_req = requests.get(video_url, timeout=15)
+                            if v_req.status_code == 200:
+                                with open(raw_bg, "wb") as f: f.write(v_req.content)
+                                if os.path.getsize(raw_bg) > 100000:
+                                    print("✅ [THÀNH CÔNG] Tải video IG bằng Playwright (igdownloader)!")
+                                    browser.close()
+                                    return raw_bg
+                    except Exception as ex:
+                        print("         - Lỗi igdownloader:", str(ex)[:50])
+                    
+                    # Thử snapinsta
+                    try:
+                        page.goto('https://snapinsta.app/', timeout=30000)
+                        page.fill('input[name="url"]', bg_url)
+                        page.click('button[type="submit"]')
+                        page.wait_for_selector('.download-bottom a', timeout=15000)
+                        video_url = page.query_selector('.download-bottom a').get_attribute('href')
+                        if video_url:
+                            if video_url.startswith('//'): video_url = 'https:' + video_url
+                            elif video_url.startswith('/'): video_url = 'https://snapinsta.app' + video_url
+                            
+                            v_req = requests.get(video_url, timeout=15)
+                            if v_req.status_code == 200:
+                                with open(raw_bg, "wb") as f: f.write(v_req.content)
+                                if os.path.getsize(raw_bg) > 100000:
+                                    print("✅ [THÀNH CÔNG] Tải video IG bằng Playwright (snapinsta)!")
+                                    browser.close()
+                                    return raw_bg
+                    except Exception as ex:
+                        print("         - Lỗi snapinsta:", str(ex)[:50])
+                    
+                    browser.close()
+            except Exception as e:
+                print("      ⚠️ Playwright bỏ qua:", str(e)[:100])
+            
             # Thử kết nối Direct (None) trước, sau đó thử thêm tối đa 4 proxy nếu bị block (Dành cho yt-dlp)
             attempts = [None]
             for _ in range(4):
