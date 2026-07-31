@@ -109,7 +109,7 @@ def crawl_tiktok_hashtag(hashtag: str, limit: int = 500) -> list[dict]:
     ]
 
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", timeout=300)
+        result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="ignore", timeout=300)
         lines = [l.strip() for l in result.stdout.strip().splitlines() if "\t" in l]
 
         entries = []
@@ -181,7 +181,7 @@ def crawl_youtube_shorts(hashtag: str, limit: int = 500) -> list[dict]:
     ]
 
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", timeout=300)
+        result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="ignore", timeout=300)
         lines = [l.strip() for l in result.stdout.strip().splitlines() if "\t" in l]
 
         entries = []
@@ -254,7 +254,7 @@ def crawl_instagram_hashtag(hashtag: str, limit: int = 200,
     cmd.append(url)
 
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", timeout=180)
+        result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="ignore", timeout=180)
         lines = [l.strip() for l in result.stdout.strip().splitlines() if "\t" in l]
 
         if not lines and result.stderr:
