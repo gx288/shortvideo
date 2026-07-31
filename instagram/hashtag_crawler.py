@@ -101,7 +101,7 @@ def crawl_tiktok_hashtag(hashtag: str, limit: int = 500) -> list[dict]:
         "yt-dlp",
         "--flat-playlist",
         "--playlist-end", str(limit),
-        "--print", "%(id)s\t%(webpage_url)s\t%(title)s\t%(duration)s",
+        "--print", "%(id)s\t%(webpage_url)s\t%(title)s\t%(duration)s\t%(view_count)s",
         "--no-warnings",
         "--quiet",
         "--extractor-args", "tiktok:api_hostname=api16-normal-c-useast1a.tiktokv.com",
@@ -114,21 +114,27 @@ def crawl_tiktok_hashtag(hashtag: str, limit: int = 500) -> list[dict]:
 
         entries = []
         for line in lines:
-            parts = line.split("\t", 3)
+            parts = line.split("\t", 4)
             if len(parts) < 2:
                 continue
             vid_id   = parts[0].strip()
             vid_url  = parts[1].strip()
             title    = parts[2].strip() if len(parts) > 2 else ""
             duration = parts[3].strip() if len(parts) > 3 else ""
+            views_str = parts[4].strip() if len(parts) > 4 else "0"
 
-            # Bỏ qua video quá dài (>3 phút) hoặc quá ngắn (<5 giây)
+            # YÊU CẦU: Thời lượng tầm 30s (15s -> 45s) và view > 100k
             try:
                 dur = float(duration)
-                if dur < 5 or dur > 180:
+                if dur < 15 or dur > 45:
+                    continue
+                
+                # Check view_count
+                views = int(float(views_str)) if views_str and views_str != "NA" else 0
+                if views < 100000:
                     continue
             except (ValueError, TypeError):
-                pass
+                continue
 
             entries.append({
                 "id":       vid_id,
@@ -168,7 +174,7 @@ def crawl_youtube_shorts(hashtag: str, limit: int = 500) -> list[dict]:
         "yt-dlp",
         "--flat-playlist",
         "--playlist-end", str(limit),
-        "--print", "%(id)s\t%(webpage_url)s\t%(title)s\t%(duration)s",
+        "--print", "%(id)s\t%(webpage_url)s\t%(title)s\t%(duration)s\t%(view_count)s",
         "--no-warnings",
         "--quiet",
         search_query,
@@ -180,20 +186,26 @@ def crawl_youtube_shorts(hashtag: str, limit: int = 500) -> list[dict]:
 
         entries = []
         for line in lines:
-            parts = line.split("\t", 3)
+            parts = line.split("\t", 4)
             if len(parts) < 2:
                 continue
             vid_id   = parts[0].strip()
             vid_url  = parts[1].strip()
             title    = parts[2].strip() if len(parts) > 2 else ""
             duration = parts[3].strip() if len(parts) > 3 else ""
+            views_str = parts[4].strip() if len(parts) > 4 else "0"
 
             try:
                 dur = float(duration)
-                if dur > 180:   # Giới hạn shorts
+                if dur < 15 or dur > 45:
+                    continue
+                
+                # Check view_count
+                views = int(float(views_str)) if views_str and views_str != "NA" else 0
+                if views < 100000:
                     continue
             except (ValueError, TypeError):
-                pass
+                continue
 
             entries.append({
                 "id":       vid_id,

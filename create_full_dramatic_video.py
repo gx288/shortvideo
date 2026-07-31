@@ -105,21 +105,8 @@ def rewrite_story_with_ai(title: str, summary: str, full_body: str) -> str:
             genai.configure(api_key=api_key)
             
             # TỰ ĐỘNG TÌM VÀ LỌC CÁC MODEL TEXT ĐƯỢC CẤP QUYỀN TRÊN API KEY NÀY
-            dynamic_models = []
-            try:
-                for m in genai.list_models():
-                    if 'generateContent' in getattr(m, 'supported_generation_methods', []):
-                        name = getattr(m, 'name', '').replace('models/', '')
-                        # CHỈ LẤY MODEL GEMINI THUẦN TEXT (LOẠI BỎ GEMMA VÀ CÁC MODEL ÂM THANH/HÌNH ẢNH)
-                        if name.startswith('gemini-') and 'image' not in name and 'audio' not in name and 'vision' not in name:
-                            dynamic_models.append(name)
-            except Exception as e_list:
-                print(f"⚠️ Lỗi khi gọi list_models(): {e_list}")
-                
-            if not dynamic_models:
-                dynamic_models = ['gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-pro']
-                
-            dynamic_models.sort(key=lambda x: x, reverse=True)
+            # Khoá cứng danh sách model tối ưu cho tạo Text, tránh dùng các model cũ/không được hỗ trợ gây lỗi API
+            dynamic_models = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.5-flash', 'gemini-pro']
 
             prompt = f"""Bạn là một đạo diễn kịch bản video ngắn (TikTok, YouTube Shorts) hàng đầu.
 Hãy VIẾT LẠI HOÀN TOÀN câu chuyện dưới đây thành một KỊCH BẢN KỂ CHUYỆN KỊCH TÍNH, GIẬT TÍT (Độ dài từ 250 đến 350 từ tiếng Việt, dành cho giọng đọc 1.5 - 2.5 phút).
@@ -389,7 +376,7 @@ def create_guaranteed_video():
     temp_bg = os.path.join("temp_fix", "temp_bg.mp4")
     cmd_step_a = [
         "ffmpeg", "-y",
-        "-stream_loop", "10",
+        "-stream_loop", "-1",
         "-i", raw_bg,
         "-t", str(audio_dur),
         "-vf", "scale=720:1280:force_original_aspect_ratio=increase,crop=720:1280,format=yuv420p",
@@ -418,6 +405,7 @@ def create_guaranteed_video():
         "-b:v", "2000k",
         "-c:a", "aac",
         "-b:a", "128k",
+        "-shortest",
         "-movflags", "+faststart",
         output_mp4
     ]
@@ -428,7 +416,7 @@ def create_guaranteed_video():
     if not os.path.exists(output_mp4):
         cmd_emergency = [
             "ffmpeg", "-y",
-            "-stream_loop", "10", "-i", raw_bg,
+            "-stream_loop", "-1", "-i", raw_bg,
             "-i", mixed_audio,
             "-t", str(audio_dur),
             "-vf", "scale=720:1280:force_original_aspect_ratio=increase,crop=720:1280,format=yuv420p",
