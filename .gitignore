@@ -39,3 +39,7 @@ instagram/downloads/
 # ==================== ENV ====================
 .env
 .env.local
+
+# ==================== LOCAL VIDEOS ====================
+local_videos/
+*.mp4
