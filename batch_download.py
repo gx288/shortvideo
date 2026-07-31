@@ -93,8 +93,8 @@ def main():
     print(f"🚀 Bắt đầu tiến trình tải {len(items_to_download)} video siêu tốc...")
     
     success_count = 0
-    # Tải đa luồng 4 video cùng lúc
-    with ThreadPoolExecutor(max_workers=4) as executor:
+    # Tải đa luồng 16 video cùng lúc để max băng thông
+    with ThreadPoolExecutor(max_workers=16) as executor:
         futures = {executor.submit(download_video, k, v): k for k, v in items_to_download}
         for future in futures:
             is_success, msg = future.result()
