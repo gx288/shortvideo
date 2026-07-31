@@ -248,7 +248,7 @@ def download_fast_background_video(pool: dict) -> str:
                     try:
                         page.goto('https://igdownloader.me/en', timeout=30000)
                         page.fill('input[name="q"]', bg_url)
-                        page.click('button[type="submit"]')
+                        page.click('.input-group-btn button')
                         page.wait_for_selector('a[href*=".mp4"], a[href*="dl=1"]', timeout=15000)
                         video_url = page.query_selector('a[href*=".mp4"], a[href*="dl=1"]').get_attribute('href')
                         if video_url:
@@ -262,26 +262,7 @@ def download_fast_background_video(pool: dict) -> str:
                     except Exception as ex:
                         print("         - Lỗi igdownloader:", str(ex)[:50])
                     
-                    # Thử snapinsta
-                    try:
-                        page.goto('https://snapinsta.app/', timeout=30000)
-                        page.fill('input[name="url"]', bg_url)
-                        page.click('button[type="submit"]')
-                        page.wait_for_selector('.download-bottom a', timeout=15000)
-                        video_url = page.query_selector('.download-bottom a').get_attribute('href')
-                        if video_url:
-                            if video_url.startswith('//'): video_url = 'https:' + video_url
-                            elif video_url.startswith('/'): video_url = 'https://snapinsta.app' + video_url
-                            
-                            v_req = requests.get(video_url, timeout=15)
-                            if v_req.status_code == 200:
-                                with open(raw_bg, "wb") as f: f.write(v_req.content)
-                                if os.path.getsize(raw_bg) > 100000:
-                                    print("✅ [THÀNH CÔNG] Tải video IG bằng Playwright (snapinsta)!")
-                                    browser.close()
-                                    return raw_bg
-                    except Exception as ex:
-                        print("         - Lỗi snapinsta:", str(ex)[:50])
+
                     
                     browser.close()
             except Exception as e:
@@ -306,7 +287,7 @@ def download_fast_background_video(pool: dict) -> str:
                     "--quiet",
                     "--extractor-args", "youtube:player_client=android,web",
                     "--user-agent", user_agent,
-                    "--socket-timeout", "8"
+                    "--socket-timeout", "6"
                 ]
                 
                 if current_proxy:
