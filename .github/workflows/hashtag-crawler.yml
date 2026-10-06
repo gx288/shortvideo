@@ -5,8 +5,8 @@ permissions:
 
 on:
   # ─── Crawl 1 lần/tuần (Chủ nhật 3AM giờ VN = 20:00 UTC Thứ 7) ──────────────
-  schedule:
-    - cron: '0 20 * * 6'
+  # schedule:
+  #   - cron: '0 20 * * 6'
 
   # ─── Trigger thủ công / Make.com ─────────────────────────────────────────────
   workflow_dispatch:

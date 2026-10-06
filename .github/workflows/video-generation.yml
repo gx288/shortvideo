@@ -5,8 +5,8 @@ permissions:
 
 on:
   # ─── Tự động chạy mỗi ngày lúc 5:00 sáng giờ VN (22:00 UTC hôm trước) ───
-  schedule:
-    - cron: '0 22 * * *'
+  # schedule:
+  #   - cron: '0 22 * * *'
 
   # ─── Cho phép trigger thủ công hoặc qua Make.com / API ───
   workflow_dispatch:
